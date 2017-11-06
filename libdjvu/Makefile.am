@@ -24,7 +24,7 @@ libdjvulibre_la_SOURCES = Arrays.cpp BSByteStream.cpp			\
  DjVuPort.h DjVuText.h DjVuToPS.h GBitmap.h GContainer.h GException.h	\
  GIFFManager.h GMapAreas.h GOS.h GPixmap.h GRect.h GScaler.h		\
  GSmartPointer.h GString.h GThreads.h GURL.h IFFByteStream.h		\
- IW44Image.h JB2Image.h JPEGDecoder.h MMRDecoder.h MMX.h Template.h	\
+ IW44Image.h JB2Image.h JPEGDecoder.h MMRDecoder.h MMX.h	\
  UnicodeByteStream.h XMLParser.h XMLTags.h ZPCodec.h atomic.h debug.h
 
 libdjvulibre_la_CPPFLAGS = -DDIR_DATADIR=\"$(datadir)\"
@@ -33,7 +33,7 @@ libdjvulibre_la_LIBADD = $(JPEG_LIBS) $(PTHREAD_LIBS)
 libdjvulibre_la_LDFLAGS = -no-undefined -version-info $(version_info)
 
 if HAVE_OS_WIN32
-libdjvulibre_la_CPPFLAGS += -DDJVUAPI_EXPORT 
+libdjvulibre_la_CPPFLAGS += -DDJVUAPI_EXPORT
 libdjvulibre_la_CPPFLAGS += -DDDJVUAPI_EXPORT -DMINILISPAPI_EXPORT
 libdjvulibre_la_LDFLAGS += -Wl,--export-all-symbols
 endif
