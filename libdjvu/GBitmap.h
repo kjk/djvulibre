@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -153,7 +153,7 @@ public:
   static GP<GBitmap> create(const GBitmap &ref)
   {return new GBitmap(ref);}
 
-  /** Constructs a GBitmap by copying the contents of GBitmap #ref#.  
+  /** Constructs a GBitmap by copying the contents of GBitmap #ref#.
       Argument #border# specifies the width of the optional border. */
   static GP<GBitmap> create(const GBitmap &ref, const int border)
   { return new GBitmap(ref,border); }
@@ -227,7 +227,7 @@ public:
 
   /** @name Managing gray levels. */
   //@{
-  /** Returns the number of gray levels. 
+  /** Returns the number of gray levels.
       Value #2# denotes a bilevel image. */
   int  get_grays() const;
   /** Sets the number of gray levels without changing the pixels.
@@ -244,7 +244,7 @@ public:
   void binarize_grays(int threshold=0);
   //@}
 
-  /** @name Optimizing the memory usage.  
+  /** @name Optimizing the memory usage.
       The amount of memory used by bilevel images can be reduced using
       function \Ref{compress}, which encodes the image using a run-length
       encoding scheme.  The bracket operator decompresses the image on demand.
@@ -263,7 +263,7 @@ public:
   /** Returns the number of bytes allocated for this image. */
   unsigned int get_memory_usage() const;
   /** Returns a possibly null pointer to a \Ref{GMonitor} for this bitmap.
-      You should use this monitor to ensure that the data representation of the 
+      You should use this monitor to ensure that the data representation of the
       bitmap will not change while you are using it.  We suggest using
       class \Ref{GMonitorLock} which properly handles null monitor pointers. */
   GMonitor *monitor() const;
@@ -307,7 +307,7 @@ public:
   int rle_get_rect(GRect &rect) const;
   //@}
 
-  /** @name Additive Blit.  
+  /** @name Additive Blit.
       The blit functions are designed to efficiently construct an anti-aliased
       image by copying smaller images at predefined locations.  The image of a
       page, for instance, is composed by copying the images of characters at
@@ -327,7 +327,7 @@ public:
       (#u#,#v#) in GBitmap #bm# corresponds to position (#u#+#x#,#v#+#y#) in
       the current GBitmap.  The value of each pixel in GBitmap #bm# is then
       added to the value of the corresponding pixel in the current GBitmap.
-      
+
       {\bf Example}: Assume for instance that the current GBitmap is initially
       white (all pixels have value zero).  This operation copies the pixel
       values of GBitmap #bm# at position (#x#,#y#) into the current GBitmap.
@@ -364,8 +364,8 @@ public:
       resulting anti-aliasing changes are paramount to the image quality. */
   void blit(const GBitmap *shape, int x, int y, int subsample);
   //@}
-  
-  /** @name Saving images.  
+
+  /** @name Saving images.
       The following functions write PBM, PGM and RLE files.  PBM and PGM are
       well known formats for bilevel and gray-level images.  The RLE is a
       simple run-length encoding scheme for bilevel images. These files can be
@@ -424,7 +424,7 @@ public:
       \Ref{PNM and RLE file formats}.  */
   void donate_rle(unsigned char *rledata, unsigned int rledatalen, int w, int h);
   /** Static function for parsing run data.
-      This function returns one run length encoded at position #data# 
+      This function returns one run length encoded at position #data#
       and increments the pointer #data# accordingly. */
   static inline int read_run(const unsigned char *&data);
   static inline int read_run(unsigned char *&data);
@@ -434,9 +434,9 @@ public:
       initially point to a large enough data buffer. */
   static inline void append_run(unsigned char *&data, int count);
   /** Rotates bitmap by 90, 180 or 270 degrees anticlockwise
-      and returns a new pixmap, input bitmap is not changed. 
+      and returns a new pixmap, input bitmap is not changed.
       count can be 1, 2, or 3 for 90, 180, 270 degree rotation.
-      It returns the same bitmap if not rotated. 
+      It returns the same bitmap if not rotated.
       The input bitmap will be uncompressed for rotation*/
   GP<GBitmap> rotate(int count=0);
   //@}
@@ -468,7 +468,7 @@ private:
 public:
   class ZeroBuffer;
   friend class ZeroBuffer;
-  GP<ZeroBuffer> gzerobuffer; 
+  GP<ZeroBuffer> gzerobuffer;
 private:
   static int zerosize;
   static unsigned char *zerobuffer;
@@ -477,11 +477,11 @@ private:
   static void euclidian_ratio(int a, int b, int &q, int &r);
   int encode(unsigned char *&pruns,GPBuffer<unsigned char> &gpruns) const;
   void decode(unsigned char *runs);
-  void read_pbm_text(ByteStream &ref); 
-  void read_pgm_text(ByteStream &ref, int maxval); 
-  void read_pbm_raw(ByteStream &ref); 
-  void read_pgm_raw(ByteStream &ref, int maxval); 
-  void read_rle_raw(ByteStream &ref); 
+  void read_pbm_text(ByteStream &ref);
+  void read_pgm_text(ByteStream &ref, int maxval);
+  void read_pbm_raw(ByteStream &ref);
+  void read_pgm_raw(ByteStream &ref, int maxval);
+  void read_rle_raw(ByteStream &ref);
   static void append_long_run(unsigned char *&data, int count);
   static void append_line(unsigned char *&data,const unsigned char *row,
                           const int rowlen,bool invert=false);
@@ -502,7 +502,7 @@ public:
     formats are widely used by popular image manipulation packages such as
     NetPBM \URL{http://www.arc.umn.edu/GVL/Software/netpbm.html} or
     ImageMagick \URL{http://www.wizards.dupont.com/cristy/}.
-    
+
     {\bf RLE} --- The binary RLE file format is a simple run-length encoding
     scheme for storing bilevel images.  Encoding or decoding a RLE encoded
     file is extremely simple. Yet RLE encoded files are usually much smaller
@@ -549,7 +549,7 @@ GBitmap::columns() const
   return ncolumns;
 }
 
-inline unsigned int 
+inline unsigned int
 GBitmap::rowsize() const
 {
   return bytes_per_row;
@@ -562,9 +562,9 @@ GBitmap::get_grays() const
 }
 
 inline unsigned char *
-GBitmap::operator[](int row) 
+GBitmap::operator[](int row)
 {
-  if (!bytes) 
+  if (!bytes)
     uncompress();
   if (row<0 || row>=nrows) {
 #ifndef NDEBUG
@@ -579,7 +579,7 @@ GBitmap::operator[](int row)
 inline const unsigned char *
 GBitmap::operator[](int row) const
 {
-  if (!bytes) 
+  if (!bytes)
     ((GBitmap*)this)->uncompress();
   if (row<0 || row>=nrows) {
 #ifndef NDEBUG
@@ -591,7 +591,7 @@ GBitmap::operator[](int row) const
   return &bytes[row * bytes_per_row + border];
 }
 
-inline GBitmap& 
+inline GBitmap&
 GBitmap::operator=(const GBitmap &ref)
 {
   init(ref, ref.border);
@@ -604,7 +604,7 @@ GBitmap::monitor() const
   return monitorptr;
 }
 
-inline void 
+inline void
 GBitmap::euclidian_ratio(int a, int b, int &q, int &r)
 {
   q = a / b;
@@ -620,7 +620,7 @@ GBitmap::euclidian_ratio(int a, int b, int &q, int &r)
 inline int
 GBitmap::read_run(unsigned char *&data)
 {
-  register int z=*data++;
+  int z=*data++;
   return (z>=RUNOVERFLOWVALUE)?
     ((z&~RUNOVERFLOWVALUE)<<8)|(*data++):z;
 }
@@ -628,7 +628,7 @@ GBitmap::read_run(unsigned char *&data)
 inline int
 GBitmap::read_run(const unsigned char *&data)
 {
-  register int z=*data++;
+  int z=*data++;
   return (z>=RUNOVERFLOWVALUE)?
     ((z&~RUNOVERFLOWVALUE)<<8)|(*data++):z;
 }
