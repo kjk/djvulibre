@@ -109,6 +109,8 @@ __inline int dup2(int _a, int _b ) { return _dup2(_a, _b);}
 #  define dup _dup
 #endif
 
+using namespace DJVU;
+
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
 #endif
@@ -1303,9 +1305,6 @@ ByteStream::getAsUTF8(void)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 
 void

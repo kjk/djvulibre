@@ -67,6 +67,7 @@
 #include <wctype.h>
 #endif
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -404,7 +405,4 @@ lt_XMLContents::write(ByteStream &bs) const
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

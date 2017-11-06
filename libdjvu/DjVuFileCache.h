@@ -273,8 +273,5 @@ DjVuFileCache::create(const int max_size)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif

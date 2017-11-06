@@ -2819,7 +2819,4 @@ DjVuFile::change_meta(const GUTF8String &xmeta,const bool do_reset)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

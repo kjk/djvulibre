@@ -1783,9 +1783,6 @@ IW44Image::Codec::Encode::code_slice(ZPCodec &zp)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif // NEED_DECODER_ONLY
 

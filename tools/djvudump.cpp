@@ -114,6 +114,8 @@ xxx
 #include "DjVuMessage.h"
 #include "common.h"
 
+using namespace DJVU;
+
 const char *outputfile = 0;
 FILE *outputf = stdout;
 

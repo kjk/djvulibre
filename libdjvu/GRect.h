@@ -341,8 +341,5 @@ operator!=(const GRect & r1, const GRect & r2)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif

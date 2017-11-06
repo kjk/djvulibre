@@ -72,6 +72,7 @@
 
 #include "debug.h"
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -1861,7 +1862,4 @@ DjVuDocument::writeDjVuXML(const GP<ByteStream> &gstr_out,
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

@@ -101,8 +101,6 @@
 namespace DJVU {
 #endif
 
-
-
 /** Base class for reference counted objects.
     This is the base class for all reference counted objects.
     Any instance of a subclass of #GPEnabled# can be used with
@@ -514,8 +512,5 @@ public:
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif

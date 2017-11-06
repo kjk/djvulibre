@@ -245,9 +245,6 @@ ArrayRep::ins(int n, const void * what, unsigned int howmany)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 
 
@@ -281,9 +278,6 @@ ByteStream::get_data(void)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif
 

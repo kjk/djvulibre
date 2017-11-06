@@ -463,9 +463,6 @@ public:
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif //_GTHREADS_H_
 

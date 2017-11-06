@@ -85,6 +85,7 @@
 # define LC_MESSAGES LC_ALL
 #endif
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -584,9 +585,6 @@ DjVuMessageLookUpUTF8(
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 
 void

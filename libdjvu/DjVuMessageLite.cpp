@@ -84,6 +84,7 @@
 #endif
 #include <locale.h>
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -436,9 +437,6 @@ DjVuMessageLite::AddByteStream(const GP<ByteStream> &bs)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 
 void

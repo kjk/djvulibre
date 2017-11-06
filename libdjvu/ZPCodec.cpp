@@ -70,6 +70,7 @@
 #include <math.h>
 #include <stdio.h>
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -1281,7 +1282,4 @@ ZPCodec::state(float prob1)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

@@ -197,8 +197,5 @@ GPBufferBase::set(const size_t t,const char c)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 

@@ -64,6 +64,7 @@
 #include "GOS.h"
 #include "debug.h"
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -650,7 +651,4 @@ DjVmDoc::expand(const GURL &codebase, const GUTF8String &idx_name)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

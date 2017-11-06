@@ -392,9 +392,6 @@ JPEGDecoder::jpeg_start_decompress(j_decompress_ptr x)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 
 #endif

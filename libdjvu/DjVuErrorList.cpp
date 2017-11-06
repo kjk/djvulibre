@@ -161,7 +161,4 @@ DjVuErrorList::request_data(const DjVuPort * source, const GURL & url)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

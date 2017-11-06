@@ -75,6 +75,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
@@ -1119,7 +1120,4 @@ lt_XMLParser::setOCRcallback(
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

@@ -63,12 +63,12 @@
 #include "debug.h"
 #include <ctype.h>
 
+using namespace DJVU;
 
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
 #endif
-
 
 
 #ifdef min
@@ -957,8 +957,5 @@ DjVuText::get_xmlText(const int height) const
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 

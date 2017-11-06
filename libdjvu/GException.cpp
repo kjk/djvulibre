@@ -219,8 +219,5 @@ static void (*old_handler)() = set_new_handler(throw_memory_error);
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 

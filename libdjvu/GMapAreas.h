@@ -550,8 +550,5 @@ GMapOval::get_shape_name(void) const { return OVAL_TAG; }
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif

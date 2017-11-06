@@ -325,7 +325,4 @@ DjVmNav::get_tree(int index, int* count_array, int count_array_size)
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif

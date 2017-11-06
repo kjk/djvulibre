@@ -120,9 +120,6 @@ public:
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 #endif /* __DJVU_MESSAGE_H__ */
 

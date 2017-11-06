@@ -547,9 +547,6 @@ JB2Dict::JB2Codec::Encode::encode_libonly_shape(
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
 
 #endif /* NEED_DECODER_ONLY */

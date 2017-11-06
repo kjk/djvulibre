@@ -791,7 +791,4 @@ GUTF8String::create( void const * const buf,
 
 #ifdef HAVE_NAMESPACES
 }
-# ifndef NOT_USING_DJVU_NAMESPACE
-using namespace DJVU;
-# endif
 #endif
