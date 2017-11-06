@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _GMAPAREAS_H
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -270,7 +267,7 @@ protected:
    virtual bool		gma_is_point_inside(const int x, const int y) const=0;
    virtual char const * const	gma_check_object(void) const=0;
    virtual GUTF8String	gma_print(void)=0;
-   
+
    void		clear_bounds(void) { bounds_initialized=0; }
 private:
    int		xmin, xmax, ymin, ymax;
@@ -308,7 +305,7 @@ public:
 
       /// Returns \Ref{GRect} describing the map area's rectangle
    operator GRect(void);
-   
+
    virtual GUTF8String get_xmltag(const int height) const;
       /// Returns MapRect
    virtual MapAreaType const get_shape_type( void ) const { return RECT; };
@@ -371,7 +368,7 @@ public:
 
       /// Returns x coordinate of vertex number #i#
    int		get_x(int i) const;
-   
+
       /// Returns y coordinate of vertex number #i#
    int		get_y(int i) const;
 
@@ -383,9 +380,9 @@ public:
 
       /// Closes the polygon if it is not closed
    void     close_poly();
-      /// Optimizes the polygon 
+      /// Optimizes the polygon
    void		optimize_data(void);
-      /// Checks validity of the polygon 
+      /// Checks validity of the polygon
    char const * const	check_data(void);
 
    virtual GUTF8String get_xmltag(const int height) const;
@@ -442,7 +439,7 @@ public:
    /// Create from the specified GRect.
    static GP<GMapOval> create(const GRect &rect) {return new GMapOval(rect);}
 
-   /// Virtual destructor. 
+   /// Virtual destructor.
    virtual ~GMapOval();
 
       /// Returns (xmax-xmin)/2
@@ -481,7 +478,7 @@ private:
    int		a, b;
    int		xf1, yf1, xf2, yf2;
    int		xmin, ymin, xmax, ymax;
-   
+
    void		initialize(void);
 };
 
@@ -506,7 +503,7 @@ GMapRect::gma_get_ymax(void) const { return ymax; }
 inline char const * const
 GMapRect::gma_check_object(void)  const{ return ""; }
 
-inline char const * const 
+inline char const * const
 GMapRect::get_shape_name(void) const { return RECT_TAG; }
 
 inline int

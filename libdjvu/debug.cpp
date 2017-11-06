@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "debug.h"
@@ -77,7 +74,7 @@
 
 #ifdef _WIN32
 # include <windows.h>  // OutputDebugString
-#endif 
+#endif
 
 
 #ifdef HAVE_NAMESPACES
@@ -135,7 +132,7 @@ DjVuDebug::~DjVuDebug()
 #endif
 }
 
-void   
+void
 DjVuDebug::format(const char *fmt, ... )
 {
   if (! block)
@@ -159,7 +156,7 @@ DjVuDebug::format(const char *fmt, ... )
     }
 }
 
-void   
+void
 DjVuDebug::set_debug_level(int lvl)
 {
   debug_level = lvl;
@@ -180,7 +177,7 @@ DjVuDebug::modify_indent(int rindent)
   indent += rindent;
 }
 
-DjVuDebug& 
+DjVuDebug&
 DjVuDebug::lock(int lvl, int noindent)
 {
   int threads_num=1;
@@ -242,7 +239,7 @@ OP(float, "%g")
 OP(double, "%g")
 OP(const void * const, "0x%08x")
 
-DjVuDebug& DjVuDebug::operator<<(const char * const ptr) 
+DjVuDebug& DjVuDebug::operator<<(const char * const ptr)
 {
   GUTF8String buffer(ptr?ptr:"(null)");
   if(buffer.length() > 255)
@@ -250,11 +247,11 @@ DjVuDebug& DjVuDebug::operator<<(const char * const ptr)
     buffer=buffer.substr(0,252)+"...";
   }
   format("%s", (const char *)buffer);
-  return *this; 
+  return *this;
 }
 
-DjVuDebug& DjVuDebug::operator<<(const unsigned char * const ptr) 
-{ 
+DjVuDebug& DjVuDebug::operator<<(const unsigned char * const ptr)
+{
   return operator<<( (const char *) ptr );
 }
 
@@ -264,7 +261,7 @@ DjVuDebug& DjVuDebug::operator<<(const GUTF8String &ptr)
   if(buffer.length() > 255)
     buffer=buffer.substr(0,252)+"...";
   format("%s", (const char *)buffer);
-  return *this; 
+  return *this;
 }
 
 DjVuDebugIndent::DjVuDebugIndent(int inc)

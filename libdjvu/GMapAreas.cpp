@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "GMapAreas.h"
@@ -247,19 +244,19 @@ static GUTF8String make_c_string(GUTF8String string)
   const char *data = (const char*)string;
   int length = string.length();
   buffer = GUTF8String("\"");
-  while (*data && length>0) 
+  while (*data && length>0)
     {
       int span = 0;
-      while (span<length && (unsigned char)(data[span])>=0x20 && 
+      while (span<length && (unsigned char)(data[span])>=0x20 &&
              data[span]!=0x7f && data[span]!='"' && data[span]!='\\' )
         span++;
-      if (span > 0) 
-        {  
+      if (span > 0)
+        {
           buffer = buffer + GUTF8String(data, span);
           data += span;
           length -= span;
-        }  
-      else 
+        }
+      else
         {
           char buf[8];
           static const char *tr1 = "\"\\tnrbf";
@@ -289,11 +286,11 @@ GMapArea::print(void)
    {
      G_THROW(errors);
    }
-   
+
    GUTF8String url1 = make_c_string((GUTF8String)url);
    GUTF8String target1 = make_c_string(target);
    GUTF8String comment1 = make_c_string(comment);
-   
+
    GUTF8String border_color_str;
    border_color_str.format("#%02X%02X%02X",
 	   (border_color & 0xff0000) >> 16,
@@ -340,7 +337,7 @@ GMapArea::print(void)
 	      (hilite_color & 0xff00) >> 8,
 	      (hilite_color & 0xff));
    }
-   
+
    GUTF8String URL;
    if (target1==TARGET_SELF)
    {
@@ -360,7 +357,7 @@ GMapArea::print(void)
 }
 
 /*
-void 
+void
 GMapArea::map(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -372,7 +369,7 @@ GMapArea::map(GRectMapper &mapper)
     ymax = rect.ymax;
     clear_bounds();
 }
-void 
+void
 GMapArea::unmap(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -424,7 +421,7 @@ GMapRect::gma_print(void)
 	   RECT_TAG, xmin, ymin, xmax-xmin, ymax-ymin);
 }
 
-void 
+void
 GMapRect::map(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -440,7 +437,7 @@ GMapRect::map(GRectMapper &mapper)
     ymax = rect.ymax;
     clear_bounds();
 }
-void 
+void
 GMapRect::unmap(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -706,7 +703,7 @@ GMapPoly::GMapPoly(const int * _xx, const int * _yy, int _points, bool _open) :
    open(_open), points(_points)
 {
    sides=points-(open!=0);
-   
+
    xx.resize(points-1); yy.resize(points-1);
    for(int i=0;i<points;i++)
    {
@@ -718,7 +715,7 @@ GMapPoly::GMapPoly(const int * _xx, const int * _yy, int _points, bool _open) :
      G_THROW(res);
 }
 
-int      
+int
 GMapPoly::add_vertex(int x, int y)
 {
     points++;
@@ -763,7 +760,7 @@ void GMapPoly::get_coords( GList<int> & CoordList ) const
   }
 }
 
-void 
+void
 GMapPoly::map(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -774,7 +771,7 @@ GMapPoly::map(GRectMapper &mapper)
     clear_bounds();
 }
 
-void 
+void
 GMapPoly::unmap(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -830,7 +827,7 @@ GMapOval::initialize(void)
    int xc=(xmax+xmin)/2;
    int yc=(ymax+ymin)/2;
    int f;
-   
+
    a=(xmax-xmin)/2;
    b=(ymax-ymin)/2;
    if (a>b)
@@ -860,7 +857,7 @@ GMapOval::gma_print(void)
 	   OVAL_TAG, xmin, ymin, xmax-xmin, ymax-ymin);
 }
 
-void 
+void
 GMapOval::map(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -878,7 +875,7 @@ GMapOval::map(GRectMapper &mapper)
     initialize();
 }
 
-void 
+void
 GMapOval::unmap(GRectMapper &mapper)
 {
     get_bound_rect();
@@ -1034,7 +1031,7 @@ GMapRect::get_xmltag(const int height) const
 
 GUTF8String
 GMapOval::get_xmltag(const int height) const
-{ 
+{
   return GMapArea2xmltag( *this, GUTF8String(get_xmin())
     +","+GUTF8String(height-1-get_ymax())
     +","+GUTF8String(get_xmax())

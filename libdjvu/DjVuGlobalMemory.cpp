@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #ifdef NEED_DJVU_MEMORY
@@ -121,7 +118,7 @@ djvu_memoryObject_callback (
   return 0;
 }
 
-int 
+int
 djvu_set_memory_callbacks
 (
   djvu_free_callback *free_handler,
@@ -189,7 +186,7 @@ _djvu_new(size_t siz)
   return ptr;
 }
 
-void  
+void
 _djvu_delete(void *addr)
 {
   if(addr)
@@ -266,10 +263,10 @@ _djvu_calloc(size_t siz, size_t items)
       memset(ptr,0,siz*items);
     }
   }else
-  { 
+  {
     ptr = calloc(siz?siz:1, items?items:1);
   }
-  return ptr;    
+  return ptr;
 }
 
 void *
@@ -286,7 +283,7 @@ _djvu_realloc(void* ptr, size_t siz)
   }
   return newptr;
 }
- 
+
 void
 _djvu_free(void *ptr)
 {

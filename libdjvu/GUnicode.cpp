@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "GString.h"
@@ -77,7 +74,7 @@ namespace DJVU {
 
 static unsigned char nill=0;
 
-static void const * 
+static void const *
 checkmarks(void const * const xbuf,
            unsigned int &bufsize,
            GStringRep::EncodeType &rep)
@@ -94,7 +91,7 @@ checkmarks(void const * const xbuf,
         {
           const unsigned int s=(((unsigned int)buf[2])<<8)+(unsigned int)buf[3];
           if(s == 0xfeff)
-          { 
+          {
             rep=GStringRep::XUCS4BE;
             buf+=4;
           }else if(s == 0xfffe)
@@ -105,7 +102,7 @@ checkmarks(void const * const xbuf,
         }
         break;
       case 0xfffe:
-        if(((bufsize>=4)||(!bufsize && rep == GStringRep::XUCS4LE)) 
+        if(((bufsize>=4)||(!bufsize && rep == GStringRep::XUCS4LE))
            && !((unsigned char *)buf)[2] && !((unsigned char *)buf)[3])
         {
           rep=GStringRep::XUCS4LE;
@@ -117,7 +114,7 @@ checkmarks(void const * const xbuf,
         }
         break;
       case 0xfeff:
-        if(((bufsize>=4)||(!bufsize && rep == GStringRep::XUCS4_3412)) 
+        if(((bufsize>=4)||(!bufsize && rep == GStringRep::XUCS4_3412))
            && !((unsigned char *)buf)[2] && !((unsigned char *)buf)[3])
         {
           rep=GStringRep::XUCS4_3412;
@@ -279,7 +276,7 @@ GStringRep::Unicode::create(
 
 #if HAS_ICONV
 /* This template works around incompatible iconv protoypes */
-template<typename _T> inline size_t 
+template<typename _T> inline size_t
 iconv_adaptor(size_t(*iconv_func)(iconv_t, _T, size_t *, char**, size_t*),
               iconv_t cd, char **inbuf, size_t *inbytesleft,
               char **outbuf, size_t *outbytesleft)
@@ -317,7 +314,7 @@ GStringRep::Unicode::create(
   {
 #if HAS_ICONV
     EncodeType t=XOTHER;
-    void const * const buf=checkmarks(xbuf,bufsize,t); 
+    void const * const buf=checkmarks(xbuf,bufsize,t);
     if(t != XOTHER)
     {
       retval=create(xbuf,bufsize,t);
@@ -334,7 +331,7 @@ GStringRep::Unicode::create(
         {
           iconv_t cv=iconv_open("UTF-8",(const char *)e);
           if(cv == (iconv_t)(-1))
-          { 
+          {
             const int i=e->search('-');
             if(i>=0)
             {
@@ -342,17 +339,17 @@ GStringRep::Unicode::create(
             }
           }
           if(cv == (iconv_t)(-1))
-          { 
+          {
             retval=create(0,0,XOTHER);
           }else
           {
-            size_t ptrleft=(eptr-ptr); 
+            size_t ptrleft=(eptr-ptr);
             char *utf8buf;
             size_t pleft=6*ptrleft+1;
             GPBuffer<char> gutf8buf(utf8buf,pleft);
             char *p=utf8buf;
             char *nptr = (char*)ptr;
-            while(iconv_adaptor(iconv, cv, &nptr, &ptrleft, &p, &pleft)) 
+            while(iconv_adaptor(iconv, cv, &nptr, &ptrleft, &p, &pleft))
               ptr = (unsigned char*)nptr;
             iconv_close(cv);
             retval=create(utf8buf,(size_t)ptr-(size_t)buf,t);
@@ -380,7 +377,7 @@ GStringRep::Unicode::create(
 {
   GP<GStringRep> gretval;
   GStringRep *retval=0;
-  void const * const buf=checkmarks(xbuf,bufsize,t); 
+  void const * const buf=checkmarks(xbuf,bufsize,t);
   if(buf && bufsize)
   {
     unsigned char const *eptr=(unsigned char *)buf;
@@ -656,7 +653,7 @@ UCS4BEtoUCS4(unsigned char const *&s,void const * const eptr)
       if(U)
         {
           s=r;
-        } 
+        }
     }
   return U;
 }
@@ -758,7 +755,7 @@ GStringRep::Unicode::get_remainder( void ) const
   return const_cast<GStringRep::Unicode *>(this);
 }
 
-GUTF8String 
+GUTF8String
 GUTF8String::create(void const * const buf,const unsigned int size,
     const EncodeType encodetype, const GUTF8String &encoding)
 {
@@ -767,7 +764,7 @@ GUTF8String::create(void const * const buf,const unsigned int size,
     :create(buf,size,encoding);
 }
 
-GUTF8String 
+GUTF8String
 GUTF8String::create( void const * const buf,
   unsigned int size, const EncodeType encodetype )
 {
@@ -776,7 +773,7 @@ GUTF8String::create( void const * const buf,
   return retval;
 }
 
-GUTF8String 
+GUTF8String
 GUTF8String::create( void const * const buf,
   const unsigned int size, const GP<GStringRep::Unicode> &remainder)
 {
@@ -785,7 +782,7 @@ GUTF8String::create( void const * const buf,
   return retval;
 }
 
-GUTF8String 
+GUTF8String
 GUTF8String::create( void const * const buf,
   const unsigned int size, const GUTF8String &encoding )
 {

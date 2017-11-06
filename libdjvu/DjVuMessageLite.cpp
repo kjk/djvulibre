@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -56,14 +56,11 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
-#endif
 
 // From: Leon Bottou, 1/31/2002
 // All these I18N XML messages are Lizardtech innovations.
 // For DjvuLibre, I changed the path extraction logic
-// and added support for non I18N messages. 
+// and added support for non I18N messages.
 
 #include "DjVuMessageLite.h"
 #include "GOS.h"
@@ -96,8 +93,8 @@ namespace DJVU {
 #endif
 
 
-const DjVuMessageLite& (*DjVuMessageLite::create)(void) = 
-  DjVuMessageLite::create_lite; 
+const DjVuMessageLite& (*DjVuMessageLite::create)(void) =
+  DjVuMessageLite::create_lite;
 
 static const char *failed_to_parse_XML=
   ERR_MSG("DjVuMessage.failed_to_parse_XML");
@@ -107,7 +104,7 @@ static const char *uparameter=
   ERR_MSG("DjVuMessage.Parameter");
 #ifdef LIZARDTECH_1_800_NUMBER
 static const char unrecognized_default[] =
-  "** Unrecognized DjVu Message: [Contact LizardTech at " 
+  "** Unrecognized DjVu Message: [Contact LizardTech at "
   LIZARDTECH_1_800_NUMBER " \n"
   "\t** Message name:  %1!s!";
 #else
@@ -115,7 +112,7 @@ static const char unrecognized_default[] =
   "** Unrecognized DjVu Message:\n"
   "\t** Message name:  %1!s!";
 #endif
-static const char uparameter_default[] = 
+static const char uparameter_default[] =
   "\t   Parameter: %1!s!";
 static const char failed_to_parse_XML_default[]=
   "Failed to parse XML message file:&#10;&#09;&apos;%1!s!&apos;.";
@@ -220,7 +217,7 @@ DjVuMessageLite::LookUp( const GUTF8String & MessageList ) const
     }
   }
 
-  //  All done 
+  //  All done
   return result;
 }
 
@@ -261,7 +258,7 @@ DjVuMessageLite::LookUpSingle( const GUTF8String &Single_Message ) const
       return LookUpSingle(unrecognized + ("\t" + Single_Message));
     }
   }
-    
+
   //  Insert the parameters (if any)
   unsigned int param_num = 0;
   while( (unsigned int)ending_posn < Single_Message.length() )
@@ -301,7 +298,7 @@ DjVuMessageLite::LookUpID( const GUTF8String &xmsgID,
     GUTF8String msgID = xmsgID;
 #if HAS_CTRL_C_IN_ERR_MSG
     int start = 0;
-    while (msgID[start] == '\003') 
+    while (msgID[start] == '\003')
       start ++;
     if (start > 0)
       msgID = msgID.substr(start, msgID.length() - start);
@@ -318,7 +315,7 @@ DjVuMessageLite::LookUpID( const GUTF8String &xmsgID,
       {
         const GUTF8String raw(tag->get_raw());
         const int start_line=raw.search((unsigned long)'\n',0);
-      
+
         const int start_text=raw.nextNonSpace(0);
         const int end_text=raw.firstEndSpace(0);
         if(start_line<0 || start_text<0 || start_text < start_line)
@@ -358,7 +355,7 @@ DjVuMessageLite::InsertArg( GUTF8String &message,
       const int n=format_start+target.length()+1;
       const int format_end=message.search((unsigned long)'!',n);
       if(format_end > format_start)
-      { 
+      {
         const int len=1+format_end-n;
         if(len && isascii(message[n-1]))
         {
@@ -416,7 +413,7 @@ DjVuMessageLite::InsertArg( GUTF8String &message,
 //  translated message, a buffer size (bytes), and a message_list. The translated
 //  result is returned in msg_buffer encoded in UTF-8. In case of error, msg_buffer is
 //  empty (i.e., msg_buffer[0] == '\0').
-void 
+void
 DjVuMessageLite_LookUp( char *msg_buffer, const unsigned int buffer_size, const char *message )
 {
   GUTF8String converted = DjVuMessageLite::LookUpUTF8( message );
@@ -457,7 +454,7 @@ DjVuWriteError( const char *message )
         const GUTF8String external = DjVuMessageLite::LookUpUTF8( message );
         errout->writestring(external+"\n");
       }
-    // Need to catch all exceptions because these might be 
+    // Need to catch all exceptions because these might be
     // called from an outer exception handler (with prejudice)
   } G_CATCH_ALL { } G_ENDCATCH;
 }
@@ -472,7 +469,7 @@ DjVuWriteMessage( const char *message )
         const GUTF8String external = DjVuMessageLite::LookUpUTF8( message );
         strout->writestring(external+"\n");
       }
-    // Need to catch all exceptions because these might be 
+    // Need to catch all exceptions because these might be
     // called from an outer exception handler (with prejudice)
   } G_CATCH_ALL { } G_ENDCATCH;
 }

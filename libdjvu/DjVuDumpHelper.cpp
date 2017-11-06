@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuDumpHelper.h"
@@ -124,7 +121,7 @@ display_fgbz(ByteStream & out_str, IFFByteStream &iff,
   GP<ByteStream> gbs = iff.get_bytestream();
   int version = gbs->read8();
   int size = gbs->read16();
-  out_str.format( "JB2 colors data, v%d, %d colors", 
+  out_str.format( "JB2 colors data, v%d, %d colors",
                   version & 0x7f, size);
 }
 
@@ -159,7 +156,7 @@ display_iw4(ByteStream & out_str, IFFByteStream &iff,
       unsigned char yhi = gbs->read8();
       unsigned char ylo = gbs->read8();
       out_str.format( ", v%d.%d (%s), %dx%d", major & 0x7f, minor,
-                      (major & 0x80 ? "b&w" : "color"), 
+                      (major & 0x80 ? "b&w" : "color"),
                       (xhi<<8)+xlo, (yhi<<8)+ylo );
     }
 }
@@ -173,15 +170,15 @@ display_djvm_dirm(ByteStream & out_str, IFFByteStream & iff,
   GPList<DjVmDir::File> list = dir->get_files_list();
   if (dir->is_indirect())
   {
-    out_str.format( "Document directory (indirect, %d files %d pages)", 
+    out_str.format( "Document directory (indirect, %d files %d pages)",
 	                  dir->get_files_num(), dir->get_pages_num());
     for (GPosition p=list; p; ++p)
-      out_str.format( "\n%s%s -> %s", (const char*)head, 
+      out_str.format( "\n%s%s -> %s", (const char*)head,
                       (const char*)list[p]->get_load_name(), (const char*)list[p]->get_save_name() );
   }
   else
   {
-    out_str.format( "Document directory (bundled, %d files %d pages)", 
+    out_str.format( "Document directory (bundled, %d files %d pages)",
 	                  dir->get_files_num(), dir->get_pages_num());
     djvminfo.dir = dir;
     djvminfo.map.empty();
@@ -255,8 +252,8 @@ struct displaysubr
   void (*subr)(ByteStream &, IFFByteStream &, GUTF8String,
 	       size_t, DjVmInfo&, int counter);
 };
- 
-static displaysubr disproutines[] = 
+
+static displaysubr disproutines[] =
 {
   { "DJVU.INFO", display_djvu_info },
   { "DJVU.Smmr", display_smmr },
@@ -294,12 +291,12 @@ display_chunks(ByteStream & out_str, IFFByteStream &iff,
   GPMap<int,DjVmDir::File> djvmmap;
   int rawoffset;
   GMap<GUTF8String, int> counters;
-  
+
   while ((size = iff.get_chunk(id, &rawoffset)))
   {
     if (!counters.contains(id)) counters[id]=0;
     else counters[id]++;
-    
+
     GUTF8String msg;
     msg.format("%s%s [%d] ", (const char *)head, (const char *)id, size);
     out_str.format( "%s", (const char *)msg);

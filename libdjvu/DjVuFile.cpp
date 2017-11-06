@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuFile.h"
@@ -142,7 +139,7 @@ private:
   void		* progress_cl_data;
   void		(* progress_cb)(int pos, void *);
   int		last_call_pos;
-  
+
   // Cancel C++ default stuff
   ProgressByteStream & operator=(const ProgressByteStream &);
 };
@@ -174,40 +171,40 @@ DjVuFile::create(
   return retval;
 }
 
-void 
+void
 DjVuFile::init(const GP<ByteStream> & str)
 {
   DEBUG_MSG("DjVuFile::DjVuFile(): ByteStream constructor\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   if (initialized)
     G_THROW( ERR_MSG("DjVuFile.2nd_init") );
   if (!get_count())
     G_THROW( ERR_MSG("DjVuFile.not_secured") );
-  
+
   file_size=0;
   decode_thread=0;
-  
+
   // Read the data from the stream
   data_pool=DataPool::create(str);
-  
+
   // Construct some dummy URL
   GUTF8String buffer;
   buffer.format("djvufile:/%p.djvu", this);
   DEBUG_MSG("DjVuFile::DjVuFile(): url is "<<(const char *)buffer<<"\n");
   url=GURL::UTF8(buffer);
-  
+
   // Set it here because trigger will call other DjVuFile's functions
   initialized=true;
-  
+
   // Add (basically - call) the trigger
   data_pool->add_trigger(-1, static_trigger_cb, this);
 }
 
 GP<DjVuFile>
 DjVuFile::create(
-  const GURL & xurl, GP<DjVuPort> port, 
-  const ErrorRecoveryAction recover_errors, const bool verbose_eof ) 
+  const GURL & xurl, GP<DjVuPort> port,
+  const ErrorRecoveryAction recover_errors, const bool verbose_eof )
 {
   DjVuFile *file=new DjVuFile();
   GP<DjVuFile> retval=file;
@@ -218,34 +215,34 @@ DjVuFile::create(
 }
 
 void
-DjVuFile::init(const GURL & xurl, GP<DjVuPort> port) 
+DjVuFile::init(const GURL & xurl, GP<DjVuPort> port)
 {
   DEBUG_MSG("DjVuFile::init(): url='" << xurl << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   if (initialized)
     G_THROW( ERR_MSG("DjVuFile.2nd_init") );
   if (!get_count())
     G_THROW( ERR_MSG("DjVuFile.not_secured") );
   if (xurl.is_empty())
     G_THROW( ERR_MSG("DjVuFile.empty_URL") );
-  
+
   url = xurl;
   DEBUG_MSG("DjVuFile::DjVuFile(): url is "<<(const char *)url<<"\n");
   file_size=0;
   decode_thread=0;
-  
+
   DjVuPortcaster * pcaster=get_portcaster();
-  
+
   // We need it 'cause we're waiting for our own termination in stop_decode()
   pcaster->add_route(this, this);
   if (!port)
     port = simple_port = new DjVuSimplePort();
   pcaster->add_route(this, port);
-  
+
   // Set it here because trigger will call other DjVuFile's functions
   initialized=true;
-  
+
   if (!(data_pool=DataPool::create(pcaster->request_data(this, url))))
     G_THROW( ERR_MSG("DjVuFile.no_data") "\t"+url.get_string());
   data_pool->add_trigger(-1, static_trigger_cb, this);
@@ -255,16 +252,16 @@ DjVuFile::~DjVuFile(void)
 {
   DEBUG_MSG("DjVuFile::~DjVuFile(): destroying...\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   // No more messages. They may result in adding this file to a cache
   // which will be very-very bad as we're being destroyed
   get_portcaster()->del_port(this);
-  
+
   // Unregister the trigger (we don't want it to be called and attempt
   // to access the destroyed object)
   if (data_pool)
     data_pool->del_trigger(static_trigger_cb, this);
-  
+
   // We don't have to wait for decoding to finish here. It's already
   // finished (we know it because there is a "life saver" in the
   // thread function)  -- but we need to delete it
@@ -275,17 +272,17 @@ void
 DjVuFile::reset(void)
 {
    flags.enter();
-   info = 0; 
-   anno = 0; 
-   text = 0; 
-   meta = 0; 
-   bg44 = 0; 
+   info = 0;
+   anno = 0;
+   text = 0;
+   meta = 0;
+   bg44 = 0;
    fgbc = 0;
-   fgjb = 0; 
+   fgjb = 0;
    fgjd = 0;
    fgpm = 0;
-   dir  = 0; 
-   description = ""; 
+   dir  = 0;
+   description = "";
    mimetype = "";
    flags=(flags&(ALL_DATA_PRESENT|DECODE_STOPPED|DECODE_FAILED));
    flags.leave();
@@ -312,7 +309,7 @@ DjVuFile::get_included_files(bool only_created)
   check();
   if (!only_created && !are_incl_files_created())
     process_incl_chunks();
-  
+
   GCriticalSectionLock lock(&inc_files_lock);
   GPList<DjVuFile> list=inc_files_list;	// Get a copy when locked
   return list;
@@ -339,9 +336,9 @@ DjVuFile::wait_for_finish(bool self)
 {
   DEBUG_MSG("DjVuFile::wait_for_finish():  self=" << self <<"\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   check();
-  
+
   if (self)
   {
     // It's best to check for self termination using flags. The reason
@@ -406,13 +403,13 @@ DjVuFile::notify_file_flags_changed(const DjVuFile * src,
     finish_mon.enter();
     finish_mon.broadcast();
     finish_mon.leave();
-    
+
     // In case a thread is still waiting for a chunk
     chunk_mon.enter();
     chunk_mon.broadcast();
     chunk_mon.leave();
   }
-  
+
   if ((set_mask & ALL_DATA_PRESENT) && src!=this &&
     are_incl_files_created() && is_data_present())
   {
@@ -443,7 +440,7 @@ void
 DjVuFile::static_decode_func(void * cl_data)
 {
   DjVuFile * th=(DjVuFile *) cl_data;
-  
+
   /* Please do not undo this life saver. If you do then try to resolve the
   following conflict first:
   1. Decoding starts and there is only one external reference
@@ -472,21 +469,21 @@ DjVuFile::decode_func(void)
   check();
   DEBUG_MSG("DjVuFile::decode_func() called, url='" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   DjVuPortcaster * pcaster=get_portcaster();
-  
+
   G_TRY {
     const GP<ByteStream> decode_stream(decode_data_pool->get_stream());
     ProgressByteStream *pstr=new ProgressByteStream(decode_stream);
     const GP<ByteStream> gpstr(pstr);
     pstr->set_progress_cb(progress_cb, this);
-    
+
     decode(gpstr);
-    
+
     // Wait for all child files to finish
     while(wait_for_finish(0))
     	continue;
-    
+
     DEBUG_MSG("waiting for children termination\n");
     // Check for termination status
     GCriticalSectionLock lock(&inc_files_lock);
@@ -535,7 +532,7 @@ DjVuFile::decode_func(void)
   decode_data_pool->clear_stream();
   G_TRY {
     if (flags.test_and_modify(DECODING, 0, DECODE_OK | INCL_FILES_CREATED, DECODING))
-      pcaster->notify_file_flags_changed(this, DECODE_OK | INCL_FILES_CREATED, 
+      pcaster->notify_file_flags_changed(this, DECODE_OK | INCL_FILES_CREATED,
                                          DECODING);
   } G_CATCH_ALL {} G_ENDCATCH;
   DEBUG_MSG("decoding thread for url='" << url << "' ended\n");
@@ -547,15 +544,15 @@ DjVuFile::process_incl_chunk(ByteStream & str, int file_num)
   check();
   DEBUG_MSG("DjVuFile::process_incl_chunk(): processing INCL chunk...\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   DjVuPortcaster * pcaster=get_portcaster();
-  
+
   GUTF8String incl_str;
   char buffer[1024];
   int length;
   while((length=str.read(buffer, 1024)))
     incl_str+=GUTF8String(buffer, length);
-  
+
   // Eat '\n' in the beginning and at the end
   while(incl_str.length() && incl_str[0]=='\n')
   {
@@ -565,18 +562,18 @@ DjVuFile::process_incl_chunk(ByteStream & str, int file_num)
   {
     incl_str.setat(incl_str.length()-1, 0);
   }
-  
+
   if (incl_str.length()>0)
   {
     if (strchr(incl_str, '/'))
       G_THROW( ERR_MSG("DjVuFile.malformed") );
-    
+
     DEBUG_MSG("incl_str='" << incl_str << "'\n");
-    
+
     GURL incl_url=pcaster->id_to_url(this, incl_str);
     if (incl_url.is_empty())	// Fallback. Should never be used.
       incl_url=GURL::UTF8(incl_str,url.base());
-    
+
     // Now see if there is already a file with this *name* created
     {
       GCriticalSectionLock lock(&inc_files_lock);
@@ -589,7 +586,7 @@ DjVuFile::process_incl_chunk(ByteStream & str, int file_num)
       if (pos)
         return inc_files_list[pos];
     }
-    
+
     // No. We have to request a new file
     GP<DjVuFile> file;
     G_TRY
@@ -605,7 +602,7 @@ DjVuFile::process_incl_chunk(ByteStream & str, int file_num)
       // NOTE, that it's now the responsibility of the
       // decoder to resolve all chunk dependencies, and
       // abort decoding if necessary.
-      
+
       get_portcaster()->notify_error(this,ex.get_cause());
       return 0;
     }
@@ -619,13 +616,13 @@ DjVuFile::process_incl_chunk(ByteStream & str, int file_num)
     if (verbose_eof)
       file->set_verbose_eof(verbose_eof);
     pcaster->add_route(file, this);
-    
+
     // We may have been stopped. Make sure the child will be stopped too.
     if (flags & STOPPED)
       file->stop(false);
     if (flags & BLOCKED_STOPPED)
       file->stop(true);
-    
+
     // Lock the list again and check if the file has already been
     // added by someone else
     {
@@ -642,7 +639,7 @@ DjVuFile::process_incl_chunk(ByteStream & str, int file_num)
       } else if (file_num<0 || !(pos=inc_files_list.nth(file_num)))
       {
         inc_files_list.append(file);
-      } else 
+      } else
       {
         inc_files_list.insert_before(pos, file);
       }
@@ -686,9 +683,9 @@ DjVuFile::process_incl_chunks(void)
   DEBUG_MSG("DjVuFile::process_incl_chunks(void)\n");
   DEBUG_MAKE_INDENT(3);
   check();
-  
+
   int incl_cnt=0;
-  
+
   const GP<ByteStream> str(data_pool->get_stream());
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
@@ -731,7 +728,7 @@ DjVuFile::process_incl_chunks(void)
       if (chunks_number < 0) chunks_number=last_chunk;
     }
     G_CATCH(ex)
-    {	
+    {
       if (chunks_number < 0)
         chunks_number=(recover_errors>SKIP_CHUNKS)?chunks:last_chunk;
       report_error(ex,(recover_errors <= SKIP_PAGES));
@@ -753,7 +750,7 @@ GP<JB2Dict>
 DjVuFile::get_fgjd(int block)
 {
   check();
-  
+
   // Simplest case
   if (fgjd)
     return fgjd;
@@ -822,7 +819,7 @@ is_annotation(const GUTF8String &chkid)
 {
   return (chkid=="ANTa" ||
     chkid=="ANTz" ||
-    chkid=="FORM:ANNO" ); 
+    chkid=="FORM:ANNO" );
 }
 
 static inline bool
@@ -845,18 +842,18 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
   DEBUG_MSG("DjVuFile::decode_chunk()\n");
   ByteStream &bs=*gbs;
   check();
-  
+
   // If this object is referenced by only one GP<> pointer, this
   // pointer should be the "life_saver" created by the decoding thread.
   // If it is the only GP<> pointer, then nobody is interested in the
   // results of the decoding and we can abort now with #DataPool::Stop#
   if (get_count()==1)
     G_THROW( DataPool::Stop );
-  
+
   GUTF8String desc = ERR_MSG("DjVuFile.unrecog_chunk");
   GUTF8String chkid = id;
   DEBUG_MSG("DjVuFile::decode_chunk() : decoding " << id << "\n");
-  
+
   // INFO  (information chunk for djvu page)
   if (is_info(chkid) && (djvu || djvi))
   {
@@ -873,10 +870,10 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     if (info->width<0 || info->height<0)
       G_THROW( ERR_MSG("DjVuFile.corrupt_zero") );
     if (info->version >= DJVUVERSION_TOO_NEW)
-      G_THROW( ERR_MSG("DjVuFile.new_version") "\t" 
+      G_THROW( ERR_MSG("DjVuFile.new_version") "\t"
                STRINGIFY(DJVUVERSION_TOO_NEW) );
   }
-  
+
   // INCL (inclusion chunk)
   else if (chkid == "INCL" && (djvi || djvu || iw44))
   {
@@ -905,7 +902,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     } else
       desc.format( ERR_MSG("DjVuFile.indir_chunk2") );
   }
-  
+
   // Djbz (JB2 Dictionary)
   else if (chkid == "Djbz" && (djvu || djvi))
   {
@@ -917,8 +914,8 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     fgjd->decode(gbs);
     this->fgjd = fgjd;
     desc.format( ERR_MSG("DjVuFile.shape_dict") "\t%d", fgjd->get_shape_count() );
-  } 
-  
+  }
+
   // Sjbz (JB2 encoded mask)
   else if (chkid=="Sjbz" && (djvu || djvi))
   {
@@ -935,7 +932,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
       fgjb->get_width(), fgjb->get_height(),
       get_dpi(fgjb->get_width(), fgjb->get_height()));
   }
-  
+
   // Smmr (MMR-G4 encoded mask)
   else if (chkid=="Smmr" && (djvu || djvi))
   {
@@ -947,7 +944,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
       fgjb->get_width(), fgjb->get_height(),
       get_dpi(fgjb->get_width(), fgjb->get_height()));
   }
-  
+
   // BG44 (background wavelets)
   else if (chkid == "BG44" && (djvu || djvi))
   {
@@ -962,7 +959,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
       desc.format( ERR_MSG("DjVuFile.IW44_bg1") "\t%d\t%d\t%d",
 		      bg44->get_width(), bg44->get_height(),
           get_dpi(bg44->get_width(), bg44->get_height()));
-    } 
+    }
     else
     {
       // Refinement chunks
@@ -972,7 +969,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
 		      bg44->get_serial(), get_dpi(bg44->get_width(), bg44->get_height()));
     }
   }
-  
+
   // FG44 (foreground wavelets)
   else if (chkid == "FG44" && (djvu || djvi))
   {
@@ -985,8 +982,8 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     desc.format( ERR_MSG("DjVuFile.IW44_fg") "\t%d\t%d\t%d",
       fg44.get_width(), fg44.get_height(),
       get_dpi(fg44.get_width(), fg44.get_height()));
-  } 
-  
+  }
+
   // LINK (background LINK)
   else if (chkid == "LINK" && (djvu || djvi))
   {
@@ -1005,8 +1002,8 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     {
       desc.format( ERR_MSG("DjVuFile.color_import2") );
     }
-  } 
-  
+  }
+
   // BGjp (background JPEG)
   else if (chkid == "BGjp" && (djvu || djvi))
   {
@@ -1021,8 +1018,8 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
 #else
     desc.format( ERR_MSG("DjVuFile.JPEG_bg2") );
 #endif
-  } 
-  
+  }
+
   // FGjp (foreground JPEG)
   else if (chkid == "FGjp" && (djvu || djvi))
   {
@@ -1036,24 +1033,24 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
 #else
     desc.format( ERR_MSG("DjVuFile.JPEG_fg2") );
 #endif
-  } 
-  
+  }
+
   // BG2k (background JPEG-2000) Note: JPEG2K bitstream not finalized.
   else if (chkid == "BG2k" && (djvu || djvi))
   {
     if (bg44)
       G_THROW( ERR_MSG("DjVuFile.dupl_backgrnd") );
     desc.format( ERR_MSG("DjVuFile.JPEG2K_bg") );
-  } 
-  
+  }
+
   // FG2k (foreground JPEG-2000) Note: JPEG2K bitstream not finalized.
   else if (chkid == "FG2k" && (djvu || djvi))
   {
     if (fgpm || fgbc)
       G_THROW( ERR_MSG("DjVuFile.dupl_foregrnd") );
     desc.format( ERR_MSG("DjVuFile.JPEG2K_fg") );
-  } 
-  
+  }
+
   // FGbz (foreground color vector)
   else if (chkid == "FGbz" && (djvu || djvi))
   {
@@ -1065,7 +1062,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     desc.format( ERR_MSG("DjVuFile.JB2_fg") "\t%d\t%d",
       fgbc->size(), fgbc->colordata.size());
   }
-  
+
   // BM44/PM44 (IW44 data)
   else if ((chkid == "PM44" || chkid=="BM44") && iw44)
   {
@@ -1083,7 +1080,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
       desc.format( ERR_MSG("DjVuFile.IW44_data1") "\t%d\t%d\t%d",
                    bg44->get_width(), bg44->get_height(),
                    get_dpi(bg44->get_width(), bg44->get_height()));
-    } 
+    }
     else
     {
       // Refinement chunks
@@ -1094,7 +1091,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
                    get_dpi(bg44->get_width(), bg44->get_height()));
     }
   }
-  
+
   // NDIR (obsolete navigation chunk)
   else if (chkid == "NDIR")
   {
@@ -1103,9 +1100,9 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     this->dir=dir;
     desc.format( ERR_MSG("DjVuFile.nav_dir") );
   }
-  
+
   // FORM:ANNO (obsolete) (must be before other annotations)
-  else if (chkid == "FORM:ANNO") 
+  else if (chkid == "FORM:ANNO")
     {
       const GP<ByteStream> gachunk(ByteStream::create());
       ByteStream &achunk=*gachunk;
@@ -1125,7 +1122,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
       anno->copy(achunk);
       desc.format( ERR_MSG("DjVuFile.anno1") );
     }
-  
+
   // ANTa/ANTx/TXTa/TXTz annotations
   else if (is_annotation(chkid))  // but not FORM:ANNO
     {
@@ -1202,7 +1199,7 @@ DjVuFile::decode_chunk( const GUTF8String &id, const GP<ByteStream> &gbs,
     {
       G_THROW( ERR_MSG("DjVuFile.securedjvu") );
     }
-  
+
   // Return description
   return desc;
 }
@@ -1220,14 +1217,14 @@ DjVuFile::decode(const GP<ByteStream> &gbs)
   DEBUG_MSG("DjVuFile::decode(), url='" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
   DjVuPortcaster * pcaster=get_portcaster();
-  
+
   // Get form chunk
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(gbs));
   IFFByteStream &iff=*giff;
-  if (!iff.get_chunk(chkid)) 
+  if (!iff.get_chunk(chkid))
     REPORT_EOF(true)
-    
+
     // Check file format
   bool djvi = (chkid=="FORM:DJVI")?true:false;
   bool djvu = (chkid=="FORM:DJVU")?true:false;
@@ -1238,7 +1235,7 @@ DjVuFile::decode(const GP<ByteStream> &gbs)
     mimetype = "image/x-iw44";
   else
     G_THROW( ERR_MSG("DjVuFile.unexp_image") );
-  
+
   // Process chunks
   int size_so_far=iff.tell();
   int chunks=0;
@@ -1280,15 +1277,15 @@ DjVuFile::decode(const GP<ByteStream> &gbs)
     }
   }
   G_ENDCATCH;
-  
+
   // Record file size
   file_size=size_so_far;
   // Close form chunk
   iff.close_chunk();
   // Close BG44 codec
-  if (bg44) 
+  if (bg44)
     bg44->close_codec();
-  
+
   // Complete description
   if (djvu && !info)
     G_THROW( ERR_MSG("DjVuFile.corrupt_missing_info") );
@@ -1298,11 +1295,11 @@ DjVuFile::decode(const GP<ByteStream> &gbs)
   {
     GUTF8String desc;
     if (djvu || djvi)
-      desc.format( ERR_MSG("DjVuFile.djvu_header") "\t%d\t%d\t%d\t%d", 
+      desc.format( ERR_MSG("DjVuFile.djvu_header") "\t%d\t%d\t%d\t%d",
         info->width, info->height,
         info->dpi, info->version);
     else if (iw44)
-      desc.format( ERR_MSG("DjVuFile.IW44_header") "\t%d\t%d\t%d", 
+      desc.format( ERR_MSG("DjVuFile.IW44_header") "\t%d\t%d\t%d",
         info->width, info->height, info->dpi);
     description=desc + "\n" + description;
     int rawsize=info->width*info->height*3;
@@ -1318,7 +1315,7 @@ DjVuFile::start_decode(void)
   check();
   DEBUG_MSG("DjVuFile::start_decode(), url='" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   GThread * thread_to_delete=0;
   flags.enter();
   G_TRY {
@@ -1327,16 +1324,16 @@ DjVuFile::start_decode(void)
       if (flags & DECODE_STOPPED) reset();
       flags&=~(DECODE_OK | DECODE_STOPPED | DECODE_FAILED);
       flags|=DECODING;
-      
+
       // Don't delete the thread while you're owning the flags lock
       // Beware of deadlock!
       thread_to_delete=decode_thread; decode_thread=0;
-      
+
       // We want to create it right here to be able to stop the
       // decoding thread even before its function is called (it starts)
       decode_data_pool=DataPool::create(data_pool);
       decode_life_saver=this;
-      
+
       decode_thread=new GThread();
       decode_thread->create(static_decode_func, this);
     }
@@ -1378,25 +1375,25 @@ void
 DjVuFile::stop_decode(bool sync)
 {
   check();
-  
+
   DEBUG_MSG("DjVuFile::stop_decode(), url='" << url <<
     "', sync=" << (int) sync << "\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   G_TRY
   {
     flags|=DONT_START_DECODE;
-    
+
     // Don't stop SYNCHRONOUSLY from the thread where the decoding is going!!!
     {
       // First - ask every included child to stop in async mode
       GCriticalSectionLock lock(&inc_files_lock);
       for(GPosition pos=inc_files_list;pos;++pos)
         inc_files_list[pos]->stop_decode(0);
-      
+
 //      if (decode_data_pool) decode_data_pool->stop();
     }
-    
+
     if (sync)
     {
       while(1)
@@ -1414,12 +1411,12 @@ DjVuFile::stop_decode(bool sync)
           }
         }
         if (!file) break;
-        
+
         file->stop_decode(1);
       }
-      
+
       wait_for_finish(1);	// Wait for self termination
-      
+
       // Don't delete the thread here. Until GPBase::preserve() is
       // reimplemented somehow at the GThread level.
       // delete decode_thread; decode_thread=0;
@@ -1438,7 +1435,7 @@ DjVuFile::stop(bool only_blocked)
 {
   DEBUG_MSG("DjVuFile::stop(): Stopping everything\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   flags|=only_blocked ? BLOCKED_STOPPED : STOPPED;
   if (data_pool) data_pool->stop(only_blocked);
   GCriticalSectionLock lock(&inc_files_lock);
@@ -1450,16 +1447,16 @@ GP<DjVuNavDir>
 DjVuFile::find_ndir(GMap<GURL, void *> & map)
 {
   check();
-  
+
   DEBUG_MSG("DjVuFile::find_ndir(): looking for NDIR in '" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   if (dir) return dir;
-  
+
   if (!map.contains(url))
   {
     map[url]=0;
-    
+
     GPList<DjVuFile> list=get_included_files(false);
     for(GPosition pos=list;pos;++pos)
     {
@@ -1481,22 +1478,22 @@ GP<DjVuNavDir>
 DjVuFile::decode_ndir(GMap<GURL, void *> & map)
 {
   check();
-  
+
   DEBUG_MSG("DjVuFile::decode_ndir(): decoding for NDIR in '" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   if (dir) return dir;
-  
+
   if (!map.contains(url))
   {
     map[url]=0;
-    
+
     const GP<ByteStream> str(data_pool->get_stream());
-    
+
     GUTF8String chkid;
     const GP<IFFByteStream> giff(IFFByteStream::create(str));
     IFFByteStream &iff=*giff;
-    if (!iff.get_chunk(chkid)) 
+    if (!iff.get_chunk(chkid))
       REPORT_EOF(true)
 
     int chunks=0;
@@ -1541,10 +1538,10 @@ DjVuFile::decode_ndir(GMap<GURL, void *> & map)
        }
     }
     G_ENDCATCH;
-    
+
     data_pool->clear_stream();
     if (dir) return dir;
-    
+
     GPList<DjVuFile> list=get_included_files(false);
     for(GPosition pos=list;pos;++pos)
     {
@@ -1658,7 +1655,7 @@ DjVuFile::get_merged_anno(const GList<GURL> & ignore_list,
   if (max_level_ptr)
     *max_level_ptr=max_level;
   ByteStream &str=*gstr;
-  if (!str.tell()) 
+  if (!str.tell())
   {
     gstr=0;
   }else
@@ -1687,7 +1684,7 @@ DjVuFile::get_merged_anno(int * max_level_ptr)
 }
 
 
-// [LB->BCR] The following six functions get_anno, get_text, get_meta 
+// [LB->BCR] The following six functions get_anno, get_text, get_meta
 // contain the same code in triplicate!!!
 
 void
@@ -1851,7 +1848,7 @@ DjVuFile::get_anno(void)
   get_anno(this, gstr);
   ByteStream &str=*gstr;
   if (!str.tell())
-  { 
+  {
     gstr=0;
   }else
   {
@@ -1868,7 +1865,7 @@ DjVuFile::get_text(void)
   get_text(this, gstr);
   ByteStream &str=*gstr;
   if (!str.tell())
-  { 
+  {
     gstr=0;
   }else
   {
@@ -1885,7 +1882,7 @@ DjVuFile::get_meta(void)
   get_meta(this, gstr);
   ByteStream &str=*gstr;
   if (!str.tell())
-  { 
+  {
     gstr=0;
   }else
   {
@@ -1913,17 +1910,17 @@ void
 DjVuFile::trigger_cb(void)
 {
   GP<DjVuFile> life_saver=this;
-  
+
   DEBUG_MSG("DjVuFile::trigger_cb(): got data for '" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   file_size=data_pool->get_length();
   flags|=DATA_PRESENT;
   get_portcaster()->notify_file_flags_changed(this, DATA_PRESENT, 0);
-  
+
   if (!are_incl_files_created())
     process_incl_chunks();
-  
+
   bool all=true;
   inc_files_lock.lock();
   GPList<DjVuFile> files_list=inc_files_list;
@@ -1943,9 +1940,9 @@ DjVuFile::progress_cb(int pos, void * cl_data)
 {
   DEBUG_MSG("DjVuFile::progress_cb() called\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   DjVuFile * th=(DjVuFile *) cl_data;
-  
+
   int length=th->decode_data_pool->get_length();
   if (length>0)
   {
@@ -1969,10 +1966,10 @@ DjVuFile::move(GMap<GURL, void *> & map, const GURL & dir_url)
   if (!map.contains(url))
   {
     map[url]=0;
-    
+
     url=GURL::UTF8(url.name(),dir_url);
-    
-    
+
+
     // Leave the lock here!
     GCriticalSectionLock lock(&inc_files_lock);
     for(GPosition pos=inc_files_list;pos;++pos)
@@ -1987,7 +1984,7 @@ DjVuFile::move(const GURL & dir_url)
   check();
   DEBUG_MSG("DjVuFile::move(): dir_url='" << dir_url << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   GMap<GURL, void *> map;
   move(map, dir_url);
 }
@@ -2015,7 +2012,7 @@ DjVuFile::get_chunks_number(void)
     IFFByteStream &iff=*giff;
     if (!iff.get_chunk(chkid))
       REPORT_EOF(true)
-      
+
       int chunks=0;
     int last_chunk=0;
     G_TRY
@@ -2051,15 +2048,15 @@ DjVuFile::get_chunk_name(int chunk_num)
     G_THROW( ERR_MSG("DjVuFile.missing_chunk") );
   }
   check();
-  
+
   GUTF8String name;
   const GP<ByteStream> str(data_pool->get_stream());
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
   IFFByteStream &iff=*giff;
-  if (!iff.get_chunk(chkid)) 
+  if (!iff.get_chunk(chkid))
     REPORT_EOF(true)
-    
+
     int chunks=0;
   int last_chunk=0;
   G_TRY
@@ -2094,15 +2091,15 @@ DjVuFile::contains_chunk(const GUTF8String &chunk_name)
   DEBUG_MSG("DjVuFile::contains_chunk(): url='" << url << "', chunk_name='" <<
     chunk_name << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   bool contains=0;
   const GP<ByteStream> str(data_pool->get_stream());
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
   IFFByteStream &iff=*giff;
-  if (!iff.get_chunk(chkid)) 
+  if (!iff.get_chunk(chkid))
     REPORT_EOF((recover_errors<=SKIP_PAGES))
-    
+
     int chunks=0;
   int last_chunk=0;
   G_TRY
@@ -2132,20 +2129,20 @@ bool
 DjVuFile::contains_anno(void)
 {
   const GP<ByteStream> str(data_pool->get_stream());
-  
+
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
   IFFByteStream &iff=*giff;
   if (!iff.get_chunk(chkid))
     G_THROW( ByteStream::EndOfFile );
-  
+
   while(iff.get_chunk(chkid))
   {
     if (is_annotation(chkid))
       return true;
     iff.close_chunk();
   }
-  
+
   data_pool->clear_stream();
   return false;
 }
@@ -2154,20 +2151,20 @@ bool
 DjVuFile::contains_text(void)
 {
   const GP<ByteStream> str(data_pool->get_stream());
-  
+
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
   IFFByteStream &iff=*giff;
   if (!iff.get_chunk(chkid))
     G_THROW( ByteStream::EndOfFile );
-  
+
   while(iff.get_chunk(chkid))
   {
     if (is_text(chkid))
       return true;
     iff.close_chunk();
   }
-  
+
   data_pool->clear_stream();
   return false;
 }
@@ -2176,20 +2173,20 @@ bool
 DjVuFile::contains_meta(void)
 {
   const GP<ByteStream> str(data_pool->get_stream());
-  
+
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
   IFFByteStream &iff=*giff;
   if (!iff.get_chunk(chkid))
     G_THROW( ByteStream::EndOfFile );
-  
+
   while(iff.get_chunk(chkid))
   {
     if (is_meta(chkid))
       return true;
     iff.close_chunk();
   }
-  
+
   data_pool->clear_stream();
   return false;
 }
@@ -2231,16 +2228,16 @@ DjVuFile::add_djvu_data(IFFByteStream & ostr, GMap<GURL, void *> & map,
   bool processed_annotation = false;
   bool processed_text = false;
   bool processed_meta = false;
-  
+
   const GP<ByteStream> str(data_pool->get_stream());
   GUTF8String chkid;
   const GP<IFFByteStream> giff(IFFByteStream::create(str));
   IFFByteStream &iff=*giff;
-  if (!iff.get_chunk(chkid)) 
+  if (!iff.get_chunk(chkid))
     REPORT_EOF(true)
-    
+
     // Open toplevel form
-    if (top_level) 
+    if (top_level)
       ostr.put_chunk(chkid);
     // Process chunks
     int chunks=0;
@@ -2269,7 +2266,7 @@ DjVuFile::add_djvu_data(IFFByteStream & ostr, GMap<GURL, void *> & map,
               file->set_verbose_eof(verbose_eof);
             file->add_djvu_data(ostr, map, included_too, no_ndir);
           }
-        } 
+        }
         else if (is_annotation(chkid) && anno && anno->size())
         {
           if (!processed_annotation)
@@ -2320,7 +2317,7 @@ DjVuFile::add_djvu_data(IFFByteStream & ostr, GMap<GURL, void *> & map,
       }
     }
     G_ENDCATCH;
-    
+
     // Otherwise, writes annotation at the end (annotations could be big)
     if (!processed_annotation && anno && anno->size())
     {
@@ -2341,13 +2338,13 @@ DjVuFile::add_djvu_data(IFFByteStream & ostr, GMap<GURL, void *> & map,
       copy_chunks(meta, ostr);
     }
     // Close iff
-    if (top_level) 
+    if (top_level)
       ostr.close_chunk();
 
   data_pool->clear_stream();
 }
 
-GP<ByteStream>  
+GP<ByteStream>
 DjVuFile::get_djvu_bytestream(const bool included_too, const bool no_ndir)
 {
    check();
@@ -2379,7 +2376,7 @@ DjVuFile::merge_anno(ByteStream &out)
   //  2. It merges annotations taking into account where a child DjVuFile
   //     is included.
   //  3. It handles loops in DjVuFile's hierarchy
-  
+
   const GP<ByteStream> str(get_merged_anno());
   if (str)
   {
@@ -2434,17 +2431,17 @@ DjVuFile::remove_anno(void)
   DEBUG_MSG("DjVuFile::remove_anno()\n");
   const GP<ByteStream> str_in(data_pool->get_stream());
   const GP<ByteStream> gstr_out(ByteStream::create());
-  
+
   GUTF8String chkid;
   const GP<IFFByteStream> giff_in(IFFByteStream::create(str_in));
   IFFByteStream &iff_in=*giff_in;
   if (!iff_in.get_chunk(chkid))
     G_THROW( ByteStream::EndOfFile );
-  
+
   const GP<IFFByteStream> giff_out(IFFByteStream::create(gstr_out));
   IFFByteStream &iff_out=*giff_out;
   iff_out.put_chunk(chkid);
-  
+
   while(iff_in.get_chunk(chkid))
   {
     if (!is_annotation(chkid))
@@ -2455,15 +2452,15 @@ DjVuFile::remove_anno(void)
     }
     iff_in.close_chunk();
   }
-  
+
   iff_out.close_chunk();
-  
+
   gstr_out->seek(0, SEEK_SET);
   data_pool=DataPool::create(gstr_out);
   chunks_number=-1;
-  
+
   anno=0;
-  
+
   flags|=MODIFIED;
   data_pool->clear_stream();
 }
@@ -2474,17 +2471,17 @@ DjVuFile::remove_text(void)
   DEBUG_MSG("DjVuFile::remove_text()\n");
   const GP<ByteStream> str_in(data_pool->get_stream());
   const GP<ByteStream> gstr_out(ByteStream::create());
-  
+
   GUTF8String chkid;
   const GP<IFFByteStream> giff_in(IFFByteStream::create(str_in));
   IFFByteStream &iff_in=*giff_in;
   if (!iff_in.get_chunk(chkid))
     G_THROW( ByteStream::EndOfFile );
-  
+
   const GP<IFFByteStream> giff_out(IFFByteStream::create(gstr_out));
   IFFByteStream &iff_out=*giff_out;
   iff_out.put_chunk(chkid);
-  
+
   while(iff_in.get_chunk(chkid))
   {
     if (!is_text(chkid))
@@ -2495,15 +2492,15 @@ DjVuFile::remove_text(void)
     }
     iff_in.close_chunk();
   }
-  
+
   iff_out.close_chunk();
-  
+
   gstr_out->seek(0, SEEK_SET);
   data_pool=DataPool::create(gstr_out);
   chunks_number=-1;
-  
+
   text=0;
-  
+
   flags|=MODIFIED;
   data_pool->clear_stream();
 }
@@ -2514,17 +2511,17 @@ DjVuFile::remove_meta(void)
   DEBUG_MSG("DjVuFile::remove_meta()\n");
   const GP<ByteStream> str_in(data_pool->get_stream());
   const GP<ByteStream> gstr_out(ByteStream::create());
-  
+
   GUTF8String chkid;
   const GP<IFFByteStream> giff_in(IFFByteStream::create(str_in));
   IFFByteStream &iff_in=*giff_in;
   if (!iff_in.get_chunk(chkid))
     G_THROW( ByteStream::EndOfFile );
-  
+
   const GP<IFFByteStream> giff_out(IFFByteStream::create(gstr_out));
   IFFByteStream &iff_out=*giff_out;
   iff_out.put_chunk(chkid);
-  
+
   while(iff_in.get_chunk(chkid))
   {
     if (!is_meta(chkid))
@@ -2535,15 +2532,15 @@ DjVuFile::remove_meta(void)
     }
     iff_in.close_chunk();
   }
-  
+
   iff_out.close_chunk();
-  
+
   gstr_out->seek(0, SEEK_SET);
   data_pool=DataPool::create(gstr_out);
   chunks_number=-1;
-  
+
   meta=0;
-  
+
   flags|=MODIFIED;
   data_pool->clear_stream();
 }
@@ -2568,17 +2565,17 @@ DjVuFile::unlink_file(const GP<DataPool> & data, const GUTF8String &name)
   const GP<ByteStream> gstr_out(ByteStream::create());
   const GP<IFFByteStream> giff_out(IFFByteStream::create(gstr_out));
   IFFByteStream &iff_out=*giff_out;
-  
+
   const GP<ByteStream> str_in(data->get_stream());
   const GP<IFFByteStream> giff_in(IFFByteStream::create(str_in));
   IFFByteStream &iff_in=*giff_in;
-  
+
   int chksize;
   GUTF8String chkid;
   if (!iff_in.get_chunk(chkid)) return data;
-  
+
   iff_out.put_chunk(chkid);
-  
+
   while((chksize=iff_in.get_chunk(chkid)))
   {
     if (chkid=="INCL")
@@ -2588,7 +2585,7 @@ DjVuFile::unlink_file(const GP<DataPool> & data, const GUTF8String &name)
       int length;
       while((length=iff_in.read(buffer, 1024)))
         incl_str+=GUTF8String(buffer, length);
-      
+
       // Eat '\n' in the beginning and at the end
       while(incl_str.length() && incl_str[0]=='\n')
       {
@@ -2632,16 +2629,16 @@ DjVuFile::insert_file(const GUTF8String &id, int chunk_num)
   DEBUG_MSG("DjVuFile::insert_file(): id='" << id << "', chunk_num="
     << chunk_num << "\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   // First: create new data
   const GP<ByteStream> str_in(data_pool->get_stream());
   const GP<IFFByteStream> giff_in(IFFByteStream::create(str_in));
   IFFByteStream &iff_in=*giff_in;
-  
+
   const GP<ByteStream> gstr_out(ByteStream::create());
   const GP<IFFByteStream> giff_out(IFFByteStream::create(gstr_out));
   IFFByteStream &iff_out=*giff_out;
-  
+
   int chunk_cnt=0;
   bool done=false;
   GUTF8String chkid;
@@ -2674,10 +2671,10 @@ DjVuFile::insert_file(const GUTF8String &id, int chunk_num)
   gstr_out->seek(0, SEEK_SET);
   data_pool=DataPool::create(gstr_out);
   chunks_number=-1;
-  
+
   // Second: create missing DjVuFiles
   process_incl_chunks();
-  
+
   flags|=MODIFIED;
   data_pool->clear_stream();
 }
@@ -2688,7 +2685,7 @@ DjVuFile::unlink_file(const GUTF8String &id)
 {
   DEBUG_MSG("DjVuFile::insert_file(): id='" << id << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   // Remove the file from the list of included files
   {
     GURL url=DjVuPort::get_portcaster()->id_to_url(this, id);
@@ -2702,16 +2699,16 @@ DjVuFile::unlink_file(const GUTF8String &id)
         inc_files_list.del(this_pos);
       } else ++pos;
   }
-  
+
   // And update the data.
   const GP<ByteStream> str_in(data_pool->get_stream());
   const GP<IFFByteStream> giff_in(IFFByteStream::create(str_in));
   IFFByteStream &iff_in=*giff_in;
-  
+
   const GP<ByteStream> gstr_out(ByteStream::create());
   const GP<IFFByteStream> giff_out(IFFByteStream::create(gstr_out));
   IFFByteStream &iff_out=*giff_out;
-  
+
   GUTF8String chkid;
   if (iff_in.get_chunk(chkid))
   {
@@ -2731,7 +2728,7 @@ DjVuFile::unlink_file(const GUTF8String &id)
         int length;
         while((length=iff_in.read(buffer, 1024)))
           incl_str+=GUTF8String(buffer, length);
-        
+
 	       // Eat '\n' in the beginning and at the end
         while(incl_str.length() && incl_str[0]=='\n')
         {
@@ -2750,11 +2747,11 @@ DjVuFile::unlink_file(const GUTF8String &id)
     }
     iff_out.close_chunk();
   }
-  
+
   gstr_out->seek(0, SEEK_SET);
   data_pool=DataPool::create(gstr_out);
   chunks_number=-1;
-  
+
   flags|=MODIFIED;
 }
 

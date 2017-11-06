@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -56,9 +56,6 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
-#endif
 
 /** @name csepdjvu
 
@@ -68,10 +65,10 @@
     \end{verbatim}
 
     {\bf Description}
-    
+
     File #"csepdjvu.cpp"# demonstrates a complete back-end encoder that takes
     {\em separated files} as input and produces a djvu file as output.
-    Each {\em separated file} contains a concatenation of pages. 
+    Each {\em separated file} contains a concatenation of pages.
     Each page contains the following components:
     \begin{itemize}
     \item A run-length encoded file representing the foreground.
@@ -83,7 +80,7 @@
           The size (width and height) of the PPM image must be obtained by
           rounding up the quotient of the foreground image size by
           an integer reduction factor ranging from 1 to 12.
-    \item An arbitrary number of comment lines starting with 
+    \item An arbitrary number of comment lines starting with
           character '#'.
     \end{itemize}
     All the provided pages will be converted to Compound DjVu Images.
@@ -91,7 +88,7 @@
     (see \Ref{DjVu Image files}).  Multiple pages will be gathered into a
     single bundled file.  Use \Ref{djvmcvt} or \Ref{djvujoin} to create an
     indirect file.
-    
+
     {\bf Options}
 
     \begin{description}
@@ -101,7 +98,7 @@
     \item[-v] Displays a brief message per page.
     \item[-vv] Displays lots of additional messages.
     \end{description}
-          
+
     {\bf Color RLE Images}
 
     The Color RLE file format is a simple run-length encoding scheme for color
@@ -115,7 +112,7 @@
     or by comment lines introduced by character ``\#''.  The last number is
     followed by exactly one character (usually a nl character).  This header
     is followed by a palette containing three bytes per color.  The bytes
-    represent the red, green, and blue components of the color.  
+    represent the red, green, and blue components of the color.
 
     The palette is followed by four bytes integers (MSB first) representing
     runs.  The twelve upper bits of this integer indicate the index of the run
@@ -188,7 +185,7 @@ csepdjvuopts::csepdjvuopts()
       verbose = 0;
       text = DjVuTXT::WORD;
       slice[0] =  72;
-      slice[1] =  83;      
+      slice[1] =  83;
       slice[2] =  93;
       slice[3] = 103;
       slice[4] =   0;
@@ -199,10 +196,10 @@ csepdjvuopts::csepdjvuopts()
 // BUFFERED BYTESTREAM
 // --------------------------------------------------
 
-// -- A bytestream that performs buffering and 
+// -- A bytestream that performs buffering and
 //    offers a stdio-like interface for parsing files.
 
-class BufferByteStream : public ByteStream 
+class BufferByteStream : public ByteStream
 {
 public:
   enum {bufsize=512};
@@ -221,7 +218,7 @@ public:
   inline int get(void);
   // parsing helpers
   bool skip(const char *s = " \t\n\r");
-  bool expect(int &c, const char *s); 
+  bool expect(int &c, const char *s);
   bool read_integer(int &x);
   bool read_pair(int &x, int &y);
   bool read_geometry(GRect &r);
@@ -230,25 +227,25 @@ public:
 
 BufferByteStream::BufferByteStream(ByteStream &bs)
   : bs(bs), bufpos(1), bufend(1)
-{ 
+{
 }
 
-int 
+int
 BufferByteStream::eof(void) // aka. feof
 {
-  if (bufpos < bufend) 
+  if (bufpos < bufend)
     return false;
   bufend = bufpos = 1;
   bufend += bs.read(buffer+bufend, bufsize-bufend);
   return (bufend == bufpos);
 }
 
-size_t 
+size_t
 BufferByteStream::read(void *buf, size_t size)
 {
   if (size < 1)
     return 0;
-  if (bufend == bufpos) 
+  if (bufend == bufpos)
     {
       if (size >= bufsize)
         return bs.read(buf, size);
@@ -262,20 +259,20 @@ BufferByteStream::read(void *buf, size_t size)
   return size;
 }
 
-size_t 
+size_t
 BufferByteStream::write(const void *, size_t )
 {
   G_THROW("Cannot write into a BufferByteStream");
   return 0;
 }
 
-long 
+long
 BufferByteStream::tell(void) const
-{ 
-  return bs.tell() + bufpos - bufend; 
+{
+  return bs.tell() + bufpos - bufend;
 }
-    
-inline int 
+
+inline int
 BufferByteStream::get(void) // aka. getc()
 {
   if (bufpos < bufend || !eof())
@@ -283,15 +280,15 @@ BufferByteStream::get(void) // aka. getc()
   return EOF;
 }
 
-int  
+int
 BufferByteStream::unget(int c) // aka. ungetc()
 {
-  if (bufpos > 0 && c != EOF) 
+  if (bufpos > 0 && c != EOF)
     return buffer[--bufpos] = (unsigned char)c;
   return EOF;
 }
 
-bool 
+bool
 BufferByteStream::expect(int &c, const char *s)
 {
   c = get();
@@ -309,14 +306,14 @@ BufferByteStream::skip(const char *s)
   return true;
 }
 
-bool 
+bool
 BufferByteStream::read_integer(int &x)
 {
   x = 0;
   int c = get();
   if (c<'0' || c>'9')
     return false;
-  while (c>='0' && c<='9') 
+  while (c>='0' && c<='9')
     {
       x = x*10 + c - '0';
       c = get();
@@ -325,27 +322,27 @@ BufferByteStream::read_integer(int &x)
   return true;
 }
 
-bool 
+bool
 BufferByteStream::read_pair(int &x, int &y)
 {
   int c;
   x = y = 0;
   expect(c, "-");
-  if (! read_integer(x)) 
+  if (! read_integer(x))
     return false;
-  if (c == '-') 
+  if (c == '-')
     x = -x;
   if (! expect(c, ":"))
     return false;
   expect(c, "-");
-  if (! read_integer(y)) 
+  if (! read_integer(y))
     return false;
   if (c == '-')
     y = -y;
   return true;
 }
 
-bool 
+bool
 BufferByteStream::read_geometry(GRect &r)
 {
   int x,y,w,h,c;
@@ -387,7 +384,7 @@ add_to_string(GUTF8String &s, char *buffer, int len, int &bom)
         bom = 0xfffe;
       if (bom)
         {
-          buffer += 2; 
+          buffer += 2;
           len -= 2;
         }
     }
@@ -403,13 +400,13 @@ add_to_string(GUTF8String &s, char *buffer, int len, int &bom)
     s += GUTF8String((const char*)buffer, len);
 }
 
-bool 
+bool
 BufferByteStream::read_ps_string(GUTF8String &s)
 {
   int bom = 0;
   unsigned int pos = 0;
   char buffer[512];
-  if (get() != '(') 
+  if (get() != '(')
     return false;
   s = "";
   for(;;)
@@ -422,20 +419,20 @@ BufferByteStream::read_ps_string(GUTF8String &s)
       if (c == '\\')
         {
           c = get();
-          switch (c) 
+          switch (c)
             {
-            case 'n': 
+            case 'n':
               c='\n' ; break;
-            case 'r': 
+            case 'r':
               c='\r' ; break;
-            case 't': 
+            case 't':
               c='\t' ; break;
-            case 'b': 
+            case 'b':
               c='\b' ; break;
-            case 'f': 
+            case 'f':
               c='\f' ; break;
             default:
-              if (c>='0' && c<='7') 
+              if (c>='0' && c<='7')
                 {
                   int n = 0;
                   int x = 0;
@@ -470,8 +467,8 @@ BufferByteStream::read_ps_string(GUTF8String &s)
 
 
 // -- A run of pixels with the same color
-struct Run    
-{ 
+struct Run
+{
   short y;       // vertical coordinate
   short x1;      // first horizontal coordinate
   short x2;      // last horizontal coordinate
@@ -489,7 +486,7 @@ operator <= (const Run &a, const Run &b)
 
 
 // -- Color component descriptor
-struct CC    
+struct CC
 {
   GRect bb;      // bounding box
   int npix;      // number of black pixels
@@ -500,7 +497,7 @@ struct CC
 
 
 // -- An image composed of runs
-class CRLEImage 
+class CRLEImage
 {
 public:
   int height;            // Height of the image in pixels
@@ -516,7 +513,7 @@ public:
   void make_ccids_by_analysis();
   void make_ccs_from_ccids();
   void merge_and_split_ccs(int smallsize, int largesize);
-  void sort_in_reading_order(); 
+  void sort_in_reading_order();
 private:
   unsigned int read_integer(BufferByteStream &bs);
   void insert_runs(int y, const short *x1x2color, int nruns);
@@ -524,7 +521,7 @@ private:
 
 
 // -- Helper for CRLEImage::CRLEImage(ByteStream &bs)
-unsigned int 
+unsigned int
 CRLEImage::read_integer(BufferByteStream &bs)
 {
   int c, x;
@@ -601,7 +598,7 @@ CRLEImage::CRLEImage(BufferByteStream &bs)
   if (magic == 0x5234) // Black&White RLE data
     {
       // Skip one character
-      bs.get(); 
+      bs.get();
       // Setup palette with one color
       pal = DjVuPalette::create();
       static char zeroes[4];
@@ -637,16 +634,16 @@ CRLEImage::CRLEImage(BufferByteStream &bs)
               insert_runs(n, ax, (px-ax)/3);
               c = 0;
               p = 0;
-              n -= 1; 
+              n -= 1;
               px = ax;
             }
         }
-    } else if (magic == 0x5236) { // Color-RLE data 
+    } else if (magic == 0x5236) { // Color-RLE data
       // Read ncolors and skip one character.
       int ncolors = read_integer(bs);
       bs.get();
-      // Setup palette 
-      if (ncolors<1 || ncolors>4095) 
+      // Setup palette
+      if (ncolors<1 || ncolors>4095)
         G_THROW("csepdjvu: corrupted input file (bad number of colors)");
 
       pal = DjVuPalette::create();
@@ -681,7 +678,7 @@ CRLEImage::CRLEImage(BufferByteStream &bs)
               insert_runs(n, ax, (px-ax)/3);
               c = 0;
               p = 0;
-              n -= 1; 
+              n -= 1;
               px = ax;
             }
         }
@@ -696,7 +693,7 @@ CRLEImage::CRLEImage(BufferByteStream &bs)
 void
 CRLEImage::make_ccids_by_analysis()
 {
-  // runs.sort(); (we know that runs are 
+  // runs.sort(); (we know that runs are
   // Single Pass Connected Component Analysis (with unodes)
   int n;
   int p=0;
@@ -771,7 +768,7 @@ CRLEImage::make_ccs_from_ccids()
       maxccid = runs[n].ccid;
   GTArray<int> armap(0,maxccid);
   int *rmap = armap;
-  // Renumber ccs 
+  // Renumber ccs
   for (n=0; n<=maxccid; n++)
     armap[n] = -1;
   for (n=0; n<=runs.hbound(); n++)
@@ -803,7 +800,7 @@ CRLEImage::make_ccs_from_ccids()
     }
   // Compute positions for runs of cc
   int frun = 0;
-  for (n=0; n<nid; n++) 
+  for (n=0; n<nid; n++)
     {
       ccs[n].frun = rmap[n] = frun;
       frun += ccs[n].nrun;
@@ -851,7 +848,7 @@ CRLEImage::make_ccs_from_ccids()
 
 
 // -- Helper for merge_and_split_ccs
-struct Grid_x_Color 
+struct Grid_x_Color
 {
   short gridi;
   short gridj;
@@ -861,7 +858,7 @@ struct Grid_x_Color
 
 // -- Helper for merge_and_split_ccs
 static inline unsigned int
-hash(const Grid_x_Color &x) 
+hash(const Grid_x_Color &x)
 {
   return (x.gridi<<16) ^ (x.gridj<<8) ^ x.color;
 }
@@ -925,7 +922,7 @@ CRLEImage::merge_and_split_ccs(int smallsize, int largesize)
               r->ccid = makeccid(key, map, ncc);
               if (gridj_span>0)
                 {
-                  // truncate current run 
+                  // truncate current run
                   runs.touch(nruns+gridj_span-1);
                   r = &runs[runid];
                   int x = key.gridj*splitsize + splitsize;
@@ -959,7 +956,7 @@ CRLEImage::merge_and_split_ccs(int smallsize, int largesize)
 
 
 // -- Helps sorting cc
-static int 
+static int
 top_edges_descending (const void *pa, const void *pb)
 {
   if (((CC*) pa)->bb.ymax != ((CC*) pb)->bb.ymax)
@@ -971,7 +968,7 @@ top_edges_descending (const void *pa, const void *pb)
 
 
 // -- Helps sorting cc
-static int 
+static int
 left_edges_ascending (const void *pa, const void *pb)
 {
   if (((CC*) pa)->bb.xmin != ((CC*) pb)->bb.xmin)
@@ -983,7 +980,7 @@ left_edges_ascending (const void *pa, const void *pb)
 
 
 // -- Helps sorting cc
-static int 
+static int
 integer_ascending (const void *pa, const void *pb)
 {
   return ( *(int*)pb - *(int*)pa );
@@ -991,7 +988,7 @@ integer_ascending (const void *pa, const void *pb)
 
 
 // -- Sort ccs in approximate reading order
-void 
+void
 CRLEImage::sort_in_reading_order()
 {
   if (nregularccs<2) return;
@@ -1004,7 +1001,7 @@ CRLEImage::sort_in_reading_order()
   qsort (ccarray, nregularccs, sizeof(CC), top_edges_descending);
   // Subdivide the ccarray list roughly into text lines
   int maxtopchange = width / 40;
-  if (maxtopchange < 32) 
+  if (maxtopchange < 32)
     maxtopchange = 32;
   // - Loop until processing all ccs
   int ccno = 0;
@@ -1055,7 +1052,7 @@ CRLEImage::sort_in_reading_order()
 
 
 // -- Creates a bitmap for a particular component
-GP<GBitmap>   
+GP<GBitmap>
 CRLEImage::get_bitmap_for_cc(const int ccid) const
 {
   const CC &cc = ccs[ccid];
@@ -1091,11 +1088,11 @@ read_background(BufferByteStream &bs, int w, int h, int &bgred)
   while (! (lookahead = bs.get())) { }
   bs.unget(lookahead);
   // Check pixmap
-  if (lookahead != 'P') 
+  if (lookahead != 'P')
     return 0;
   GP<GPixmap> pix = GPixmap::create(bs);
   // Check background reduction
-  for (bgred=1; bgred<=12; bgred++) 
+  for (bgred=1; bgred<=12; bgred++)
     {
       int subw = (w + bgred - 1) / bgred;
       int subh = (h + bgred - 1) / bgred;
@@ -1160,7 +1157,7 @@ Comments::Comments(int w, int h, const csepdjvuopts &opts)
   mapper.mirrory();
 }
 
-void 
+void
 Comments::process_comments(BufferByteStream &bs, int verbose)
 {
   int c;
@@ -1186,7 +1183,7 @@ Comments::process_comments(BufferByteStream &bs, int verbose)
         GUTF8String str = DjVuMessageLite::LookUpUTF8(ex.get_cause());
         if (verbose > 1)
           DjVuPrintErrorUTF8("%s\n",(const char *)str);
-      } 
+      }
       G_ENDCATCH;
       if (message)
         DjVuPrintErrorUTF8(message);
@@ -1242,14 +1239,14 @@ Comments::parse_comment_line(BufferByteStream &bs)
   // Bookmark comments
   if (c == 'B')
     {
-      int count; 
+      int count;
       GUTF8String url;
       GUTF8String title;
       if (! (bs.skip(" \t") && bs.read_integer(count) &&
              bs.skip(" \t") && bs.read_ps_string(title) &&
              bs.skip(" \t") && bs.read_ps_string(url) ) )
         G_THROW("csepdjvu: corrupted file (syntax error in outline comment)");
-      GP<DjVmNav::DjVuBookMark> b = 
+      GP<DjVmNav::DjVuBookMark> b =
         DjVmNav::DjVuBookMark::create(count, title, url);
       if (b && ! nav)
         nav = DjVmNav::create();
@@ -1271,7 +1268,7 @@ Comments::parse_comment_line(BufferByteStream &bs)
   return false;
 }
 
-static int 
+static int
 median3(int *p)
 {
   if (p[0] > p[1])
@@ -1280,7 +1277,7 @@ median3(int *p)
     return MIN(p[1],MAX(p[0],p[2]));
 }
 
-static bool 
+static bool
 allspaces(const GUTF8String &s)
 {
   bool ok = true;
@@ -1290,7 +1287,7 @@ allspaces(const GUTF8String &s)
   return ok;
 }
 
-void 
+void
 Comments::textmark(GP<TxtMark> mark)
 {
   // determine direction
@@ -1323,7 +1320,7 @@ Comments::textmark(GP<TxtMark> mark)
       int shy = (mark->y - lasty) * 100 / fontsize;
       int inter = dirx * shx + diry * shy;
       if ( (dirx || diry) && (dirx == lastdirx) && (diry == lastdiry) &&
-           (inter > -150) && (inter < 300) && 
+           (inter > -150) && (inter < 300) &&
            abs(diry * shx + dirx * shy) < 80 )
         mark->inter = inter;
       else
@@ -1338,7 +1335,7 @@ Comments::textmark(GP<TxtMark> mark)
   lasty = mark->y + mark->dy;
 }
 
-void 
+void
 Comments::textflush(void)
 {
   int size = lastline.size();
@@ -1358,17 +1355,17 @@ Comments::textflush(void)
         for (GPosition p=lastline; p; ++p)
         {
           TxtMark *mark = lastline[p];
-          if (word && mark->inter > wordsep) 
+          if (word && mark->inter > wordsep)
             {
               if (! allspaces(word->s))
                 words.append(word);
               word = 0;
             }
-          if (! word) 
+          if (! word)
             {
               word = mark;
-            } 
-          else 
+            }
+          else
             {
               word->dx += mark->dx;
               word->dy += mark->dy;
@@ -1413,7 +1410,7 @@ Comments::textflush(void)
                   wzone->ztype = DjVuTXT::WORD;
                   wzone->text_start = txt->textUTF8.length();
                   txt->textUTF8 += word->s;
-                  wzone->text_length = 
+                  wzone->text_length =
                     txt->textUTF8.length() - wzone->text_start;
                   wzone->rect = word->r;
                   lzone->rect.recthull(lzone->rect, word->r);
@@ -1422,7 +1419,7 @@ Comments::textflush(void)
                 {
                   if (lzone->text_length > 0) txt->textUTF8 += " ";
                   txt->textUTF8 += word->s;
-                  lzone->text_length = 
+                  lzone->text_length =
                     txt->textUTF8.length() - lzone->text_start;
                   lzone->rect.recthull(lzone->rect, word->r);
                 }
@@ -1432,14 +1429,14 @@ Comments::textflush(void)
   lastline.empty();
 }
 
-static int 
+static int
 bytestream_fputs(miniexp_io_t *io, const char *s)
 {
   ByteStream *outbs = (ByteStream*)io->data[0];
   return (outbs) ? outbs->write((const void*)s, strlen(s)) : -1;
 }
 
-void 
+void
 Comments::make_chunks(IFFByteStream &iff)
 {
   // Write text chunk
@@ -1513,9 +1510,9 @@ Comments::get_pagetitle()
 // -- Compresses one page:
 //    - bytestream bs contains the input separated file.
 //    - bytestream obs will receive the output djvu file.
-void 
-csepdjvu_page(BufferByteStream &bs, 
-              GP<ByteStream> obs, 
+void
+csepdjvu_page(BufferByteStream &bs,
+              GP<ByteStream> obs,
               GP<DjVmNav> &nav,
 	      GUTF8String &pagetitle,
               const csepdjvuopts &opts)
@@ -1526,28 +1523,28 @@ csepdjvu_page(BufferByteStream &bs,
   int h = rimg.height;
   if (opts.verbose > 1)
     DjVuFormatErrorUTF8( "%s\t%d\t%d\t%d\t%d",
-                     ERR_MSG("csepdjvu.summary"), 
+                     ERR_MSG("csepdjvu.summary"),
                      w, h, rimg.pal->size(), rimg.runs.size());
-  
+
   // Perform Color Connected Component Analysis
   rimg.make_ccids_by_analysis();                  // Obtain ccids
   rimg.make_ccs_from_ccids();                     // Compute cc descriptors
   if (opts.verbose > 1)
-    DjVuFormatErrorUTF8("%s\t%d", ERR_MSG("csepdjvu.analyzed"), 
+    DjVuFormatErrorUTF8("%s\t%d", ERR_MSG("csepdjvu.analyzed"),
                         rimg.ccs.size());
-  
+
   // Post-process Color Connected Components
   int largesize = MIN(500, MAX(64, opts.dpi));
   int smallsize = MAX(2, opts.dpi/150);
   rimg.merge_and_split_ccs(smallsize,largesize);  // Eliminates gross ccs
   if (opts.verbose > 1)
     DjVuFormatErrorUTF8( "%s\t%d",
-                     ERR_MSG("csepdjvu.merge_split"), 
+                     ERR_MSG("csepdjvu.merge_split"),
                      rimg.ccs.size());
   rimg.sort_in_reading_order();                   // Sort cc descriptors
-  
+
   // Create JB2Image and fill colordata
-  GP<JB2Image> gjimg=JB2Image::create(); 
+  GP<JB2Image> gjimg=JB2Image::create();
   JB2Image &jimg=*gjimg;
   jimg.set_dimension(w, h);
   int nccs = rimg.ccs.size();
@@ -1569,23 +1566,23 @@ csepdjvu_page(BufferByteStream &bs,
       rimg.pal->colordata.touch(blitno);
       rimg.pal->colordata[blitno] = cc.color;
     }
-  
+
   // Organize JB2Image
   tune_jb2image_lossless(&jimg);
   if (opts.verbose> 1)
     {
       int nshape=0, nrefine=0;
-      for (int i=0; i<jimg.get_shape_count(); i++) 
+      for (int i=0; i<jimg.get_shape_count(); i++)
         {
           if (!jimg.get_shape(i).bits) continue;
-          if (jimg.get_shape(i).parent >= 0) nrefine++; 
-          nshape++; 
+          if (jimg.get_shape(i).parent >= 0) nrefine++;
+          nshape++;
         }
       DjVuFormatErrorUTF8( "%s\t%d\t%d",
-                       ERR_MSG("csepdjvu.cross_code"), 
+                       ERR_MSG("csepdjvu.cross_code"),
                        nshape, nrefine);
     }
-  
+
   // Obtain background image
   int bgred;
   GP<GPixmap> bgpix = read_background(bs, w, h, bgred);
@@ -1595,14 +1592,14 @@ csepdjvu_page(BufferByteStream &bs,
   // Process comments
   Comments coms(w, h, opts);
   coms.process_comments(bs, opts.verbose);
-  
+
   // Compute flags for simplifying output format
   bool white_background = (bgpix ? false : true);
   bool gray_background = white_background;
   if (rimg.bg_flags == 'g' || rimg.bg_flags=='b')
     gray_background = true;
   bool bitonal = false;
-  if (white_background && rimg.pal->size() == 1) 
+  if (white_background && rimg.pal->size() == 1)
     {
       GPixel fgcolor;
       rimg.pal->index_to_color(0, fgcolor);
@@ -1613,14 +1610,14 @@ csepdjvu_page(BufferByteStream &bs,
     {
       if (bitonal)
         DjVuWriteError( ERR_MSG("csepdjvu.bilevel") );
-      else if (white_background) 
+      else if (white_background)
         DjVuWriteError( ERR_MSG("csepdjvu.white_bg") );
-      else if (gray_background) 
+      else if (gray_background)
         DjVuWriteError( ERR_MSG("csepdjvu.gray_bg") );
-      else 
+      else
         DjVuWriteError( ERR_MSG("csepdjvu.color") );
     }
-  
+
   // Create background image
   GP<IW44Image> iw;
   if (! white_background)
@@ -1632,15 +1629,15 @@ csepdjvu_page(BufferByteStream &bs,
       if (gray_background) mode = IW44Image::CRCBnone;
       iw = IW44Image::create_encode(*bgpix, mask, mode);
       bgpix = 0;
-    } 
-  else if (! bitonal) 
+    }
+  else if (! bitonal)
     {
       /* Compute white background */
       GPixel bgcolor = GPixel::WHITE;
       GP<GPixmap> inputsub=GPixmap::create((h+11)/12, (w+11)/12, &bgcolor);
       iw = IW44Image::create_encode(*inputsub, 0, IW44Image::CRCBnone);
     }
-  
+
   // Assemble DJVU file
   GP<IFFByteStream> giff=IFFByteStream::create(obs);
   IFFByteStream &iff=*giff;
@@ -1660,7 +1657,7 @@ csepdjvu_page(BufferByteStream &bs,
   jimg.encode(iff.get_bytestream());
   iff.close_chunk();
   // -- Color stuff
-  if (! bitonal) 
+  if (! bitonal)
     {
       // -- ``FGbz'' chunk
       iff.put_chunk("FGbz");
@@ -1668,7 +1665,7 @@ csepdjvu_page(BufferByteStream &bs,
       iff.close_chunk();
       // -- ``BG44'' chunk
       IWEncoderParms iwparms;
-      if (white_background) 
+      if (white_background)
         {
           iff.put_chunk("BG44");
           iwparms.slices = 97;
@@ -1691,9 +1688,9 @@ csepdjvu_page(BufferByteStream &bs,
   iff.close_chunk();
   // -- returns page title and outline
   pagetitle = coms.get_pagetitle();
-  if (! nav) 
+  if (! nav)
     nav = coms.get_djvm_nav();
-}  
+}
 
 // -- Checks whether there is another page in the same file
 bool
@@ -1704,9 +1701,9 @@ check_for_another_page(BufferByteStream &bs, const csepdjvuopts &opts)
   while (! (lookahead = bs.get())) { }
   bs.unget(lookahead);
   // Check next header
-  if (lookahead == 'R') 
+  if (lookahead == 'R')
     return true;
-  if (lookahead != EOF) 
+  if (lookahead != EOF)
     DjVuPrintErrorUTF8("%s","csepdjvu: found corrupted data\n");
   return false;
 }
@@ -1716,7 +1713,7 @@ check_for_another_page(BufferByteStream &bs, const csepdjvuopts &opts)
 void
 usage()
 {
-  const char *msg = 
+  const char *msg =
 #ifdef DJVULIBRE_VERSION
     "CSEPDJVU --- DjVuLibre-" DJVULIBRE_VERSION "\n"
 #endif
@@ -1738,14 +1735,14 @@ usage()
 
 
 // -- Parsing quality spec (borrowed from c44)
-void 
+void
 parse_slice(const char *q, csepdjvuopts &opts)
 {
   int count = 0;
   int lastx = 0;
   while (*q)
     {
-      char *ptr; 
+      char *ptr;
       int x = strtol(q, &ptr, 10);
       if (ptr == q)
         G_THROW("csepdjvu: "
@@ -1758,7 +1755,7 @@ parse_slice(const char *q, csepdjvuopts &opts)
       lastx = x;
       if (*ptr && *ptr!='+' && *ptr!=',')
         G_THROW("csepdjvu: "
-                "illegal quality specification (comma expected)");        
+                "illegal quality specification (comma expected)");
       q = (*ptr ? ptr+1 : ptr);
       if (count+1 >= (int)(sizeof(opts.slice)/sizeof(opts.slice[0])))
         G_THROW("csepdjvu: "
@@ -1773,7 +1770,7 @@ parse_slice(const char *q, csepdjvuopts &opts)
 
 
 // -- Main routine
-int 
+int
 main(int argc, const char **argv)
 {
   DJVU_LOCALE;
@@ -1827,10 +1824,10 @@ main(int argc, const char **argv)
               DjVuPrintErrorUTF8("csepdjvu: option %s not yet supported\n",
                                  (const char *)arg );
             }
-          else 
+          else
             {
               // Process separation file
-              GP<ByteStream> fbs = 
+              GP<ByteStream> fbs =
                 ByteStream::create(GURL::Filename::UTF8(arg),"rb");
               BufferByteStream ibs(*fbs);
               do {
@@ -1838,7 +1835,7 @@ main(int argc, const char **argv)
                 sprintf(pagename, "p%04d.djvu", ++pageno);
                 if (opts.verbose > 1)
                   DjVuPrintErrorUTF8("%s","--------------------\n");
-                // Compress page 
+                // Compress page
                 goutputpage=ByteStream::create();
                 ByteStream &outputpage=*goutputpage;
                 csepdjvu_page(ibs, goutputpage, gnav, pagetitle, opts);
@@ -1848,21 +1845,21 @@ main(int argc, const char **argv)
                   if (arg == "-")
                     DjVuPrintErrorUTF8("%s"," (from stdin)\n");
                   else
-                    DjVuPrintErrorUTF8(" (from file '%s')\n", 
+                    DjVuPrintErrorUTF8(" (from file '%s')\n",
                                        (const char*)arg);
                 }
                 // Insert page into document
                 outputpage.seek(0);
-                doc.insert_file(outputpage, DjVmDir::File::PAGE, 
+                doc.insert_file(outputpage, DjVmDir::File::PAGE,
                                 pagename, pagename, pagetitle);
               } while (check_for_another_page(ibs, opts));
             }
-        } 
+        }
       // Save file
-      if (pageno == 1 && ! gnav && ! pagetitle) 
+      if (pageno == 1 && ! gnav && ! pagetitle)
         {
           ByteStream &outputpage=*goutputpage;
-          // Save as a single page 
+          // Save as a single page
           outputpage.seek(0);
           ByteStream::create(outputurl,"wb")->copy(outputpage);
         }
@@ -1872,7 +1869,7 @@ main(int argc, const char **argv)
           doc.set_djvm_nav(gnav);
           doc.write(ByteStream::create(outputurl,"wb"));
         }
-      else 
+      else
         usage();
     }
   G_CATCH(ex)

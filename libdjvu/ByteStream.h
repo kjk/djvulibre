@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,12 +58,10 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
+
 
 /** @name ByteStream.h
-    
+
     Files #"ByteStream.h"# and #"ByteStream.cpp"# define input/output classes
     similar in spirit to the well known C++ #iostream# classes.  Class
     \Ref{ByteStream} is an abstract base class for all byte streams.  It
@@ -82,11 +80,11 @@
     involves multi-threading issues that many implementations of the standard
     C++ library would squarely ignore.
 
-    @memo 
+    @memo
     Input/output classes
     @author
     L\'eon Bottou <leonb@research.att.com> -- initial implementation\\
-    Andrei Erofeev <eaf@geocities.com> -- 
+    Andrei Erofeev <eaf@geocities.com> --
 
 // From: Leon Bottou, 1/31/2002
 // This file has very little to do with my initial implementation.
@@ -121,7 +119,7 @@ class GNativeString;
 
     {\bf Note}. Both the copy constructor and the copy operator are declared
     as private members. It is therefore not possible to make multiple copies
-    of instances of this class, as implied by the class semantic.  
+    of instances of this class, as implied by the class semantic.
 */
 class DJVUAPI ByteStream : public GPEnabled
 {
@@ -193,7 +191,7 @@ public:
       implementation which does nothing. */
   virtual void flush(void);
   //@}
-  /** @name Utility Functions.  
+  /** @name Utility Functions.
       Class #ByteStream# implements these functions using the virtual
       interface functions only.  All subclasses of #ByteStream# inherit these
       functions. */
@@ -246,7 +244,7 @@ public:
       The integer most significant byte is written first,
       regardless of the processor endianness. */
   void write24(unsigned int card24);
-  /** Writes a four-bytes integer to a ByteStream. 
+  /** Writes a four-bytes integer to a ByteStream.
       The integer most significant bytes are written first,
       regardless of the processor endianness. */
   void write32(unsigned int card32);
@@ -320,16 +318,16 @@ public:
   static GP<ByteStream> create(
     FILE * const f, char const * const mode, const bool closeme);
   /** Creates a ByteStream object for allocating the memory area of
-      length #sz# starting at address #buffer#.  This call impliments 
+      length #sz# starting at address #buffer#.  This call impliments
       a read-only ByteStream interface for a memory area specified by
       the user at construction time. Calls to function #read# directly
       access this memory area.  The user must therefore make sure that its
       content remain valid long enough.  */
   static GP<ByteStream> create_static(void const *buffer, size_t size);
-  
+
   /** Easy access to preallocated stdin/stdout/stderr bytestreams */
   static GP<ByteStream> get_stdin(char const * mode=0);
-  static GP<ByteStream> get_stdout(char const * mode=0);  
+  static GP<ByteStream> get_stdout(char const * mode=0);
   static GP<ByteStream> get_stderr(char const * mode=0);
 
   /** This is the conventional name for EOF exceptions */

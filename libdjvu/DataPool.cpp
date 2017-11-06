@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DataPool.h"
@@ -116,10 +113,10 @@ public:
   GPList<DataPool>		pools_list;	// List of pools using this stream
   GCriticalSection		pools_lock;
   unsigned long		open_time;	// Time when stream was open
-  
+
   int	add_pool(GP<DataPool> &pool);
   int	del_pool(GP<DataPool> &pool);
-  
+
   OpenFiles_File(const GURL &url, GP<DataPool> &pool);
   virtual ~OpenFiles_File(void);
   void clear_stream(void);
@@ -157,7 +154,7 @@ DataPool::OpenFiles_File::OpenFiles_File(const GURL &xurl, GP<DataPool> &pool) :
 {
    DEBUG_MSG("DataPool::OpenFiles_File::OpenFiles_File(): Opening file '" << url << "'\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    open_time=GOS::ticks();
    stream=ByteStream::create(url,"rb");
    add_pool(pool);
@@ -267,7 +264,7 @@ DataPool::OpenFiles::request_stream(const GURL &url, GP<DataPool> pool)
       files_list.append(file);
       prune();
    }
-   
+
    file->add_pool(pool);
    return file;
 }
@@ -275,7 +272,7 @@ DataPool::OpenFiles::request_stream(const GURL &url, GP<DataPool> pool)
 void
 DataPool::OpenFiles::stream_released(GP<ByteStream> &stream, GP<DataPool> pool)
 {
-   DEBUG_MSG("DataPool::OpenFiles::stream_release: stream=" 
+   DEBUG_MSG("DataPool::OpenFiles::stream_release: stream="
              << (void *)stream << " pool=" << (void *)pool << "\n");
    DEBUG_MAKE_INDENT(3);
    GCriticalSectionLock lock(&files_lock);
@@ -356,7 +353,7 @@ FCPools::clean(void)
                 break;
               }
             for (GPosition poslst = *lst; poslst; ++poslst)
-              if ((*lst)[poslst]->get_count() < 2) 
+              if ((*lst)[poslst]->get_count() < 2)
                 {
                   lst->del(poslst);
                   restart = true;
@@ -452,7 +449,7 @@ FCPools::load_file(const GURL &url)
   DEBUG_MSG("FCPools::load_file: url='" << url << "'\n");
   DEBUG_MAKE_INDENT(3);
   GCriticalSectionLock lock(&map_lock);
-   
+
   clean();
    if (url.is_local_file_url())
    {
@@ -731,7 +728,7 @@ DataPool::init(void)
   active_readers=new Counter;
   block_list=0;
   G_TRY
-  {   
+  {
     block_list=new BlockList;
     data=ByteStream::create();
   }
@@ -764,7 +761,7 @@ DataPool::create(void)
   return retval;
 }
 
-GP<DataPool> 
+GP<DataPool>
 DataPool::create(const GP<ByteStream> &gstr)
 {
   DEBUG_MSG("DataPool::create: str="<<(ByteStream *)gstr<<"\n");
@@ -843,7 +840,7 @@ DataPool::~DataPool(void)
   if (furl.is_local_file_url())
     if (this->get_count() > 1)
       FCPools::get()->del_pool(furl, this);
-  
+
   GP<DataPool> pool = this->pool;
   {
 	 // Wait until the static_trigger_cb() exits
@@ -870,7 +867,7 @@ DataPool::connect(const GP<DataPool> & pool_in, int start_in, int length_in)
 {
    DEBUG_MSG("DataPool::connect(): connecting to another DataPool\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    if (pool) G_THROW( ERR_MSG("DataPool.connected1") );
    if (furl.is_local_file_url()) G_THROW( ERR_MSG("DataPool.connected2") );
    if (start_in<0) G_THROW( ERR_MSG("DataPool.neg_start") );
@@ -888,7 +885,7 @@ DataPool::connect(const GP<DataPool> & pool_in, int start_in, int length_in)
    data=0;
 
    wake_up_all_readers();
-   
+
       // Pass registered trigger callbacks to the DataPool
    GCriticalSectionLock lock(&triggers_lock);
    for(GPosition pos=triggers_list;pos;++pos)
@@ -906,7 +903,7 @@ DataPool::connect(const GURL &furl_in, int start_in, int length_in)
 {
    DEBUG_MSG("DataPool::connect(): connecting to a file\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    if (pool)
      G_THROW( ERR_MSG("DataPool.connected1") );
    if (furl.is_local_file_url())
@@ -942,14 +939,14 @@ DataPool::connect(const GURL &furl_in, int start_in, int length_in)
         length=0;
       else if (length<0 || start+length>=file_size)
         length=file_size-start;
-      
+
       eof_flag=true;
       data=0;
-      
+
       FCPools::get()->add_pool(furl, this);
 
       wake_up_all_readers();
-   
+
 	 // Call every trigger callback
       GCriticalSectionLock lock(&triggers_lock);
       for(GPosition pos=triggers_list;pos;++pos)
@@ -968,7 +965,7 @@ DataPool::get_length(void) const
       // Or connected to a file
       // Or connected to a pool, but length was preset
    int retval=(-1);
-   if (length>=0) 
+   if (length>=0)
    {
      retval=length;
    }else if (pool)
@@ -988,9 +985,9 @@ DataPool::get_size(int dstart, int dlength) const
       dlength=length-dstart;
       if (dlength<0) return 0;
    }
-   
+
    GP<DataPool> pool = this->pool;
-   if (pool) 
+   if (pool)
      return pool->get_size(start+dstart, dlength);
    else if (furl.is_local_file_url())
    {
@@ -1027,7 +1024,7 @@ DataPool::add_data(const void * buffer, int offset, int size)
 
    if (furl.is_local_file_url() || pool)
       G_THROW( ERR_MSG("DataPool.add_data") );
-   
+
       // Add data to the data storage
    {
       GCriticalSectionLock lock(&data_lock);
@@ -1052,7 +1049,7 @@ DataPool::added_data(const int offset, const int size)
 {
      // Modify map of blocks
   block_list->add_range(offset, size);
-   
+
      // Wake up all threads, which may be waiting for this data
   {
     GCriticalSectionLock lock(&readers_lock);
@@ -1115,16 +1112,16 @@ DataPool::get_data(void * buffer, int offset, int sz, int level)
    DEBUG_MSG("DataPool::get_data()\n");
    DEBUG_MAKE_INDENT(3);
    Incrementor inc(*active_readers);
-   
+
    if (stop_flag)
      G_THROW( DataPool::Stop );
    if (stop_blocked_flag && !is_eof() &&
        !has_data(offset, sz))
      G_THROW( DataPool::Stop );
-   
+
    if (sz < 0)
      G_THROW( ERR_MSG("DataPool.bad_size") );
-   
+
    if (! sz)
      return 0;
 
@@ -1173,7 +1170,7 @@ DataPool::get_data(void * buffer, int offset, int sz, int level)
 	 sz=length-offset;
        if (sz<0)
          sz=0;
-       
+
        GP<OpenFiles_File> f=fstream;
        if (!f)
          {
@@ -1185,9 +1182,9 @@ DataPool::get_data(void * buffer, int offset, int sz, int level)
              }
          }
        GCriticalSectionLock lock2(&(f->stream_lock));
-       f->stream->seek(start+offset, SEEK_SET); 
+       f->stream->seek(start+offset, SEEK_SET);
        return f->stream->readall(buffer, sz);
-     } 
+     }
    else
      {
        DEBUG_MSG("DataPool::get_data(): direct\n");
@@ -1201,9 +1198,9 @@ DataPool::get_data(void * buffer, int offset, int sz, int level)
            data->seek(offset, SEEK_SET);
            return data->readall(buffer, size);
          }
-       
+
        // No data available.
-       
+
        // If there is no data and nothing else is expected, we can do
        // two things: throw ByteStream::EndOfFile exception or return ZERO bytes.
        // The exception is for the cases when the data flow has been
@@ -1215,30 +1212,30 @@ DataPool::get_data(void * buffer, int offset, int sz, int level)
        // returned. Otherwise an ByteStream::EndOfFile exception will be thrown.
        if (eof_flag)
          {
-           if (length>0 && offset<length) 
+           if (length>0 && offset<length)
              {
                G_THROW( ByteStream::EndOfFile );
              }
-           else 
+           else
              {
                return 0;
              }
-         } 
+         }
        // Some data is still expected => add this reader to the
        // list of readers and call virtual wait_for_data()
        DEBUG_MSG("DataPool::get_data(): There is no data in the pool.\n");
        DEBUG_MSG("offset=" << offset << ", size=" << sz <<
                  ", data_size=" << data->size() << "\n");
        GP<Reader> reader=new Reader(offset, sz);
-       G_TRY 
+       G_TRY
          {
            {
              GCriticalSectionLock slock(&readers_lock);
              readers_list.append(reader);
            }
            wait_for_data(reader);
-         } 
-       G_CATCH_ALL 
+         }
+       G_CATCH_ALL
          {
            {
              GCriticalSectionLock slock(&readers_lock);
@@ -1246,15 +1243,15 @@ DataPool::get_data(void * buffer, int offset, int sz, int level)
              if (readers_list.search(reader, pos)) readers_list.del(pos);
            }
            G_RETHROW;
-         } 
+         }
        G_ENDCATCH;
-       
+
        {
          GCriticalSectionLock slock(&readers_lock);
          GPosition pos;
          if (readers_list.search(reader, pos)) readers_list.del(pos);
        }
-       
+
        // This call to get_data() should return immediately as there MUST
        // be data in the buffer after wait_for_data(reader) returns
        // or eof_flag should be TRUE
@@ -1289,7 +1286,7 @@ DataPool::wait_for_data(const GP<Reader> & reader)
       DEBUG_MSG("calling event.wait()...\n");
       reader->event.wait();
    }
-   
+
    DEBUG_MSG("Got some data to read\n");
 }
 
@@ -1311,7 +1308,7 @@ DataPool::set_eof(void)
    if (!furl.is_local_file_url() && !pool)
    {
       eof_flag=true;
-      
+
 	 // Can we set the length now?
       if (length<0)
       {
@@ -1321,7 +1318,7 @@ DataPool::set_eof(void)
 
 	 // Wake up all readers to let them rescan the flags
       wake_up_all_readers();
-   
+
 	 // Activate all trigger callbacks with negative threshold
       check_triggers();
    }
@@ -1336,7 +1333,7 @@ DataPool::stop(bool only_blocked)
 
    if (only_blocked) stop_blocked_flag=true;
    else stop_flag=true;
-   
+
 
    wake_up_all_readers();
 
@@ -1364,7 +1361,7 @@ DataPool::restart_readers(void)
 {
    DEBUG_MSG("DataPool::restart_readers(): telling all readers to reenter\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    GCriticalSectionLock slock(&readers_lock);
    for(GPosition pos=readers_list;pos;++pos)
    {
@@ -1372,7 +1369,7 @@ DataPool::restart_readers(void)
       reader->reenter_flag=true;
       reader->event.set();
    }
-      
+
    if (pool)
      pool->restart_readers();
 }
@@ -1407,13 +1404,13 @@ DataPool::load_file(void)
 
          const GP<ByteStream> gbs = f->stream;
          gbs->seek(0, SEEK_SET);
-         
+
          char buffer[1024];
          int length;
          while((length = f->stream->read(buffer, 1024)))
            add_data(buffer, length);
          set_eof();
-         
+
          OpenFiles::get()->stream_released(f->stream, this);
       }
       fstream=0;
@@ -1497,7 +1494,7 @@ DataPool::add_trigger(int tstart, int tlength,
    DEBUG_MSG("DataPool::add_trigger(): start=" << tstart <<
 	     ", length=" << tlength << ", func=" << (void *) callback << "\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    if (callback)
    {
       if (is_eof())
@@ -1515,7 +1512,7 @@ DataPool::add_trigger(int tstart, int tlength,
 	    pool->add_trigger(start+tstart, tlength, callback, cl_data);
 	    GCriticalSectionLock lock(&triggers_lock);
 	    triggers_list.append(trigger);
-	 } 
+	 }
          else if (!furl.is_local_file_url())
 	 {
 	       // We're not connected to anything and maintain our own data
@@ -1592,7 +1589,7 @@ DataPool::trigger_cb(void)
       // Don't want to be destroyed while I'm here. Can't use GP<> life saver
       // because it may be called from the constructor
    GCriticalSectionLock lock(&trigger_lock);
-   
+
    DEBUG_MSG("DataPool::trigger_cb() called\n");
    DEBUG_MAKE_INDENT(3);
 
@@ -1607,7 +1604,7 @@ DataPool::trigger_cb(void)
    {
 	    // Not connected to anything => Try to guess the length
       if (length<0) analyze_iff();
-      
+
 	    // Failed to analyze? Check, maybe it's EOF already
       if (length<0 && is_eof())
       {
@@ -1630,7 +1627,7 @@ DataPool::analyze_iff(void)
    DEBUG_MAKE_INDENT(3);
 
    GP<ByteStream> str=get_stream();
-   
+
    GP<IFFByteStream> giff=IFFByteStream::create(str);
    IFFByteStream &iff=*giff;
    GUTF8String chkid;
@@ -1672,7 +1669,7 @@ private:
    DataPool		* data_pool;
    GP<DataPool>		data_pool_lock;
    long			position;
-   
+
    char			buffer[512];
    size_t		buffer_size;
    size_t		buffer_pos;
@@ -1685,7 +1682,7 @@ inline
 PoolByteStream::PoolByteStream(GP<DataPool> xdata_pool) :
    data_pool(xdata_pool), position(0), buffer_size(0), buffer_pos(0)
 {
-   if (!data_pool) 
+   if (!data_pool)
        G_THROW( ERR_MSG("DataPool.zero_DataPool") );
 
       // Secure the DataPool if possible. If we're called from DataPool

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,15 +58,12 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
 
 /** @name DjVuToPS.h
     Files #"DjVuToPS.h"# and #"DjVuToPS.cpp"# implement code that can be
     used to convert a \Ref{DjVuImage} or \Ref{DjVuDocument} to PostScript
     format. The conversion is carried out by the \Ref{DjVuToPS} class.
-    
+
     @memo PostScript file generator
     @author Andrei Erofeev <eaf@geocities.com> \\
             Florin Nicsa <Florin.Nicsa@insa-lyon.fr>
@@ -121,8 +118,8 @@ public:
                 foreground layer, background layer, and the mask respectively)
              \item[Color] ({\em TRUE} or {\em FALSE}). Choosing {\em FALSE}
                 converts color images to gray scale.
-             \item[Gamma] Printer color correction. 
-                This parameter ranges from #0.3# to #5.0#. 
+             \item[Gamma] Printer color correction.
+                This parameter ranges from #0.3# to #5.0#.
              \item[sRGB] ({\em TRUE} or {\em FALSE}).  Choosing {\em TRUE}
                 enables accurate sRGB color calibration.  This option
                 only works with language level 2.  When this is set,
@@ -173,7 +170,7 @@ public:
     void set_zoom(int zoom);
     /** Affects automatic conversion to GreyScale mode. */
     void set_color(bool color);
-    /** Sets gamma correction factor. Ranges from #0.3# to #5.0#. */    
+    /** Sets gamma correction factor. Ranges from #0.3# to #5.0#. */
     void set_gamma(double gamma);
     /** Sets sRGB color calibration flag. */
     void set_sRGB(bool calibrate);
@@ -189,11 +186,11 @@ public:
     void set_bookletmode(BookletMode m);
     /** Specifies the maximal number of pages in a booklet */
     void set_bookletmax(int m);
-    /** Specifies an offset (points) between 
+    /** Specifies an offset (points) between
         booklet recto(s) and verso(s). */
     void set_bookletalign(int m);
-    /** Specifies the margin (points) required to fold 
-        the booklet (#fold# in points) and the margin 
+    /** Specifies the margin (points) required to fold
+        the booklet (#fold# in points) and the margin
         increase required for each sheet (#xfold# in millipoints). */
     void set_bookletfold(int fold, int xfold=0);
 
@@ -206,7 +203,7 @@ public:
     /** Returns output image orientation (#PORTRAIT# or #LANDSCAPE#) */
     Orientation get_orientation(void) const {
       return orientation; }
-    /** Returns \Ref{DjVuImage} rendering mode 
+    /** Returns \Ref{DjVuImage} rendering mode
         (#COLOR#, #FORE#, #BACK#, #BW#) */
     Mode get_mode(void) const {
       return mode; }
@@ -250,11 +247,11 @@ public:
     /* Constructor */
     Options(void);
   };
-  
+
   /** Describes current page processing stage. This is passed to
       the #info_cb()# callback. See \Ref{set_info_cb}() for details. */
   enum Stage { DECODING, PRINTING };
-  
+
 private:
   void (*refresh_cb)(void*);
   void  *refresh_cl_data;
@@ -284,18 +281,18 @@ protected:
   GP<DjVuImage> decode_page(GP<DjVuDocument>,int,int,int);
   void process_single_page(ByteStream&,GP<DjVuDocument>,int,int,int,int);
   void process_double_page(ByteStream&,GP<DjVuDocument>,void*,int,int);
-  
+
 public:
   /** Options affecting the print result. Please refer to
       \Ref{DjVuToPS::Options} for details. */
   Options options;
-  
+
   /** @name Callbacks */
   //@{
   /** Refresh callback is a function, which will be called fairly
       often while the image (document) is being printed. It can
       be used to refresh a GUI, if necessary.
-      
+
       @param refresh_cb Callback function to be called periodically
       @param refresh_cl_data Pointer passed to #refresh_cb()# */
    void set_refresh_cb(void (*refresh_cb)(void*), void *refresh_cl_data);
@@ -307,7 +304,7 @@ public:
       learn the number of the page being printed you can use
       \Ref{set_info_cb}() function.  See \Ref{set_dec_progress_cb}() to find
       out how to learn the decoding progress.
-      
+
       @param cb Callback function to be called
       @param data Pointer passed to #cb()#. */
   void set_prn_progress_cb(void (*cb)(double, void*), void *data);
@@ -322,7 +319,7 @@ public:
       progress.  See \Ref{set_info_cb}() to learn how to find out the number
       of the page being processed, the total number of pages and the number of
       processed pages.
-          
+
       @param cb Callback function to be called
       @param data Pointer passed to #cb()#. */
   void set_dec_progress_cb(void (*cb)(double, void*), void *data);
@@ -339,14 +336,14 @@ public:
       \item[page_num] The number of the page being processed
       \item[page_cnt] Counts how many pages have already been processed.
       \item[tot_pages] Counts how many pages will be output enventually.
-      \item[stage] Describes the current processing stage 
+      \item[stage] Describes the current processing stage
                    (#DECODING# or #PRINTING#).
       \end{description}
       @param cb Callback function to be called
       @param data Pointer, which will be passed to #cb()#. */
   void set_info_cb(void (*cb)(int,int,int,Stage,void*), void *data);
   //@}
-  
+
   /** Prints the specified \Ref{DjVuImage} #dimg# into the
       \Ref{ByteStream} #str#. The function will first scale
       the image to fit the #img_rect#, then extract #prn_rect#
@@ -354,17 +351,17 @@ public:
       PostScript format. The function generates a legal PostScript
       (or Encapsulated PostScript) file taking care of all comments
       conforming to Document Structure Conventions v. 3.0.
-      
+
       {\bf Warning:} The zoom factor specified in \Ref{Options} does
       not affect the amount of data stored into the PostScript file.
       It will be used by the PostScript code to additionally scale
       the image. We cannot pre-scale it here, because we do not know
       the future resolution of the printer. The #img_rect# and
       #prn_rect# alone define how much data will be sent to printer.
-      
+
       Using #img_rect# one can upsample or downsample the image prior
       to sending it to the printer.
-      
+
       @param str \Ref{ByteStream} where PostScript output will be sent
       @param dimg \Ref{DjVuImage} to print
       @param img_rect Rectangle to which the \Ref{DjVuImage} will be scaled.
@@ -378,7 +375,7 @@ public:
    void print(ByteStream&, GP<DjVuImage> dimg,
               const GRect &prn_rect, const GRect &img_rect,
               int override_dpi=-1 );
-  
+
   /** Outputs the specifies pages from the \Ref{DjVuDocument} into the
       \Ref{ByteStream} in PostScript format.  The function will generate a
       multipage PostScript document conforming to PS DSC 3.0 by storing into
@@ -399,8 +396,8 @@ public:
       \end{itemize} */
   void print(ByteStream&, GP<DjVuDocument> doc, GUTF8String page_range);
   void print(ByteStream&, GP<DjVuDocument> doc);
- 
-  
+
+
   /** Default constructor. Initializes the class. */
   DjVuToPS(void);
 };

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // From: Leon Bottou, 1/31/2002
@@ -111,7 +108,7 @@ namespace DJVU {
 // using the DjVu compatibility mode.
 
 
-static ZPCodec::Table default_ztable[256] = 
+static ZPCodec::Table default_ztable[256] =
 {
 #ifdef ZPCODER
   /* This table has been designed for the ZPCoder
@@ -641,7 +638,7 @@ public:
   Encode(GP<ByteStream> gbs, const bool djvucompat);
   virtual ~Encode();
 private:
-  void init(void); 
+  void init(void);
 };
 
 ZPCodec::Encode::Encode(GP<ByteStream> gbs, const bool djvucompat)
@@ -658,14 +655,14 @@ ZPCodec::Encode::~Encode()
 {
   eflush();
 }
- 
+
 class ZPCodec::Decode : public ZPCodec
 {
 public:
   Decode(GP<ByteStream> gbs, const bool djvucompat);
   virtual ~Decode();
 private:
-  void init(void); 
+  void init(void);
 };
 
 ZPCodec::Decode::Decode(GP<ByteStream> gbs, const bool djvucompat)
@@ -677,7 +674,7 @@ ZPCodec::Decode::Decode(GP<ByteStream> gbs, const bool djvucompat)
   bitcount = 0;
 #endif
 }
- 
+
 ZPCodec::Decode::~Decode() {}
 
 ZPCodec::ZPCodec(GP<ByteStream> xgbs, const bool xencoding, const bool djvucompat)
@@ -731,7 +728,7 @@ ZPCodec::create(GP<ByteStream> gbs, const bool encoding, const bool djvucompat)
 
 
 
-void 
+void
 ZPCodec::Decode::init(void)
 {
   assert(sizeof(unsigned int)==4);
@@ -760,7 +757,7 @@ ZPCodec::preload(void)
 {
   while (scount<=24)
     {
-      if (bs->read((void*)&byte, 1) < 1) 
+      if (bs->read((void*)&byte, 1) < 1)
         {
           byte = 0xff;
           if (--delay < 1)
@@ -775,12 +772,12 @@ ZPCodec::preload(void)
 inline int
 ZPCodec::ffz(unsigned int x)
 {
-  // DO NOT DEFINE FASTBSR : 
+  // DO NOT DEFINE FASTBSR :
   // Test shows that it hardly helps on a PPro,
   // and rumors are that BSR is very slow on PPlain.
 #if defined(FASTBSR) && defined(_MSC_VER) && defined(_M_IX86)
   int r;
-  __asm  { 
+  __asm  {
         mov  ebx, x
         xor  ebx, 0xffff
         mov  eax, -1
@@ -802,7 +799,7 @@ ZPCodec::ffz(unsigned int x)
 }
 
 
-int 
+int
 ZPCodec::decode_sub(BitContext &ctx, unsigned int z)
 {
   /* Save bit */
@@ -810,7 +807,7 @@ ZPCodec::decode_sub(BitContext &ctx, unsigned int z)
   /* Avoid interval reversion */
 #ifdef ZPCODER
   unsigned int d = 0x6000 + ((z+a)>>2);
-  if (z > d) 
+  if (z > d)
     z = d;
 #endif
 #ifdef ZCODER
@@ -863,7 +860,7 @@ ZPCodec::decode_sub(BitContext &ctx, unsigned int z)
 }
 
 
-int 
+int
 ZPCodec::decode_sub_simple(int mps, unsigned int z)
 {
   /* Test MPS/LPS */
@@ -907,12 +904,12 @@ ZPCodec::decode_sub_simple(int mps, unsigned int z)
 }
 
 
-int  
+int
 ZPCodec::decode_sub_nolearn(int mps, unsigned int z)
 {
 #ifdef ZPCODER
   unsigned int d = 0x6000 + ((z+a)>>2);
-  if (z > d) 
+  if (z > d)
         z = d;
 #endif
 #ifdef ZCODER
@@ -970,7 +967,7 @@ ZPCodec::decode_sub_nolearn(int mps, unsigned int z)
 
 
 
-void 
+void
 ZPCodec::Encode::init(void)
 {
   assert(sizeof(unsigned int)==4);
@@ -1009,7 +1006,7 @@ ZPCodec::outbit(int bit)
     }
 }
 
-void 
+void
 ZPCodec::zemit(int b)
 {
   /* Shift new bit into 3bytes buffer */
@@ -1051,7 +1048,7 @@ ZPCodec::zemit(int b)
 #endif
 }
 
-void 
+void
 ZPCodec::eflush()
 {
   /* adjust subend */
@@ -1077,13 +1074,13 @@ ZPCodec::eflush()
   delay = 0xff;
 }
 
-void 
+void
 ZPCodec::encode_mps(BitContext &ctx, unsigned int z)
 {
   /* Avoid interval reversion */
 #ifdef ZPCODER
   unsigned int d = 0x6000 + ((z+a)>>2);
-  if (z > d) 
+  if (z > d)
     z = d;
 #endif
 #ifdef ZCODER
@@ -1105,13 +1102,13 @@ ZPCodec::encode_mps(BitContext &ctx, unsigned int z)
 }
 
 
-void 
+void
 ZPCodec::encode_lps(BitContext &ctx, unsigned int z)
 {
   /* Avoid interval reversion */
 #ifdef ZPCODER
   unsigned int d = 0x6000 + ((z+a)>>2);
-  if (z > d) 
+  if (z > d)
     z = d;
 #endif
 #ifdef ZCODER
@@ -1134,7 +1131,7 @@ ZPCodec::encode_lps(BitContext &ctx, unsigned int z)
 }
 
 
-void 
+void
 ZPCodec::encode_mps_simple(unsigned int z)
 {
   /* Code MPS */
@@ -1148,7 +1145,7 @@ ZPCodec::encode_mps_simple(unsigned int z)
     }
 }
 
-void 
+void
 ZPCodec::encode_lps_simple(unsigned int z)
 {
   /* Code LPS */
@@ -1165,12 +1162,12 @@ ZPCodec::encode_lps_simple(unsigned int z)
 }
 
 
-void 
+void
 ZPCodec::encode_mps_nolearn(unsigned int z)
 {
 #ifdef ZPCODER
   unsigned int d = 0x6000 + ((z+a)>>2);
-  if (z > d) 
+  if (z > d)
     z = d;
 #endif
 #ifdef ZCODER
@@ -1189,12 +1186,12 @@ ZPCodec::encode_mps_nolearn(unsigned int z)
 }
 
 
-void 
+void
 ZPCodec::encode_lps_nolearn(unsigned int z)
 {
 #ifdef ZPCODER
   unsigned int d = 0x6000 + ((z+a)>>2);
-  if (z > d) 
+  if (z > d)
     z = d;
 #endif
 #ifdef ZCODER
@@ -1226,7 +1223,7 @@ ZPCodec::encode_lps_nolearn(unsigned int z)
 
 
 
-void 
+void
 ZPCodec::newtable(ZPCodec::Table *table)
 {
   for (int i=0; i<256; i++)
@@ -1238,7 +1235,7 @@ ZPCodec::newtable(ZPCodec::Table *table)
     }
 }
 
-static float 
+static float
 p_to_plps(unsigned short p)
 {
   float fplps;
@@ -1257,11 +1254,11 @@ p_to_plps(unsigned short p)
 }
 
 
-BitContext 
+BitContext
 ZPCodec::state(float prob1)
 {
   // Return a state representing 'prob1' in the steady chain
-  // FixMe: This is quite slow! 
+  // FixMe: This is quite slow!
   int mps = (prob1 <= 0.5 ? 0 : 1);
   float plps = (float)(mps ? 1.0 - prob1 : prob1);
   // Locate steady chain (ordered, decreasing)

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _DJVUPALETTE_H_
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -80,9 +77,9 @@ namespace DJVU {
     Files #"DjVuPalette.h"# and #"DjVuPalette.cpp"# implement a single class
     \Ref{DjVuPalette} which provides facilities for computing optimal color
     palettes, coding color palettes, and coding sequences of color indices.
-    @memo 
+    @memo
     DjVuPalette header file
-    @author: 
+    @author:
     L\'eon Bottou <leonb@research.att.com> */
 //@{
 
@@ -90,7 +87,7 @@ namespace DJVU {
 /** Computing and coding color palettes and index arrays.
     This class provides facilities for computing optimal color palettes,
     coding color palettes, and coding sequences of color indices.
-    
+
     {\bf Creating a color palette} -- The recipe for creating a color palette
     consists in (a) creating a DjVuPalette object, (b) constructing a color
     histogram using \Ref{histogram_add}, and (c) calling function
@@ -164,7 +161,7 @@ public:
   int color_to_index(const unsigned char *bgr);
   /** Overwrites #p# with the color located at position #index# in the palette. */
   void index_to_color(int index, GPixel &p) const;
-  /** Overwrites #rgb[0..3]# with the color located at 
+  /** Overwrites #rgb[0..3]# with the color located at
       position #index# in the palette. */
   void index_to_color(int index, unsigned char *bgr) const;
   /** Quantizes pixmap #pm#. All pixels are replaced by their closest
@@ -179,7 +176,7 @@ public:
       \Ref{ppmcoco} explains how to properly use this function. */
   void color_correct(double corr);
   // COLOR INDEX DATA
-  /** Contains an optional sequence of color indices. 
+  /** Contains an optional sequence of color indices.
       Function \Ref{encode} and \Ref{decode} also encode and decode this
       sequence when such a sequence is provided. */
   GTArray<short> colordata;
@@ -232,7 +229,7 @@ private: // dummy functions
 // ------------ INLINES
 
 
-inline void 
+inline void
 DjVuPalette::histogram_clear()
 {
   delete hist;
@@ -240,25 +237,25 @@ DjVuPalette::histogram_clear()
   mask = 0;
 }
 
-inline void 
+inline void
 DjVuPalette::histogram_add(const unsigned char *bgr, int weight)
 {
   if (weight > 0)
     {
-      if (!hist || hist->size()>=0x4000) 
+      if (!hist || hist->size()>=0x4000)
         allocate_hist();
       int key = (bgr[0]<<16)|(bgr[1]<<8)|(bgr[2])|(mask);
       (*hist)[key] += weight;
     }
-}  
+}
 
-inline void 
+inline void
 DjVuPalette::histogram_add(const GPixel &p, int weight)
 {
   histogram_add(&p.b, weight);
 }
 
-inline void 
+inline void
 DjVuPalette::histogram_norm_and_add(const int *bgr, int weight)
 {
   if (weight > 0)
@@ -266,7 +263,7 @@ DjVuPalette::histogram_norm_and_add(const int *bgr, int weight)
       int p0 = bgr[0]/weight; if (p0>255) p0=255;
       int p1 = bgr[1]/weight; if (p1>255) p1=255;
       int p2 = bgr[2]/weight; if (p2>255) p2=255;
-      if (!hist || hist->size()>=0x4000) 
+      if (!hist || hist->size()>=0x4000)
         allocate_hist();
       int key = (p0<<16)|(p1<<8)|(p2)|(mask);
       (*hist)[key] += weight;
@@ -279,7 +276,7 @@ DjVuPalette::size() const
   return palette.size();
 }
 
-inline int 
+inline int
 DjVuPalette::color_to_index(const unsigned char *bgr)
 {
   if (! pmap)
@@ -291,13 +288,13 @@ DjVuPalette::color_to_index(const unsigned char *bgr)
   return color_to_index_slow(bgr);
 }
 
-inline int 
+inline int
 DjVuPalette::color_to_index(const GPixel &p)
 {
   return color_to_index(&p.b);
 }
 
-inline void 
+inline void
 DjVuPalette::index_to_color(int index, unsigned char *bgr) const
 {
   const PColor &color = palette[index];
@@ -306,7 +303,7 @@ DjVuPalette::index_to_color(int index, unsigned char *bgr) const
   bgr[2] = color.p[2];
 }
 
-inline void 
+inline void
 DjVuPalette::index_to_color(int index, GPixel &p) const
 {
   index_to_color(index, &p.b);
@@ -329,8 +326,8 @@ using namespace DJVU;
 # endif
 #endif
 #endif
-      
-      
-             
 
-    
+
+
+
+

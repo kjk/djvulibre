@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // From: Leon Bottou, 1/31/2002
@@ -119,7 +116,7 @@ protected:
     unsigned char *up2, unsigned char *up1, unsigned char *up0 );
   void code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cbm,
     const int xd2c, const int dw, int dy, int cy,
-    unsigned char *up1, unsigned char *up0, unsigned char *xup1, 
+    unsigned char *up1, unsigned char *up0, unsigned char *xup1,
     unsigned char *xup0, unsigned char *xdn1 );
   int get_diff(const int x_diff,NumContext &rel_loc);
 
@@ -181,14 +178,14 @@ JB2Dict::get_shape(const int shapeno) const
   return *retval;
 }
 
-void 
+void
 JB2Dict::set_inherited_dict(const GP<JB2Dict> &dict)
 {
   if (shapes.size() > 0)
     G_THROW( ERR_MSG("JB2Image.cant_set") );
   if (inherited_dict)
     G_THROW( ERR_MSG("JB2Image.cant_change") );
-  inherited_dict = dict; 
+  inherited_dict = dict;
   inherited_shapes = dict->get_shape_count();
   // Make sure that inherited bitmaps are marked as shared
   for (int i=0; i<inherited_shapes; i++)
@@ -216,7 +213,7 @@ JB2Dict::get_memory_usage() const
   return usage;
 }
 
-int  
+int
 JB2Dict::add_shape(const JB2Shape &shape)
 {
   if (shape.parent >= get_shape_count())
@@ -227,7 +224,7 @@ JB2Dict::add_shape(const JB2Shape &shape)
   return index + inherited_shapes;
 }
 
-void 
+void
 JB2Dict::decode(const GP<ByteStream> &gbs, JB2DecoderCallback *cb, void *arg)
 {
   init();
@@ -266,14 +263,14 @@ JB2Image::get_memory_usage() const
   return usage;
 }
 
-void 
+void
 JB2Image::set_dimension(int awidth, int aheight)
 {
   width = awidth;
   height = aheight;
 }
 
-int  
+int
 JB2Image::add_blit(const JB2Blit &blit)
 {
   if (blit.shapeno >= (unsigned int)get_shape_count())
@@ -326,7 +323,7 @@ JB2Image::get_bitmap(const GRect &rect, int subsample, int align, int dispy) con
   return bm;
 }
 
-void 
+void
 JB2Image::decode(const GP<ByteStream> &gbs, JB2DecoderCallback *cb, void *arg)
 {
   init();
@@ -415,7 +412,7 @@ JB2Dict::JB2Codec::JB2Codec(const bool xencoding)
 
 JB2Dict::JB2Codec::~JB2Codec() {}
 
-void 
+void
 JB2Dict::JB2Codec::reset_numcoder()
 {
   dist_comment_byte = 0;
@@ -441,7 +438,7 @@ JB2Dict::JB2Codec::reset_numcoder()
 }
 
 
-void 
+void
 JB2Dict::JB2Codec::Decode::set_dict_callback(JB2DecoderCallback *cb, void *arg)
 {
   cbfunc = cb;
@@ -498,23 +495,23 @@ JB2Dict::JB2Codec::CodeNum(int low, int high, NumContext *pctx, int v)
       // context for new bit
       pctx = decision?(&rightcell[*pctx]):(&leftcell[*pctx]);
       // phase dependent part
-      switch (phase) 
+      switch (phase)
         {
 	case 1:
           negative = !decision;
-          if (negative) 
+          if (negative)
             {
               if (encoding)
                 v = - v - 1;
-              const int temp = - low - 1; 
-              low = - high - 1; 
+              const int temp = - low - 1;
+              low = - high - 1;
               high = temp;
 	    }
           phase = 2; cutoff =  1;
           break;
-          
+
 	case 2:
-          if (!decision) 
+          if (!decision)
             {
               phase = 3;
               range = (cutoff + 1) / 2;
@@ -523,22 +520,22 @@ JB2Dict::JB2Codec::CodeNum(int low, int high, NumContext *pctx, int v)
               else
                 cutoff -= range / 2;
 	    }
-          else 
-            { 
-              cutoff += cutoff + 1; 
+          else
+            {
+              cutoff += cutoff + 1;
             }
           break;
 
 	case 3:
           range /= 2;
-          if (range != 1) 
+          if (range != 1)
             {
               if (!decision)
                 cutoff -= range / 2;
-              else               
+              else
                 cutoff += range / 2;
 	    }
-          else if (!decision) 
+          else if (!decision)
             {
                 cutoff --;
 	    }
@@ -552,13 +549,13 @@ JB2Dict::JB2Codec::CodeNum(int low, int high, NumContext *pctx, int v)
 
 // CODE COMMENTS
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_comment(GUTF8String &comment)
 {
       int size=CodeNum(0, BIGPOSITIVE, dist_comment_length);
       comment.empty();
       char *combuf = comment.getbuf(size);
-      for (int i=0; i<size; i++) 
+      for (int i=0; i<size; i++)
         {
           combuf[i]=CodeNum(0, 255, dist_comment_byte);
         }
@@ -584,7 +581,7 @@ JB2Dict::JB2Codec::init_library(JB2Dict &jim)
     }
 }
 
-int 
+int
 JB2Dict::JB2Codec::add_library(const int shapeno, JB2Shape &jshp)
 {
   const int libno = lib2shape.hbound() + 1;
@@ -600,13 +597,13 @@ JB2Dict::JB2Codec::add_library(const int shapeno, JB2Shape &jshp)
 
 // CODE SIMPLE VALUES
 
-inline void 
+inline void
 JB2Dict::JB2Codec::Decode::code_record_type(int &rectype)
 {
   rectype=CodeNum( START_OF_DATA, END_OF_DATA, dist_record_type);
 }
 
-int 
+int
 JB2Dict::JB2Codec::Decode::code_match_index(int &index, JB2Dict &)
 {
     int match=CodeNum(0, lib2shape.hbound(), dist_match_index);
@@ -617,7 +614,7 @@ JB2Dict::JB2Codec::Decode::code_match_index(int &index, JB2Dict &)
 
 // HANDLE SHORT LIST
 
-int 
+int
 JB2Dict::JB2Codec::update_short_list(const int v)
 {
   if (++ short_list_pos == 3)
@@ -656,7 +653,7 @@ JB2Dict::JB2Codec::Decode::code_inherited_shape_count(JB2Dict &jim)
     }
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_image_size(JB2Dict &jim)
 {
   int w=CodeNum(0, BIGPOSITIVE, image_size_dist);
@@ -666,7 +663,7 @@ JB2Dict::JB2Codec::Decode::code_image_size(JB2Dict &jim)
   JB2Codec::code_image_size(jim);
 }
 
-void 
+void
 JB2Dict::JB2Codec::code_image_size(JB2Dict &)
 {
   last_left = 1;
@@ -677,7 +674,7 @@ JB2Dict::JB2Codec::code_image_size(JB2Dict &)
   gotstartrecordp = 1;
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_image_size(JB2Image &jim)
 {
   image_columns=CodeNum(0, BIGPOSITIVE, image_size_dist);
@@ -688,7 +685,7 @@ JB2Dict::JB2Codec::Decode::code_image_size(JB2Image &jim)
   JB2Codec::code_image_size(jim);
 }
 
-void 
+void
 JB2Dict::JB2Codec::code_image_size(JB2Image &)
 {
   last_left = 1 + image_columns;
@@ -705,7 +702,7 @@ JB2Dict::JB2Codec::Decode::get_diff(int,NumContext &rel_loc)
    return CodeNum(BIGNEGATIVE, BIGPOSITIVE, rel_loc);
 }
 
-void 
+void
 JB2Dict::JB2Codec::code_relative_location(JB2Blit *jblt, int rows, int columns)
 {
   // Check start record
@@ -764,7 +761,7 @@ JB2Dict::JB2Codec::code_relative_location(JB2Blit *jblt, int rows, int columns)
     }
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_absolute_location(JB2Blit *jblt, int rows, int columns)
 {
   // Check start record
@@ -776,7 +773,7 @@ JB2Dict::JB2Codec::Decode::code_absolute_location(JB2Blit *jblt, int rows, int c
   jblt->left = left - 1;
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_absolute_mark_size(GBitmap &bm, int border)
 {
   int xsize=CodeNum(0, BIGPOSITIVE, abs_size_x);
@@ -786,7 +783,7 @@ JB2Dict::JB2Codec::Decode::code_absolute_mark_size(GBitmap &bm, int border)
   bm.init(ysize, xsize, border);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_relative_mark_size(GBitmap &bm, int cw, int ch, int border)
 {
   int xdiff=CodeNum(BIGNEGATIVE, BIGPOSITIVE, rel_size_x);
@@ -803,7 +800,7 @@ JB2Dict::JB2Codec::Decode::code_relative_mark_size(GBitmap &bm, int cw, int ch, 
 
 // CODE BITMAP DIRECTLY
 
-void 
+void
 JB2Dict::JB2Codec::code_bitmap_directly (GBitmap &bm)
 {
   // Make sure bitmap will not be disturbed
@@ -815,13 +812,13 @@ JB2Dict::JB2Codec::code_bitmap_directly (GBitmap &bm)
   code_bitmap_directly(bm,bm.columns(),dy,bm[dy+2],bm[dy+1],bm[dy]);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_bitmap_directly(
   GBitmap &bm,const int dw, int dy,
   unsigned char *up2, unsigned char *up1, unsigned char *up0 )
 {
       ZPCodec &zp=*gzp;
-      // iterate on rows (decoding)      
+      // iterate on rows (decoding)
       while (dy >= 0)
         {
           int context=get_direct_context(up2, up1, up0, 0);
@@ -848,7 +845,7 @@ JB2Dict::JB2Codec::Decode::code_bitmap_directly(
 
 // CODE BITMAP BY CROSS CODING
 
-void 
+void
 JB2Dict::JB2Codec::code_bitmap_by_cross_coding (GBitmap &bm, GP<GBitmap> &cbm, const int libno)
 {
   // Make sure bitmaps will not be disturbed
@@ -883,14 +880,14 @@ JB2Dict::JB2Codec::code_bitmap_by_cross_coding (GBitmap &bm, GP<GBitmap> &cbm, c
     (*cbm)[cy+1] + xd2c, (*cbm)[cy  ] + xd2c, (*cbm)[cy-1] + xd2c);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cbm,
   const int xd2c, const int dw, int dy, int cy,
-  unsigned char *up1, unsigned char *up0, unsigned char *xup1, 
+  unsigned char *up1, unsigned char *up0, unsigned char *xup1,
   unsigned char *xup0, unsigned char *xdn1 )
 {
       ZPCodec &zp=*gzp;
-      // iterate on rows (decoding)      
+      // iterate on rows (decoding)
       while (dy >= 0)
         {
           int context=get_cross_context(
@@ -899,7 +896,7 @@ JB2Dict::JB2Codec::Decode::code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cb
             {
               const int n = zp.decoder(cbitdist[context]);
               up0[dx++] = n;
-              context=shift_cross_context(context, n,  
+              context=shift_cross_context(context, n,
                                   up1, up0, xup1, xup0, xdn1, dx);
             }
           // next row
@@ -929,7 +926,7 @@ JB2Dict::JB2Codec::code_record(
 
   // Code record type
   code_record_type(rectype);
-  
+
   // Pre-coding actions
   switch(rectype)
     {
@@ -941,7 +938,7 @@ JB2Dict::JB2Codec::code_record(
           G_THROW( ERR_MSG("JB2Image.bad_number") );
         }
         JB2Shape &jshp=*xjshp;
-        if (!encoding) 
+        if (!encoding)
         {
           jshp.bits = GBitmap::create();
           jshp.parent = -1;
@@ -1050,7 +1047,7 @@ JB2Dict::JB2Codec::code_record(
 
 // CODE JB2DICT
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code(const GP<JB2Dict> &gjim)
 {
   if(!gjim)
@@ -1064,7 +1061,7 @@ JB2Dict::JB2Codec::Decode::code(const GP<JB2Dict> &gjim)
   int rectype;
   JB2Shape tmpshape;
   do {
-    code_record(rectype, gjim, &tmpshape);        
+    code_record(rectype, gjim, &tmpshape);
   } while(rectype != END_OF_DATA);
   if (!gotstartrecordp)
     G_THROW( ERR_MSG("JB2Image.no_start") );
@@ -1093,7 +1090,7 @@ JB2Dict::JB2Codec::code_record(
 
   // Code record type
   code_record_type(rectype);
-  
+
   // Pre-coding actions
   switch(rectype)
     {
@@ -1110,7 +1107,7 @@ JB2Dict::JB2Codec::code_record(
            G_THROW( ERR_MSG("JB2Image.bad_number") );
         }
         JB2Shape &jshp=*xjshp;
-        if (!encoding) 
+        if (!encoding)
         {
           jshp.bits = GBitmap::create();
           jshp.parent = -1;
@@ -1168,7 +1165,7 @@ JB2Dict::JB2Codec::code_record(
         match = code_match_index (jshp.parent, jim);
         cbm = jim.get_shape(jshp.parent).bits;
         LibRect &l = libinfo[match];
-        code_relative_mark_size (*bm, l.right-l.left+1, l.top-l.bottom+1, 4); 
+        code_relative_mark_size (*bm, l.right-l.left+1, l.top-l.bottom+1, 4);
         code_bitmap_by_cross_coding (*bm, cbm, match);
         code_relative_location (jblt, bm->rows(), bm->columns() );
         break;
@@ -1223,7 +1220,7 @@ JB2Dict::JB2Codec::code_record(
         else
           code_relative_location (jblt, l.top-l.bottom+1, l.right-l.left+1 );
         jblt->left -= l.left;
-        jblt->bottom -= l.bottom; 
+        jblt->bottom -= l.bottom;
         break;
       }
     case NON_MARK_DATA:
@@ -1267,7 +1264,7 @@ JB2Dict::JB2Codec::code_record(
         G_THROW( ERR_MSG("JB2Image.unknown_type") );
       }
     }
-  
+
   // Post-coding action
   if (!encoding)
     {
@@ -1334,7 +1331,7 @@ JB2Dict::JB2Codec::code_record(
 
 // CODE JB2IMAGE
 
-void 
+void
 JB2Dict::JB2Codec::Decode::code(const GP<JB2Image> &gjim)
 {
   if(!gjim)
@@ -1350,8 +1347,8 @@ JB2Dict::JB2Codec::Decode::code(const GP<JB2Image> &gjim)
       JB2Shape tmpshape;
       do
         {
-          code_record(rectype, gjim, &tmpshape, &tmpblit);        
-        } 
+          code_record(rectype, gjim, &tmpshape, &tmpblit);
+        }
       while(rectype!=END_OF_DATA);
       if (!gotstartrecordp)
         G_THROW( ERR_MSG("JB2Image.no_start") );
@@ -1364,7 +1361,7 @@ JB2Dict::JB2Codec::Decode::code(const GP<JB2Image> &gjim)
 //// HELPERS
 ////////////////////////////////////////
 
-void 
+void
 JB2Dict::LibRect::compute_bounding_box(const GBitmap &bm)
 {
   // Avoid trouble

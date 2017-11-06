@@ -78,8 +78,8 @@ add_definitions(-DHAS_MBSTATE=1)
 
 set(CMAKE_BUILD_TYPE Release)
 
-add_library(libdjvu STATIC ${LIBDJVU_SOURCES})
+add_library(djvu STATIC ${LIBDJVU_SOURCES})
 
 include_directories("libdjvu")
 add_executable(djvudump tools/djvudump.cpp)
-target_link_libraries(djvudump libdjvu)
+target_link_libraries(djvudump djvu)

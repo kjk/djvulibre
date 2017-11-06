@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,10 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
-
 
 #include "DjVuInfo.h"
 #include "DjVuPalette.h"
@@ -136,7 +132,7 @@ class DjVuNavDir;
     dictionary (to be implemented). To avoid putting these chunks into
     every page, we have invented new chunk called #INCL# which purpose is
     to make the decoder open the specified file and decode it.
-    
+
     {\bf Source of data.} The #DjVuFile# can be initialized in two ways:
     \begin{itemize}
        \item With #URL# and \Ref{DjVuPort}. In this case #DjVuFile# will
@@ -150,7 +146,7 @@ class DjVuNavDir;
 	     no include anything else. In this case the \Ref{ByteStream}
 	     is enough for the #DjVuFile# to initialize.
     \end{itemize}
-	     
+
     {\bf Progress information.} #DjVuFile# does not do decoding silently.
     Instead, it sends a whole set of notifications through the mechanism
     provided by \Ref{DjVuPort} and \Ref{DjVuPortcaster}. It tells the user
@@ -262,7 +258,7 @@ public:
    static GP<DjVuFile> create( const GP<ByteStream> & str,
      const ErrorRecoveryAction recover_action=ABORT,
      const bool verbose_eof=true);
-   
+
       /** Initializes a #DjVuFile# object. As you can notice, the data is not
 	  directly passed to this function. The #DjVuFile# will ask for it
 	  through the \Ref{DjVuPort} mechanism before the constructor
@@ -431,12 +427,12 @@ public:
 	  if not all data is available. */
    void		process_incl_chunks(void);
       //@}
-   
+
       // Function needed by the cache
    unsigned int	get_memory_usage(void) const;
 
       /** Returns the list of included DjVuFiles.
-	  
+
 	  {\bf Warning.} Included files are normally created during decoding.
 	  Before that they do not exist.   If you call this function at
 	  that time and set #only_created# to #FALSE# then it will have to
@@ -553,13 +549,13 @@ public:
 
      /** Changes the value of the hiddentext. */
    void change_info(GP<DjVuInfo> info, const bool do_reset=false);
-   
+
      /** Changes the value of the hiddentext. */
    void change_text(GP<DjVuTXT> txt, const bool do_reset=false);
-   
+
      /** Changes the value of the metadata. */
    void change_meta(const GUTF8String &meta, const bool do_reset=false);
-   
+
       /** @name Encoding routines */
       //@{
       /** The main function that encodes data back into binary stream.
@@ -570,7 +566,7 @@ public:
 	  {\bf Note:} The file stream will not have the magic
           #0x41,0x54,0x26,0x54#
 	  at the beginning.
-	  
+
 	  @param included_too Process included files too. */
    GP<ByteStream>	get_djvu_bytestream(const bool included_too, const bool no_ndir=true);
 
@@ -660,7 +656,7 @@ private:
       // Trigger: called when DataPool has all data
    static void	static_trigger_cb(void *);
    void		trigger_cb(void);
-   
+
       // Progress callback: called from time to time
    static void	progress_cb(int pos, void *);
    static void	get_merged_anno(const GP<DjVuFile> & file,

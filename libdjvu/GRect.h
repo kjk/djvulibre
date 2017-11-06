@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _GRECT_H_
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -134,7 +131,7 @@ namespace DJVU {
     intersection of rectangles (\Ref{intersect}) or the smallest rectangle
     enclosing two rectangles (\Ref{recthull}).  */
 
-class DJVUAPI GRect 
+class DJVUAPI GRect
 {
 public:
   /** Constructs an empty rectangle */
@@ -206,7 +203,7 @@ public:
     matching corners of the second rectangle. The scaling operation is
     performed using integer fraction arithmetic in order to maximize
     accuracy. */
-class DJVUAPI GRectMapper 
+class DJVUAPI GRectMapper
 {
 public:
   /** Constructs a rectangle mapper. */
@@ -276,8 +273,8 @@ private:
   int   code;
   // Helper
   void  precalc();
-  friend int operator*(int n, GRatio r ); 
-  friend int operator/(int n, GRatio r ); 
+  friend int operator*(int n, GRatio r );
+  friend int operator/(int n, GRatio r );
   GRatio rw;
   GRatio rh;
 };
@@ -295,31 +292,31 @@ GRect::GRect()
 {
 }
 
-inline 
+inline
 GRect::GRect(int xmin, int ymin, unsigned int width, unsigned int height)
 : xmin(xmin), ymin(ymin), xmax(xmin+width), ymax(ymin+height)
 {
 }
 
-inline int 
+inline int
 GRect::width() const
 {
   return xmax - xmin;
 }
 
-inline int 
+inline int
 GRect::height() const
 {
   return ymax - ymin;
 }
 
-inline bool 
+inline bool
 GRect::isempty() const
 {
   return (xmin>=xmax || ymin>=ymax);
 }
 
-inline int 
+inline int
 GRect::area() const
 {
   return isempty() ? 0 : (xmax-xmin)*(ymax-ymin);
@@ -330,8 +327,8 @@ GRect::contains(int x, int y) const
 {
   return (x>=xmin && x<xmax && y>=ymin && y<ymax);
 }
-  
-inline void 
+
+inline void
 GRect::clear()
 {
   xmin = xmax = ymin = ymax = 0;

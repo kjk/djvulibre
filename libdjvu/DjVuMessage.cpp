@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // From: Leon Bottou, 1/31/2002
@@ -165,7 +162,7 @@ RegOpenReadConfig ( HKEY hParentKey )
       szPathValue[dwCount] = 0;
       retval=GURL::Filename::Native(path);
     }
-  } 
+  }
   return retval;
 }
 
@@ -245,7 +242,7 @@ GetModulePath( void )
 #endif
 
 static void
-appendPath(const GURL &url, 
+appendPath(const GURL &url,
            GMap<GUTF8String,void *> &map,
            GList<GURL> &list)
 {
@@ -341,12 +338,12 @@ DjVuMessage::GetProfilePaths(void)
         lt_XMLTags::get_Maps(languagestring,localestring,Body,localemap);
         localemaps.append(localemap);
       }
-    } 
+    }
     GList<GURL> localepaths;
 
     // Need to do it the right way!
     GUTF8String defaultlocale = getenv("LANGUAGE");
-    if (! defaultlocale) 
+    if (! defaultlocale)
       {
         const GUTF8String oldlocale(setlocale(LC_MESSAGES,0));
         defaultlocale = setlocale(LC_MESSAGES,"");
@@ -364,7 +361,7 @@ DjVuMessage::GetProfilePaths(void)
         {
           const GUTF8String sublocale(defaultlocale,sepcharpos);
           const GUTF8String downcasesublocale("downcase^"+sublocale.downcase());
-          for(pos=localemaps;pos;++pos) 
+          for(pos=localemaps;pos;++pos)
           {
             const GMap<GUTF8String,GP<lt_XMLTags> > &localemap=localemaps[pos];
             GPosition pos=localemap.contains(sublocale);
@@ -417,7 +414,7 @@ static GUTF8String
 getbodies(
   GList<GURL> &paths,
   const GUTF8String &MessageFileName,
-  GPList<lt_XMLTags> &body, 
+  GPList<lt_XMLTags> &body,
   GMap<GUTF8String, void *> & map )
 {
   GUTF8String errors;
@@ -531,13 +528,13 @@ void
 DjVuMessage::set_programname(const GUTF8String &xprogramname)
 {
   programname()=xprogramname;
-  DjVuMessageLite::create=create_full; 
+  DjVuMessageLite::create=create_full;
 }
 
 void
 DjVuMessage::use_language(void)
-{ 
-  DjVuMessageLite::create=create_full; 
+{
+  DjVuMessageLite::create=create_full;
 }
 
 
@@ -561,7 +558,7 @@ DjVuMessage::~DjVuMessage( )
 //  result is returned in msg_buffer encoded in Native MBS encoding. In case
 // of error, msg_b empty (i.e., msg_buffer[0] == '\0').
 void
-DjVuMessageLookUpNative( 
+DjVuMessageLookUpNative(
   char *msg_buffer, const unsigned int buffer_size, const char *message)
 {
   const GNativeString converted(DjVuMessage::LookUpNative( message ));
@@ -576,7 +573,7 @@ DjVuMessageLookUpNative(
 //  result is returned in msg_buffer encoded in UTF8 encoding. In case
 // of error, msg_b empty (i.e., msg_buffer[0] == '\0').
 void
-DjVuMessageLookUpUTF8( 
+DjVuMessageLookUpUTF8(
   char *msg_buffer, const unsigned int buffer_size, const char *message)
 {
   const GUTF8String converted(DjVuMessage::LookUpUTF8( message ));
@@ -599,7 +596,7 @@ void
 DjVuFormatErrorUTF8( const char *fmt, ... )
 {
   va_list args;
-  va_start(args, fmt); 
+  va_start(args, fmt);
   const GUTF8String message(fmt,args);
   DjVuWriteError( message );
 }
@@ -608,7 +605,7 @@ void
 DjVuFormatErrorNative( const char *fmt, ... )
 {
   va_list args;
-  va_start(args, fmt); 
+  va_start(args, fmt);
   const GNativeString message(fmt,args);
   DjVuWriteError( message );
 }

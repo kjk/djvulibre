@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // This file defines machine independent classes
@@ -86,7 +83,7 @@
 #endif
 
 #ifndef _DEBUG
-# if defined(DEBUG) 
+# if defined(DEBUG)
 #  define _DEBUG /* */
 # elif DEBUGLVL >= 1
 #  define _DEBUG /* */
@@ -112,11 +109,11 @@ namespace DJVU {
 
 #if WINTHREADS
 
-static unsigned __stdcall 
+static unsigned __stdcall
 start(void *arg)
 {
   GThread *gt = (GThread*)arg;
-  try 
+  try
     {
       G_TRY
         {
@@ -151,7 +148,7 @@ GThread::~GThread()
   thrid = 0;
 }
 
-int  
+int
 GThread::create(void (*entry)(void*), void *arg)
 {
   if (hthr)
@@ -166,7 +163,7 @@ GThread::create(void (*entry)(void*), void *arg)
   return -1;
 }
 
-void 
+void
 GThread::terminate()
 {
   OutputDebugString("Terminating thread.\n");
@@ -209,10 +206,10 @@ GMonitor::~GMonitor()
   for (struct thr_waiting *w=head; w; w=w->next)
     SetEvent(w->gwait);
   LeaveCriticalSection(&cs);
-  DeleteCriticalSection(&cs); 
+  DeleteCriticalSection(&cs);
 }
 
-void 
+void
 GMonitor::enter()
 {
   DWORD self = GetCurrentThreadId();
@@ -226,7 +223,7 @@ GMonitor::enter()
   count -= 1;
 }
 
-void 
+void
 GMonitor::leave()
 {
   DWORD self = GetCurrentThreadId();
@@ -250,7 +247,7 @@ GMonitor::signal()
       if (count>0 || self!=locker)
         G_THROW( ERR_MSG("GThreads.not_acq_signal") );
       for (struct thr_waiting *w=head; w; w=w->next)
-        if (w->waiting) 
+        if (w->waiting)
           {
             SetEvent(w->gwait);
             w->waiting = FALSE;
@@ -293,7 +290,7 @@ GMonitor::wait()
       waitrec.next = 0;
       waitrec.prev = tail;
       // Link wait record (protected by critical section)
-      *(waitrec.next ? &waitrec.next->prev : &tail) = &waitrec; 
+      *(waitrec.next ? &waitrec.next->prev : &tail) = &waitrec;
       *(waitrec.prev ? &waitrec.prev->next : &head) = &waitrec;
       // Start wait
       int sav_count = count;
@@ -312,7 +309,7 @@ GMonitor::wait()
 }
 
 void
-GMonitor::wait(unsigned long timeout) 
+GMonitor::wait(unsigned long timeout)
 {
   // Check state
   DWORD self = GetCurrentThreadId();
@@ -329,7 +326,7 @@ GMonitor::wait(unsigned long timeout)
       waitrec.prev = tail;
       // Link wait record (protected by critical section)
       *(waitrec.prev ? &waitrec.prev->next : &head) = &waitrec;
-      *(waitrec.next ? &waitrec.next->prev : &tail) = &waitrec; 
+      *(waitrec.next ? &waitrec.next->prev : &tail) = &waitrec;
       // Start wait
       int sav_count = count;
       count = 1;
@@ -384,9 +381,9 @@ GThread::start(void *arg)
 #endif
   // Catch exceptions
 #ifdef __EXCEPTIONS
-  try 
+  try
     {
-#endif 
+#endif
       G_TRY
         {
           (gt->xentry)(gt->xarg);
@@ -412,7 +409,7 @@ GThread::start(void *arg)
 
 // GThread
 
-GThread::GThread(int stacksize) : 
+GThread::GThread(int stacksize) :
   hthr(pthread_null), xentry(0), xarg(0)
 {
 }
@@ -422,7 +419,7 @@ GThread::~GThread()
   hthr = pthread_null;
 }
 
-int  
+int
 GThread::create(void (*entry)(void*), void *arg)
 {
   if (xentry || xarg)
@@ -443,7 +440,7 @@ GThread::create(void (*entry)(void*), void *arg)
   return ret;
 }
 
-void 
+void
 GThread::terminate()
 {
   if (xentry || xarg)
@@ -470,7 +467,7 @@ GThread::current()
 #if defined(pthread_getunique_np)
   return (void*) pthread_getunique_np( & self );
 #elif defined(cma_thread_get_unique)
-  return (void*) cma_thread_get_unique( & self );  
+  return (void*) cma_thread_get_unique( & self );
 #else
   return (void*) self;
 #endif
@@ -492,7 +489,7 @@ GMonitor::GMonitor()
 #endif
   // standard
   pthread_mutex_init(&mutex, pthread_mutexattr_default);
-  pthread_cond_init(&cond, pthread_condattr_default); 
+  pthread_cond_init(&cond, pthread_condattr_default);
   locker = pthread_self();
   ok = 1;
 }
@@ -501,11 +498,11 @@ GMonitor::~GMonitor()
 {
   ok = 0;
   pthread_cond_destroy(&cond);
-  pthread_mutex_destroy(&mutex); 
+  pthread_mutex_destroy(&mutex);
 }
 
 
-void 
+void
 GMonitor::enter()
 {
   pthread_t self = pthread_self();
@@ -519,7 +516,7 @@ GMonitor::enter()
   count -= 1;
 }
 
-void 
+void
 GMonitor::leave()
 {
   pthread_t self = pthread_self();
@@ -577,11 +574,11 @@ GMonitor::wait()
       // Re-acquire
       count = sav_count;
       locker = self;
-    }      
+    }
 }
 
 void
-GMonitor::wait(unsigned long timeout) 
+GMonitor::wait(unsigned long timeout)
 {
   // Check
   pthread_t self = pthread_self();
@@ -607,7 +604,7 @@ GMonitor::wait(unsigned long timeout)
       // Re-acquire
       count = sav_count;
       locker = self;
-    }      
+    }
 }
 
 #endif
@@ -615,7 +612,7 @@ GMonitor::wait(unsigned long timeout)
 
 
 // ----------------------------------------
-// GSAFEFLAGS 
+// GSAFEFLAGS
 // ----------------------------------------
 
 

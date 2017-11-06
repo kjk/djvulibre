@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -56,15 +56,12 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
-#endif
 
 // -- Implementation of IFFByteStream
 // - Author: Leon Bottou, 06/1998
 
 // From: Leon Bottou, 1/31/2002
-// This has been changed by Lizardtech to fit better 
+// This has been changed by Lizardtech to fit better
 // with their re-implementation of ByteStreams.
 
 #include <assert.h>
@@ -107,7 +104,7 @@ IFFByteStream::create(const GP<ByteStream> &bs)
 // -- indicates if bytestream is ready for reading
 //    returns number of bytes available
 
-int 
+int
 IFFByteStream::ready()
 {
   if (ctx && dir < 0)
@@ -122,7 +119,7 @@ IFFByteStream::ready()
 // IFFByteStream::composite
 // -- indicates if bytestream is ready for putting or getting chunks
 
-int 
+int
 IFFByteStream::composite()
 {
   if (ctx && !ctx->bComposite)
@@ -137,7 +134,7 @@ IFFByteStream::composite()
 // IFFByteStream::check_id
 // -- checks if an id is legal
 
-int 
+int
 IFFByteStream::check_id(const char *id)
 {
   int i;
@@ -147,12 +144,12 @@ IFFByteStream::check_id(const char *id)
       return -1;
   // check composite chunks
   static const char *szComposite[] = { "FORM", "LIST", "PROP", "CAT ", 0 };
-  for (i=0; szComposite[i]; i++) 
+  for (i=0; szComposite[i]; i++)
     if (!memcmp(id, szComposite[i], 4))
       return 1;
   // check reserved chunks
   static const char *szReserved[] = { "FOR", "LIS", "CAT", 0 };
-  for (i=0; szReserved[i]; i++) 
+  for (i=0; szReserved[i]; i++)
     if (!memcmp(id, szReserved[i], 3) && id[3]>='1' && id[3]<='9')
       return -1;
   // regular chunk
@@ -164,12 +161,12 @@ IFFByteStream::check_id(const char *id)
 // IFFByteStream::get_chunk
 // -- get next chunk header
 
-int  
+int
 IFFByteStream::get_chunk(GUTF8String &chkid, int *rawoffsetptr, int *rawsizeptr)
 {
   int bytes;
   char buffer[8];
-  
+
   // Check that we are allowed to read a chunk
   if (dir > 0)
     G_THROW( ERR_MSG("IFFByteStream.read_write") );
@@ -194,10 +191,10 @@ IFFByteStream::get_chunk(GUTF8String &chkid, int *rawoffsetptr, int *rawsizeptr)
         return 0;
       offset += bytes;
     }
-  
+
   // Record raw offset
   int rawoffset = offset;
-  
+
   // Read chunk id (skipping magic sequences inserted here to make
   // DjVu files recognizable.)
   for(;;)
@@ -227,7 +224,7 @@ IFFByteStream::get_chunk(GUTF8String &chkid, int *rawoffsetptr, int *rawsizeptr)
     else
       break;
   }
-  
+
   // Read chunk size
   if (ctx && offset+4 > ctx->offEnd)
     G_THROW( ERR_MSG("IFFByteStream.corrupt_end2") );
@@ -241,12 +238,12 @@ IFFByteStream::get_chunk(GUTF8String &chkid, int *rawoffsetptr, int *rawsizeptr)
               ((unsigned char)buffer[7]);
   if (ctx && offset+size > ctx->offEnd)
     G_THROW( ERR_MSG("IFFByteStream.corrupt_mangled") );
-  
-  // Check if composite 
+
+  // Check if composite
   int composite = check_id(buffer);
   if (composite < 0)
     G_THROW( ERR_MSG("IFFByteStream.corrupt_id") );
-  
+
   // Read secondary id of composite chunk
   if (composite)
   {
@@ -286,7 +283,7 @@ IFFByteStream::get_chunk(GUTF8String &chkid, int *rawoffsetptr, int *rawsizeptr)
     G_RETHROW;
   }
   G_ENDCATCH;
-  
+
   // Install context record
   ctx = nctx;
   chkid = GUTF8String(ctx->idOne, 4);
@@ -306,7 +303,7 @@ IFFByteStream::get_chunk(GUTF8String &chkid, int *rawoffsetptr, int *rawsizeptr)
 // IFFByteStream::put_chunk
 // -- write new chunk header
 
-void  
+void
 IFFByteStream::put_chunk(const char *chkid, int insert_magic)
 {
   int bytes;
@@ -352,7 +349,7 @@ IFFByteStream::put_chunk(const char *chkid, int insert_magic)
   {
     memcpy((void*)&buffer[4], (void*)&chkid[5], 4);
     bytes = bs->writall((void*)&buffer[4], 4);
-    offset = offset + bytes;    
+    offset = offset + bytes;
   }
 
   // Create new context record
@@ -380,14 +377,14 @@ IFFByteStream::put_chunk(const char *chkid, int insert_magic)
     delete nctx;
     G_RETHROW;
   }
-  G_ENDCATCH; 
+  G_ENDCATCH;
   // Install context record and leave
   ctx = nctx;
 }
 
 
 
-void 
+void
 IFFByteStream::close_chunk()
 {
   // Check that this is ok
@@ -420,7 +417,7 @@ IFFByteStream::close_chunk()
 // Otherwise an EOF in this chunk won't be reported until we
 // try to open the next chunk, which makes error recovery
 // very difficult.
-void  
+void
 IFFByteStream::seek_close_chunk(void)
 {
   close_chunk();
@@ -434,7 +431,7 @@ IFFByteStream::seek_close_chunk(void)
 // IFFByteStream::short_id
 // Returns the id of the current chunk
 
-void 
+void
 IFFByteStream::short_id(GUTF8String &chkid)
 {
   if (!ctx)
@@ -449,7 +446,7 @@ IFFByteStream::short_id(GUTF8String &chkid)
 // IFFByteStream::full_id
 // Returns the full chunk id of the current chunk
 
-void 
+void
 IFFByteStream::full_id(GUTF8String &chkid)
 {
   short_id(chkid);
@@ -457,7 +454,7 @@ IFFByteStream::full_id(GUTF8String &chkid)
     return;
   // Search parent FORM or PROP chunk.
   for (IFFContext *ct = ctx->next; ct; ct=ct->next)
-    if (memcmp(ct->idOne, "FOR", 3)==0 || 
+    if (memcmp(ct->idOne, "FOR", 3)==0 ||
         memcmp(ct->idOne, "PRO", 3)==0  )
       {
         chkid = GUTF8String(ct->idTwo, 4) + "." + chkid;
@@ -470,7 +467,7 @@ IFFByteStream::full_id(GUTF8String &chkid)
 // IFFByteStream::read
 // -- read bytes from IFF file chunk
 
-size_t 
+size_t
 IFFByteStream::read(void *buffer, size_t size)
 {
   if (! (ctx && dir < 0))
@@ -495,7 +492,7 @@ IFFByteStream::read(void *buffer, size_t size)
 // IFFByteStream::write
 // -- write bytes to IFF file chunk
 
-size_t 
+size_t
 IFFByteStream::write(const void *buffer, size_t size)
 {
   if (! (ctx && dir > 0))
@@ -510,7 +507,7 @@ IFFByteStream::write(const void *buffer, size_t size)
 // IFFByteStream::tell
 // -- tell position
 
-long 
+long
 IFFByteStream::tell() const
 {
   return (seekto>offset)?seekto:offset;

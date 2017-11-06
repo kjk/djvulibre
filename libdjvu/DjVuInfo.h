@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,10 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
-
 
 /** @name DjVuInfo.h
     Each instance of class #DjVuInfo# represents the information
@@ -95,9 +91,9 @@ class ByteStream;
     version of the DjVu file format implemented by this release of the DjVu
     Reference Library. */
 #define DJVUVERSION              26
-/** DjVu format version. This is the value used in files produced 
+/** DjVu format version. This is the value used in files produced
     with DjVuLibre. This is smaller than DJVUVERSION because version
-    number inflation causes problems with older software. */ 
+    number inflation causes problems with older software. */
 #define DJVUVERSION_FOR_OUTPUT   24
 /** This is the version which introduced orientations. */
 #define DJVUVERSION_ORIENTATION  22
@@ -140,7 +136,7 @@ public:
       DjVuInfo object into ByteStream #bs#. It is normally called after
       creating an #"INFO"# chunk header with function
       \Ref{IFFByteStream::put_chunk}. */
-  void encode(ByteStream &bs);  
+  void encode(ByteStream &bs);
   /** Returns the number of bytes used by this object. */
   unsigned int get_memory_usage() const;
   /** Width of the DjVu image (in pixels). */

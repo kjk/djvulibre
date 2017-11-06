@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _JB2IMAGE_H
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 /** @name JB2Image.h
@@ -100,8 +97,8 @@
     \Ref{JB2Dict::set_inherited_dict}. Several JB2Images can use shapes from a
     same JB2Dict encoded separately.  This is how several pages of a same
     document can share information.
-    
-    {\bf Decoding JB2 data} --- The first step for decoding JB2 data consists of 
+
+    {\bf Decoding JB2 data} --- The first step for decoding JB2 data consists of
     creating an empty #JB2Image# object.  Function \Ref{JB2Image::decode} then
     reads the data and populates the #JB2Image# with the shapes and the blits.
     Function \Ref{JB2Image::get_bitmap} finally produces an anti-aliased image.
@@ -136,18 +133,18 @@
     effects the quality of the image.  The last refinement consists in
     smoothing the shapes in order to reduce the noise and maximize the
     similarities between shapes.
-    
+
     {\bf JB2 extensions} --- Two extensions of the JB2
     encoding format have been introduced with DjVu files version 21. The first
     extension addresses the shared shape dictionaries. The second extension
     bounds the number of probability contexts used for coding numbers.
-    Both extensions maintain backward compatibility with JB2 as 
+    Both extensions maintain backward compatibility with JB2 as
     described in the ICFDD proposal. A more complete discussion
     can be found in section \Ref{JB2 extensions for version 21.}.
 
-    {\bf References} 
+    {\bf References}
     \begin{itemize}
-    \item Paul G. Howard : {\em Text image compression using soft 
+    \item Paul G. Howard : {\em Text image compression using soft
           pattern matching}, Computer Journal, volume 40:2/3, 1997.
     \item JBIG1 : \URL{http://www.jpeg.org/public/jbighomepage.htm}.
     \item JBIG2 draft : \URL{http://www.jpeg.org/public/jbigpt2.htm}.
@@ -158,7 +155,7 @@
     Coding bilevel images with JB2.
     @author
     Paul Howard <pgh@research.att.com> -- JB2 design\\
-    L\'eon Bottou <leonb@research.att.com> -- this implementation 
+    L\'eon Bottou <leonb@research.att.com> -- this implementation
 
 // From: Leon Bottou, 1/31/2002
 // Lizardtech has split the corresponding cpp file into a decoder and an encoder.
@@ -210,8 +207,8 @@ public:
     the parent shape.  */
 
 class DJVUAPI JB2Shape
-{ 
-public: 
+{
+public:
   /** Subscript of the parent shape.  The parent shape must always be located
       before the current shape in the shape array.  A negative value indicates
       that this shape has no parent.  Any negative values smaller than #-1#
@@ -219,7 +216,7 @@ public:
       is used to enable a few internal optimizations.  This information is
       saved into the JB2 file, but the actual value of the #parent# variable
       is not. */
-  int parent; 
+  int parent;
   /** Bilevel image of the shape pixels.  This must be a pointer to a bilevel
       #GBitmap# image.  This pointer can also be null. The encoder will just
       silently discard all blits referring to a shape containing a null
@@ -235,7 +232,7 @@ public:
 
 /** JB2 Dictionary callback.
     The decoding function call this callback function when they discover that
-    the current JB2Image or JB2Dict needs a pre-existing shape dictionary. 
+    the current JB2Image or JB2Dict needs a pre-existing shape dictionary.
     The callback function must return a pointer to the dictionary or NULL
     if none is found. */
 
@@ -284,7 +281,7 @@ public:
   const JB2Shape &get_shape(const int shapeno) const;
   /** Appends a shape to the shape array.  This function appends a copy of
       shape #shape# to the shape array and returns the subscript of the new
-      shape.  The subscript of the parent shape #shape.parent# must 
+      shape.  The subscript of the parent shape #shape.parent# must
       actually designate an already existing shape. */
   int  add_shape(const JB2Shape &shape);
 
@@ -300,7 +297,7 @@ public:
   unsigned int get_memory_usage(void) const;
 
   // CODING
-  /** Encodes the JB2Dict into ByteStream #bs#.  
+  /** Encodes the JB2Dict into ByteStream #bs#.
       This function generates the JB2 data stream without any header.   */
   void encode(const GP<ByteStream> &gbs) const;
   /** Decodes JB2 data from ByteStream #bs#. This function decodes the image
@@ -313,7 +310,7 @@ public:
       dictionary is found. */
   void decode(const GP<ByteStream> &gbs, JB2DecoderCallback *cb=0, void *arg=0);
 
-  
+
 public:
   /** Comment string coded by JB2 file. */
   GUTF8String comment;
@@ -358,14 +355,14 @@ public:
   void init(void);
 
   // DIMENSION
-  /** Returns the width of the image.  
+  /** Returns the width of the image.
       This is the width value previously set with #set_dimension#. */
   int get_width(void) const;
-  /** Returns the height of the image.  
+  /** Returns the height of the image.
       This is the height value previously set with #set_dimension#. */
   int get_height(void) const;
   /** Sets the size of the JB2Image.
-      This function can be called at any time. 
+      This function can be called at any time.
       The corresponding #width# and the #height# are stored
       in the JB2 file. */
   void set_dimension(int width, int height);
@@ -413,7 +410,7 @@ public:
   unsigned int get_memory_usage(void) const;
 
   // CODING
-  /** Encodes the JB2Image into ByteStream #bs#.  
+  /** Encodes the JB2Image into ByteStream #bs#.
       This function generates the JB2 data stream without any header. */
   void encode(const GP<ByteStream> &gbs) const;
   /** Decodes JB2 data from ByteStream #bs#. This function decodes the image
@@ -425,7 +422,7 @@ public:
       inherited dictionary.  The callback should return null if no such
       dictionary is found. */
   void decode(const GP<ByteStream> &gbs, JB2DecoderCallback *cb=0, void *arg=0);
-  
+
 private:
   // Implementation
   int width;
@@ -545,7 +542,7 @@ JB2Image::get_blit(int blitno) const
     Each page {\bf FORM:DJVU} may directly contain a {\bf Djbz} chunk,
     or may indirectly point to such a chunk using an {\bf INCL} chunk
     (cf. \Ref{Multipage DjVu documents.}).
-    
+
 
     {\bf Numcoder Reset} --- This extension addresses a problem for
     hardware implementations.  The encoding of numbers (cf. ICFDD page
@@ -559,7 +556,7 @@ JB2Image::get_blit(int blitno) const
     all binary contexts used for coding numbers}.  This operation
     implies that all binary contexts previously allocated for coding
     numbers can be deallocated.
-  
+
     Starting with version 21, the JB2 encoder should insert a
     #REQUIRED_DICT_OR_RESET# record type whenever the number of these
     allocated binary contexts exceeds #20000#.  Only very large
@@ -650,7 +647,7 @@ protected:
     unsigned char *up2, unsigned char *up1, unsigned char *up0 )=0;
   virtual void code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cbm,
     const int xd2c, const int dw, int dy, int cy,
-    unsigned char *up1, unsigned char *up0, unsigned char *xup1, 
+    unsigned char *up1, unsigned char *up0, unsigned char *xup1,
     unsigned char *xup0, unsigned char *xdn1 )=0;
   // Code records
   virtual int get_diff(const int x_diff,NumContext &rel_loc) = 0;

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuText.h"
@@ -152,7 +149,7 @@ DjVuTXT::Zone::normtext(const char *instr, GUTF8String &outstr)
       sep = end_of_column; break;
     case REGION:
       sep = end_of_region; break;
-    case PARAGRAPH: 
+    case PARAGRAPH:
       sep = end_of_paragraph; break;
     case LINE:
       sep = end_of_line; break;
@@ -169,7 +166,7 @@ DjVuTXT::Zone::normtext(const char *instr, GUTF8String &outstr)
     }
 }
 
-unsigned int 
+unsigned int
 DjVuTXT::Zone::memuse() const
 {
   int memuse = sizeof(*this);
@@ -180,14 +177,14 @@ DjVuTXT::Zone::memuse() const
 
 
 #ifndef NEED_DECODER_ONLY
-void 
+void
 DjVuTXT::Zone::encode(
   const GP<ByteStream> &gbs, const Zone * parent, const Zone * prev) const
 {
   ByteStream &bs=*gbs;
   // Encode type
   bs.write8(ztype);
-  
+
   // Modify text_start and bounding rectangle based on the context
   // (whether there is a previous non-zero same-level-child or parent)
   int start=text_start;
@@ -229,7 +226,7 @@ DjVuTXT::Zone::encode(
   bs.write24(text_length);
   // Encode number of children
   bs.write24(children.size());
-  
+
   const Zone * prev_child=0;
   // Encode all children
   for (GPosition i=children; i; ++i)
@@ -240,7 +237,7 @@ DjVuTXT::Zone::encode(
 }
 #endif
 
-void 
+void
 DjVuTXT::Zone::decode(const GP<ByteStream> &gbs, int maxtext,
 		      const Zone * parent, const Zone * prev)
 {
@@ -289,7 +286,7 @@ DjVuTXT::Zone::decode(const GP<ByteStream> &gbs, int maxtext,
   // Process children
   const Zone * prev_child=0;
   children.empty();
-  while (size-- > 0) 
+  while (size-- > 0)
   {
     Zone *z = append_child();
     z->decode(gbs, maxtext, this, prev_child);
@@ -297,7 +294,7 @@ DjVuTXT::Zone::decode(const GP<ByteStream> &gbs, int maxtext,
   }
 }
 
-void 
+void
 DjVuTXT::normalize_text()
 {
   GUTF8String newtextUTF8;
@@ -305,19 +302,19 @@ DjVuTXT::normalize_text()
   textUTF8 = newtextUTF8;
 }
 
-int 
+int
 DjVuTXT::has_valid_zones() const
 {
   if (!textUTF8)
     return false;
-  if (page_zone.rect.isempty()) 
+  if (page_zone.rect.isempty())
     return false;
   return true;
 }
 
 
 #ifndef NEED_DECODER_ONLY
-void 
+void
 DjVuTXT::encode(const GP<ByteStream> &gbs) const
 {
   ByteStream &bs=*gbs;
@@ -336,7 +333,7 @@ DjVuTXT::encode(const GP<ByteStream> &gbs) const
 }
 #endif
 
-void 
+void
 DjVuTXT::decode(const GP<ByteStream> &gbs)
 {
   ByteStream &bs=*gbs;
@@ -350,7 +347,7 @@ DjVuTXT::decode(const GP<ByteStream> &gbs)
     G_THROW( ERR_MSG("DjVuText.corrupt_chunk") );
   // Try reading zones
   unsigned char version;
-  if ( bs.read( (void*) &version, 1 ) == 1) 
+  if ( bs.read( (void*) &version, 1 ) == 1)
   {
     if (version != Zone::version)
       G_THROW( ERR_MSG("DjVuText.bad_version") "\t" + GUTF8String(version) );
@@ -358,7 +355,7 @@ DjVuTXT::decode(const GP<ByteStream> &gbs)
   }
 }
 
-GP<DjVuTXT> 
+GP<DjVuTXT>
 DjVuTXT::copy(void) const
 {
   return new DjVuTXT(*this);
@@ -378,7 +375,7 @@ intersects_zone(GRect box, const GRect &zone)
 }
 
 void
-DjVuTXT::Zone::get_text_with_rect(const GRect &box, 
+DjVuTXT::Zone::get_text_with_rect(const GRect &box,
                                   int &string_start, int &string_end) const
 {
   GPosition pos=children;
@@ -406,7 +403,7 @@ DjVuTXT::Zone::get_text_with_rect(const GRect &box,
 }
 
 void
-DjVuTXT::Zone::find_zones(GList<Zone *> &list, 
+DjVuTXT::Zone::find_zones(GList<Zone *> &list,
                           const int string_start, const int string_end) const
 {
   const int text_end=text_start+text_length;
@@ -483,8 +480,8 @@ DjVuTXT::Zone::get_smallest(GList<GRect> &list, const int padding) const
 }
 
 void
-DjVuTXT::get_zones(int zone_type, const Zone *parent, 
-                   GList<Zone *> & zone_list) const 
+DjVuTXT::get_zones(int zone_type, const Zone *parent,
+                   GList<Zone *> & zone_list) const
    // get all the zones of  type zone_type under zone node parent
 {
    // search all branches under parent
@@ -508,7 +505,7 @@ DjVuTXT::get_zones(int zone_type, const Zone *parent,
 }
 
 GList<GRect>
-DjVuTXT::find_text_with_rect(const GRect &box, GUTF8String &text, 
+DjVuTXT::find_text_with_rect(const GRect &box, GUTF8String &text,
                              const int padding) const
 {
   GList<GRect> retval;
@@ -541,14 +538,14 @@ DjVuTXT::find_text_with_rect(const GRect &box, GUTF8String &text,
 
 GList<DjVuTXT::Zone *>
 DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
-   // returns a list of zones of type WORD in the nearest/selected paragraph 
+   // returns a list of zones of type WORD in the nearest/selected paragraph
 {
    GList<Zone *> zone_list;
    GList<Zone *> lines;
 
    get_zones((int)PARAGRAPH, &page_zone, zone_list);
-   // it's possible that no paragraph structure exists for reasons that  
-   // 1) ocr engine is not capable 2) file was modified by user. In such case, 
+   // it's possible that no paragraph structure exists for reasons that
+   // 1) ocr engine is not capable 2) file was modified by user. In such case,
    // we can only make a rough guess, i.e., select all the lines intersected with
    // target_rect
    if (zone_list.isempty())
@@ -562,7 +559,7 @@ DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
 	 if(rect.intersect(rect,target_rect) && rect.height()>h0)
 	    lines.append(zone_list[pos]);
       }
-   } else 
+   } else
    {
       GPosition pos, pos_sel=zone_list;
       float ar=0;
@@ -583,7 +580,7 @@ DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
       Zone *parag = 0;
       if ( ar>0 ) parag=zone_list[pos_sel];
       zone_list.empty();
-      if ( ar>0 ) 
+      if ( ar>0 )
       {
 	 get_zones((int)LINE, parag, zone_list);
 	 if ( !zone_list.isempty() )
@@ -600,7 +597,7 @@ DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
    }
 
    zone_list.empty();
-   if (!lines.isempty()) 
+   if (!lines.isempty())
    {
       int i=1, lsize=lines.size();
 
@@ -635,7 +632,7 @@ DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
 			start=false;
 			zone_list.append(words[p]);
 		     }
-		  } else 
+		  } else
 		     zone_list.append(words[p]);
 	       }
 	    } else if (i==lsize)
@@ -652,7 +649,7 @@ DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
 			end=false;
 			zone_list.append(words[p]);
 		     }
-		  } else 
+		  } else
 		     zone_list.append(words[p]);
 	       }
 	    }
@@ -664,15 +661,15 @@ DjVuTXT::find_text_in_rect(GRect target_rect, GUTF8String &text) const
 	    }
 	 }
       }
-   } 
+   }
 
    return zone_list;
 }
 
-unsigned int 
+unsigned int
 DjVuTXT::get_memory_usage() const
 {
-  return sizeof(*this) + textUTF8.length() + page_zone.memuse() - sizeof(page_zone); 
+  return sizeof(*this) + textUTF8.length() + page_zone.memuse() - sizeof(page_zone);
 }
 
 
@@ -934,7 +931,7 @@ DjVuText::writeText(ByteStream &str_out,const int height) const
   {
     str_out.writestring("<"+GUTF8String(tags[DjVuTXT::PAGE])+"/>\n");
   }
-   
+
 }
 GUTF8String
 DjVuTXT::get_xmlText(const int height) const

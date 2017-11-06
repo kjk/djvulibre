@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _ZPCODEC_H
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 // From: Leon Bottou, 1/31/2002
@@ -79,7 +76,7 @@ class ByteStream;
 
 
 /** @name ZPCodec.h
-    
+
     Files #"ZPCodec.h"# and #"ZPCodec.cpp"# implement a fast binary adaptive
     quasi-arithmetic coder named ZP-Coder.  Because of its speed and
     convenience, the ZP-Coder is used in several parts of the DjVu reference
@@ -132,7 +129,7 @@ class ByteStream;
     update the context variables and improve the predictors.  Both the encoder
     and the decoder programs use the same predictors for any given message
     bit.  The decoder could not work if this was not the case.
-    
+
     Just before encoding a message bit, all the context variables in the
     encoder program contain certain values. Just before decoding this message
     bit, all the context variables in the decoder program must contain the same
@@ -182,7 +179,7 @@ class ByteStream;
     The good news however is that we can grant a license to use the ZP-Coder
     in ``free software'' without further complication. See the Copyright
     for more information.
-    
+
     @memo
     Binary adaptive quasi-arithmetic coder.
     @author
@@ -190,7 +187,7 @@ class ByteStream;
 //@{
 
 
-/** Context variable.  
+/** Context variable.
     Variables of type #BitContext# hold a single byte describing how to encode
     or decode message bits with similar statistical properties.  This single
     byte simultaneously represents the current estimate of the bit probability
@@ -205,7 +202,7 @@ class ByteStream;
     encoded using a coding context determined as a function of previously
     encoded message bits.  The decoder therefore can examine the previously
     decoded message bits and decode the current bit using the same context as
-    the encoder.  This is critical for proper decoding.  
+    the encoder.  This is critical for proper decoding.
 */
 typedef unsigned char  BitContext;
 
@@ -290,7 +287,7 @@ public:
   int bitcount;
 #endif
   // Table management (advanced stuff)
-  struct Table { 
+  struct Table {
     unsigned short p;
     unsigned short m;
     BitContext     up;
@@ -358,8 +355,8 @@ private:
 
 // INLINE CODE
 
-inline void 
-ZPCodec::encoder(int bit, BitContext &ctx) 
+inline void
+ZPCodec::encoder(int bit, BitContext &ctx)
 {
   unsigned int z = a + p[ctx];
   if (bit != (ctx & 1))
@@ -381,16 +378,16 @@ ZPCodec::IWdecoder(void)
 }
 
 inline int
-ZPCodec::decoder(BitContext &ctx) 
+ZPCodec::decoder(BitContext &ctx)
 {
   unsigned int z = a + p[ctx];
-  if (z <= fence) 
-    { a = z; return (ctx&1); } 
+  if (z <= fence)
+    { a = z; return (ctx&1); }
   return decode_sub(ctx, z);
 }
 
-inline void 
-ZPCodec::encoder_nolearn(int bit, BitContext &ctx) 
+inline void
+ZPCodec::encoder_nolearn(int bit, BitContext &ctx)
 {
   unsigned int z = a + p[ctx];
   if (bit != (ctx & 1))
@@ -402,15 +399,15 @@ ZPCodec::encoder_nolearn(int bit, BitContext &ctx)
 }
 
 inline int
-ZPCodec::decoder_nolearn(BitContext &ctx) 
+ZPCodec::decoder_nolearn(BitContext &ctx)
 {
   unsigned int z = a + p[ctx];
-  if (z <= fence) 
-    { a = z; return (ctx&1); } 
+  if (z <= fence)
+    { a = z; return (ctx&1); }
   return decode_sub_nolearn( (ctx&1), z);
 }
 
-inline void 
+inline void
 ZPCodec::encoder(int bit)
 {
   if (bit)
@@ -441,13 +438,13 @@ ZPCodec::IWencoder(const bool bit)
 // ------------ ADDITIONAL DOCUMENTATION
 
 /** @name ZPCodec Examples
-    
+
     Binary adaptive coders are efficient and very flexible.  Unfortunate
     intellectual property issues however have limited their popularity.  As a
     consequence, few programmers have a direct experience of using such a
     coding device.  The few examples provided in this section demonstrate how
     we think the ZP-Coder should be used.
-    
+
     {\bf Encoding Multivalued Symbols} ---
     Since the ZP-Coder is a strictly binary coder, every message must be
     reduced to a sequence of bits (#0#s or #1#s).  It is often convenient to
@@ -473,7 +470,7 @@ ZPCodec::IWencoder(const bool bit)
     byte.  This encoding procedure can be understood as a binary decision
     tree with a dedicated context variable for predicting each decision.
     \begin{verbatim}
-    [>=128]----n---[>=64?]----n----[>31?]  ... 
+    [>=128]----n---[>=64?]----n----[>31?]  ...
            \              `---y----[>95?]  ...
             \
              `--y---[>=192?]----n---[>=160?] ...
@@ -482,7 +479,7 @@ ZPCodec::IWencoder(const bool bit)
     The following decoding function illustrates a very compact way to
     implement such a decision tree.  Argument #ctx# points to an array of 255
     #BitContext# variables.  Macro #REPEAT8# is a shorthand notation for eight
-    repetitions of its argument.  
+    repetitions of its argument.
     \begin{verbatim}
     int decode_8_bits(ZPCodec &zp, BitContext *ctx )
     {
@@ -570,7 +567,7 @@ ZPCodec::IWencoder(const bool bit)
     successive points.
 
 
-    {\bf Huffman Coding Tricks} --- 
+    {\bf Huffman Coding Tricks} ---
     Programmers with experience in Huffman codes can see the similarity in the
     ZP-Coder.  Huffman codes also organize the symbol values as a decision
     tree. The tree is balanced in such a way that each decision is as
@@ -617,7 +614,7 @@ ZPCodec::IWencoder(const bool bit)
     probability more precisely. Therefore we use small sets for the most
     probable values and large sets for the least probable values, as
     demonstrated below.
-    \begin{verbatim} 
+    \begin{verbatim}
     A---------------- {0}                                 (size=1)
      `------B---C---- {1}            or {-1}              (size=1)
              \   `--- {2,3}          or {-2,-3}           (size=2)
@@ -658,7 +655,7 @@ ZPCodec::IWencoder(const bool bit)
                  return - 132 - decode_15_bits(zp);
              }
            }
-        } 
+        }
    \end{verbatim}
    Note that the call #zp.decoder()# for coding the sign decision does not use
    a context variable.  This is a "pass-thru" variant of \Ref{decoder} which
@@ -682,7 +679,7 @@ ZPCodec::IWencoder(const bool bit)
    quickly estimate of the probability distribution of the message bits coded
    using a particular context variable.  It is also able to track slow
    variations when the actual probabilities change while coding.
-   
+
    Let us consider the ``cloud of points'' application presented above.
    Suppose that we first code points located towards the left side and then
    slowly move towards points located on the right side.  The ZP-Coder will
@@ -727,7 +724,7 @@ ZPCodec::IWencoder(const bool bit)
    program, after each call to #decoder#, print the decoded bit and the value
    of the context variable.  Both program should print exactly the same thing.
    When you find the difference, you find the bug.
-   
+
    @memo Suggestions for efficiently using the ZP-Coder.  */
 //@}
 

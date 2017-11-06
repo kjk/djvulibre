@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuAnno.h"
@@ -100,20 +97,20 @@ public:
    GLObject(GLObjectType type, const char * str);
    GLObject(const char * name, const GPList<GLObject> & list);
    virtual ~GLObject(void);
-   
+
    int		get_number(void) const;
    GUTF8String	get_string(void) const;
    GUTF8String	get_symbol(void) const;
    GPList<GLObject>	& get_list(void);
    GP<GLObject>	operator[](int n) const;
-   
+
    GLObjectType	get_type(void) const;
    GUTF8String	get_name(void) const;
    void		print(ByteStream & str, int compact=1, int indent=0, int * cur_pos=0) const;
 private:
    GLObjectType	type;
    GUTF8String	name;
-   
+
    int		number;
    GUTF8String	string;
    GUTF8String	symbol;
@@ -136,7 +133,7 @@ public:
    enum GLTokenType { OPEN_PAR, CLOSE_PAR, OBJECT };
    GLTokenType	type;
    GP<GLObject>	object;
-   
+
    GLToken(GLTokenType type, const GP<GLObject> & object);
 };
 
@@ -166,25 +163,25 @@ private:
 		      const char * & start);
 };
 
-GLParser::GLParser(void) 
+GLParser::GLParser(void)
   : compat(false)
 {
 }
 
-GLParser::~GLParser(void) 
+GLParser::~GLParser(void)
 {
 }
 
 GPList<GLObject> &
-GLParser::get_list(void) 
-{ 
-  return list; 
+GLParser::get_list(void)
+{
+  return list;
 }
 
-GLParser::GLParser(const char * str) 
+GLParser::GLParser(const char * str)
   : compat(false)
 {
-  parse(str); 
+  parse(str);
 }
 
 
@@ -199,7 +196,7 @@ GLObject::GLObject(GLObjectType xtype, const char * str) : type(xtype)
 {
    if (type!=STRING && type!=SYMBOL)
       G_THROW( ERR_MSG("DjVuAnno.bad_type") );
-   if (type==STRING) 
+   if (type==STRING)
       string=str;
    else symbol=str;
 }
@@ -214,19 +211,19 @@ static GUTF8String make_c_string(GUTF8String string)
   const char *data = (const char*)string;
   int length = string.length();
   buffer = GUTF8String("\"");
-  while (*data && length>0) 
+  while (*data && length>0)
     {
       int span = 0;
-      while (span<length && (unsigned char)(data[span])>=0x20 && 
+      while (span<length && (unsigned char)(data[span])>=0x20 &&
              data[span]!=0x7f && data[span]!='"' && data[span]!='\\' )
         span++;
-      if (span > 0) 
-        {  
+      if (span > 0)
+        {
           buffer = buffer + GUTF8String(data, span);
           data += span;
           length -= span;
-        }  
-      else 
+        }
+      else
         {
           char buf[8];
           static const char *tr1 = "\"\\tnrbf";
@@ -252,7 +249,7 @@ GLObject::print(ByteStream & str, int compact, int indent, int * cur_pos) const
 {
   int local_cur_pos = 0;
   if (!cur_pos) { cur_pos = &local_cur_pos; }
-  
+
   GUTF8String buffer;
   switch(type)
   {
@@ -405,7 +402,7 @@ void
 GLParser::skip_white_space(const char * & start)
 {
   while(*start && isspace((unsigned char)(*start))) start++;
-   if (!*start) 
+   if (!*start)
        G_THROW( ByteStream::EndOfFile );
 }
 
@@ -463,7 +460,7 @@ GLParser::get_token(const char * & start)
                if (c>='0' && c<='7')
                  {
                    int x = 0;
-                   for (int i=0; i<3 && c>='0' && c<='7'; i++) 
+                   for (int i=0; i<3 && c>='0' && c<='7'; i++)
                      {
                        x = x * 8 + c - '0';
                        c = *++start;
@@ -481,7 +478,7 @@ GLParser::get_token(const char * & start)
                    str += c;
                  }
              }
-           else 
+           else
              {
                G_THROW( ByteStream::EndOfFile );
              }
@@ -495,7 +492,7 @@ GLParser::get_token(const char * & start)
        if (start > here)
          return GLToken(GLToken::OBJECT, new GLObject(val));
      }
-   
+
    GUTF8String str;
    while(c != 0 && c != ')' && c != '(' && c != '"' && !isspace((unsigned char)c))
      {
@@ -506,7 +503,7 @@ GLParser::get_token(const char * & start)
      G_THROW(ByteStream::EndOfFile);
    else
      return GLToken(GLToken::OBJECT, new GLObject(GLObject::SYMBOL, str));
-} 
+}
 
 void
 GLParser::parse(const char * cur_name, GPList<GLObject> & list,
@@ -514,7 +511,7 @@ GLParser::parse(const char * cur_name, GPList<GLObject> & list,
 {
   DEBUG_MSG("GLParse::parse(): Parsing contents of object '" << cur_name << "'\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   while(1)
   {
     GLToken token=get_token(start);
@@ -525,7 +522,7 @@ GLParser::parse(const char * cur_name, GPList<GLObject> & list,
         GUTF8String mesg=GUTF8String( ERR_MSG("DjVuAnno.paren") "\t")+cur_name;
         G_THROW(mesg);
       }
-      
+
       GLToken tok=get_token(start);
       GP<GLObject> object=tok.object;	// This object should be SYMBOL
       // We will convert it to LIST later
@@ -554,29 +551,29 @@ GLParser::parse(const char * cur_name, GPList<GLObject> & list,
           }
         }
       }
-      
+
       // OK. Get the object contents
       GPList<GLObject> new_list;
       G_TRY
       {
         parse(object->get_symbol(), new_list, start);
-      } 
+      }
       G_CATCH(exc)
       {
         if (exc.cmp_cause(ByteStream::EndOfFile))
           G_RETHROW;
-      } 
+      }
       G_ENDCATCH;
       list.append(new GLObject(object->get_symbol(), new_list));
       continue;
     }
-    if (token.type==GLToken::CLOSE_PAR) 
+    if (token.type==GLToken::CLOSE_PAR)
       return;
     list.append(token.object);
   }
 }
 
-void 
+void
 GLParser::check_compat(const char *s)
 {
   int state = 0;
@@ -611,7 +608,7 @@ GLParser::parse(const char * str)
 {
    DEBUG_MSG("GLParser::parse(): parsing string contents\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    G_TRY
    {
       check_compat(str);
@@ -766,12 +763,12 @@ DjVuANT::decode(class GLParser & parser)
    hor_align=get_hor_align(parser);
    ver_align=get_ver_align(parser);
    map_areas=get_map_areas(parser);
-   metadata=get_metadata(parser); 
+   metadata=get_metadata(parser);
    xmpmetadata=get_xmpmetadata(parser);
 }
 
 
-void 
+void
 DjVuANT::decode(ByteStream & str)
 {
    GLParser parser(read_raw(str));
@@ -794,7 +791,7 @@ DjVuANT::encode(ByteStream &bs)
   bs.writall((const char*) raw, raw.length());
 }
 
-unsigned int 
+unsigned int
 DjVuANT::get_memory_usage() const
 {
   return sizeof(DjVuANT);
@@ -809,7 +806,7 @@ DjVuANT::decode_comp(char ch1, char ch2)
       ch1=toupper(ch1);
       if (ch1>='0' && ch1<='9') dig1=ch1-'0';
       if (ch1>='A' && ch1<='F') dig1=10+ch1-'A';
-      
+
       unsigned char dig2=0;
       if (ch2)
       {
@@ -831,19 +828,19 @@ DjVuANT::cvt_color(const char * color, unsigned long int def)
    unsigned long int color_rgb=0;
    color++;
    const char * start, * end;
-   
+
       // Do blue
    end=color+strlen(color); start=end-2;
    if (start<color) start=color;
    if (end>start)
       color_rgb|=decode_comp(start[0], start+1<end ? start[1] : 0);
-   
+
       // Do green
    end=color+strlen(color)-2; start=end-2;
    if (start<color) start=color;
    if (end>start)
       color_rgb|=decode_comp(start[0], start+1<end ? start[1] : 0) << 8;
-   
+
       // Do red
    end=color+strlen(color)-4; start=end-2;
    if (start<color) start=color;
@@ -855,7 +852,7 @@ DjVuANT::cvt_color(const char * color, unsigned long int def)
    if (start<color) start=color;
    if (end>start)
       color_rgb|=decode_comp(start[0], start+1<end ? start[1] : 0) << 24;
-   
+
    return color_rgb;
 }
 
@@ -907,7 +904,7 @@ DjVuANT::get_zoom(GLParser & parser)
     {
       const GUTF8String zoom((*obj)[0]->get_symbol());
       DEBUG_MSG("zoom='" << zoom << "'\n");
-     
+
       for(int i=0;(i<zoom_strings_size);++i)
       {
         if(zoom == zoom_strings[i])
@@ -1030,7 +1027,7 @@ DjVuANT::get_hor_align(GLParser & parser)
     {
       const GUTF8String align((*obj)[0]->get_symbol());
       DEBUG_MSG("hor_align='" << align << "'\n");
-      
+
       for(int i=(int)ALIGN_UNSPEC;(i<align_strings_size);++i)
       {
         const alignment j=legal_halign(i);
@@ -1101,28 +1098,28 @@ DjVuANT::get_metadata(GLParser & parser)
 {
   DEBUG_MSG("DjVuANT::get_metadata(): forming and returning metadata table\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   GMap<GUTF8String, GUTF8String> mdata;
-  
+
   GPList<GLObject> list=parser.get_list();
   for(GPosition pos=list;pos;++pos)
     {
       GLObject & obj=*list[pos];
-      if (obj.get_type()==GLObject::LIST && obj.get_name()==METADATA_TAG)  
-        { 
-          G_TRY 
+      if (obj.get_type()==GLObject::LIST && obj.get_name()==METADATA_TAG)
+        {
+          G_TRY
             {
               for(int obj_num=0;obj_num<obj.get_list().size();obj_num++)
                 {
                   GLObject & el=*obj[obj_num];
                   const int type = el.get_type();
                   if (type == GLObject::LIST)
-                    { 
-                      const GUTF8String & name=el.get_name();  
+                    {
+                      const GUTF8String & name=el.get_name();
                       mdata[name]=(el[0])->get_string();
                     }
                 }
-            } 
+            }
           G_CATCH_ALL { } G_ENDCATCH;
         }
     }
@@ -1134,15 +1131,15 @@ DjVuANT::get_xmpmetadata(GLParser & parser)
 {
   DEBUG_MSG("DjVuANT::get_xmpmetadata(): returning xmp metadata string\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   GUTF8String xmp;
   GPList<GLObject> list=parser.get_list();
   for(GPosition pos=list;pos;++pos)
     {
       GLObject &obj = *list[pos];
-      if (obj.get_type()==GLObject::LIST && obj.get_name()==XMP_TAG)  
-        { 
-          G_TRY 
+      if (obj.get_type()==GLObject::LIST && obj.get_name()==XMP_TAG)
+        {
+          G_TRY
             {
               if (obj.get_list().size() >= 1)
                 {
@@ -1150,7 +1147,7 @@ DjVuANT::get_xmpmetadata(GLParser & parser)
                   xmp = el.get_string();
                   break;
                 }
-            } 
+            }
           G_CATCH_ALL { } G_ENDCATCH;
         }
     }
@@ -1163,9 +1160,9 @@ DjVuANT::get_map_areas(GLParser & parser)
 {
   DEBUG_MSG("DjVuANT::get_map_areas(): forming and returning back list of map areas\n");
   DEBUG_MAKE_INDENT(3);
-  
+
   GPList<GMapArea> map_areas;
-  
+
   GPList<GLObject> list=parser.get_list();
 
   for(GPosition pos=list;pos;++pos)
@@ -1189,13 +1186,13 @@ DjVuANT::get_map_areas(GLParser & parser)
             url=(url_obj[0])->get_string();
             target=(url_obj[1])->get_string();
           } else url=url_obj.get_string();
-        
+
 	       // Getting the comment
           GUTF8String comment=(obj[1])->get_string();
-        
+
           DEBUG_MSG("found maparea '" << comment << "' (" <<
             url << ":" << target << ")\n");
-        
+
           GLObject * shape=obj[2];
           GP<GMapArea> map_area;
           if (shape->get_type()==GLObject::LIST)
@@ -1232,7 +1229,7 @@ DjVuANT::get_map_areas(GLParser & parser)
               map_area=(GMapOval *)map_oval;
             }
           }
-        
+
           if (map_area)
           {
             map_area->url=url;
@@ -1273,7 +1270,7 @@ DjVuANT::get_map_areas(GLParser & parser)
                         map_area->border_width=obj->get_number();
                     }
                   }
-                }	    
+                }
               } // if (el->get_type()==...)
             } // for(int obj_num=...)
             map_areas.append(map_area);
@@ -1282,9 +1279,9 @@ DjVuANT::get_map_areas(GLParser & parser)
       }
     }
   } // while(item==...)
-   
+
   DEBUG_MSG("map area list size = " << list.size() << "\n");
-  
+
   return map_areas;
 }
 
@@ -1342,7 +1339,7 @@ DjVuANT::encode_raw(void) const
    {
       const int i=mode-1;
       if((i>=0)&& (i<mode_strings_size))
-      { 
+      {
         buffer="(" MODE_TAG " " + GUTF8String(mode_strings[mode]) + ")";
       }
       parser.parse(buffer);

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -56,9 +56,6 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
-#endif
 
 /** @name djvuextract
 
@@ -66,7 +63,7 @@
     \begin{verbatim}
     djvuextract <djvufile> [-page=<page>] [Sjbz=<maskout>] [FG44=<fgout>] [BG44=<bgout>]
     \end{verbatim}
-    
+
     {\bf Description}\\
     Program #djvuextract# analyzes the DjVu file
     #<djvufile># and saves the various layers into the specified files.
@@ -137,7 +134,7 @@ extract_chunk(GP<ByteStream> ibs, const GUTF8String &id, GP<ByteStream> out)
     G_THROW("Malformed DJVU file");
   if (chkid != "FORM:DJVU" && chkid != "FORM:DJVI" )
     G_THROW("This is not a layered DJVU file");
-  
+
 
   // Special case for FG44 and BG44
   if (id == "BG44" || id == "FG44")
@@ -186,7 +183,7 @@ extract_chunk(GP<ByteStream> ibs, const GUTF8String &id, GP<ByteStream> out)
 }
 
 
-void 
+void
 usage()
 {
   DjVuPrintErrorUTF8("%s",
@@ -219,17 +216,17 @@ main(int argc, char **argv)
 	 if (!dargv[i].cmp("-page=", 6))
            {
 	     page_num = dargv[i].substr(6,dargv[i].length()).toInt() - 1;
-             for(int j=i;j<argc-1;j++) 
+             for(int j=i;j<argc-1;j++)
                dargv[j]=dargv[j+1];
              argc--;
              break;
-           } 
+           }
       if (page_num<0)
         {
           DjVuPrintErrorUTF8("%s", "Invalid page number\n");
           usage();
         }
-      
+
       // Check that chunk names are legal
       if (argc<=2)
         usage();
@@ -241,7 +238,7 @@ main(int argc, char **argv)
       const GURL::Filename::UTF8 url1(dargv[1]);
       GP<DjVuDocument> doc=DjVuDocument::create_wait(url1);
       if (! doc->wait_for_complete_init() || ! doc->is_init_ok())
-        G_THROW("Decoding failed. Nothing can be done.");        
+        G_THROW("Decoding failed. Nothing can be done.");
       GP<DjVuFile> file=doc->get_djvu_file(page_num);
       GP<ByteStream> pibs = file->get_djvu_bytestream(false, false);
       // Extract required chunks
@@ -262,7 +259,7 @@ main(int argc, char **argv)
               GP<ByteStream> obs=ByteStream::create(url,"wb");
               mbs.seek(0);
               obs->copy(mbs);
-              DjVuPrintErrorUTF8("  %s --> \"%s\" (%d bytes)\n", 
+              DjVuPrintErrorUTF8("  %s --> \"%s\" (%d bytes)\n",
                       (const char *)dargv[i], (const char *)dargv[i]+5, mbs.size());
             }
         }

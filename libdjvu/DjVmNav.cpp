@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include <ctype.h>
@@ -84,7 +81,7 @@ DjVmNav::DjVuBookMark::create(void)
 
 GP<DjVmNav::DjVuBookMark>
 DjVmNav::DjVuBookMark::create(const unsigned short count,
-                              const GUTF8String &displayname, 
+                              const GUTF8String &displayname,
                               const GUTF8String &url)
 {
   DjVuBookMark *pvm=new DjVuBookMark();
@@ -93,11 +90,11 @@ DjVmNav::DjVuBookMark::create(const unsigned short count,
   pvm->displayname=displayname;
   pvm->url=url;
   return bookmark;
-}   
+}
 
 DjVmNav::DjVuBookMark::DjVuBookMark(void)
   : count(0), displayname(), url()
-{ 
+{
 }
 
 GP<DjVmNav>
@@ -107,7 +104,7 @@ DjVmNav::create(void)
 }
 
 // Decode the input bytestream and populate this object
-void 
+void
 DjVmNav::DjVuBookMark::decode(const GP<ByteStream> &gstr)
 {
   int textsize=0, readsize=0;
@@ -139,8 +136,8 @@ DjVmNav::DjVuBookMark::decode(const GP<ByteStream> &gstr)
 }
 
 // Serialize this object to the output bytestream
-void  
-DjVmNav::DjVuBookMark::encode(const GP<ByteStream> &gstr) 
+void
+DjVmNav::DjVuBookMark::encode(const GP<ByteStream> &gstr)
 {
   int textsize=0;
   ByteStream &bs=*gstr;
@@ -165,8 +162,8 @@ DjVmNav::DjVuBookMark::encode(const GP<ByteStream> &gstr)
 }
 
 // Text dump of this object to the output bytestream
-void 
-DjVmNav::DjVuBookMark::dump(const GP<ByteStream> &gstr) 
+void
+DjVmNav::DjVuBookMark::dump(const GP<ByteStream> &gstr)
 {
   int textsize=0;
   ByteStream &bs=*gstr;
@@ -178,7 +175,7 @@ DjVmNav::DjVuBookMark::dump(const GP<ByteStream> &gstr)
 }
 
 // Decode the input bytestream and populate this object
-void 
+void
 DjVmNav::decode(const GP<ByteStream> &gstr)
 {
   //ByteStream &str=*gstr;
@@ -192,13 +189,13 @@ DjVmNav::decode(const GP<ByteStream> &gstr)
         {
           GP<DjVuBookMark> pBookMark=DjVuBookMark::create();
           pBookMark->decode(gpBSByteStream);
-          bookmark_list.append(pBookMark);  
+          bookmark_list.append(pBookMark);
         }
     }
 }
 
 // Serialize this object to the output stream
-void 
+void
 DjVmNav::encode(const GP<ByteStream> &gstr)
 {
   //ByteStream &str=*gstr;
@@ -225,19 +222,19 @@ DjVmNav::encode(const GP<ByteStream> &gstr)
     }
 }
 
-int 
+int
 DjVmNav::getBookMarkCount()
 {
   return(bookmark_list.size());
 }
 
-void 
-DjVmNav::append (const GP<DjVuBookMark> &gpBookMark) 
+void
+DjVmNav::append (const GP<DjVuBookMark> &gpBookMark)
 {
   bookmark_list.append(gpBookMark);
 }
 
-bool 
+bool
 DjVmNav::getBookMark(GP<DjVuBookMark> &gpBookMark, int iPos)
 {
   GPosition pos = bookmark_list.nth(iPos);
@@ -250,7 +247,7 @@ DjVmNav::getBookMark(GP<DjVuBookMark> &gpBookMark, int iPos)
 
 
 // A text dump of this object
-void 
+void
 DjVmNav::dump(const GP<ByteStream> &gstr)
 {
   ByteStream &str=*gstr;
@@ -276,7 +273,7 @@ DjVmNav::dump(const GP<ByteStream> &gstr)
     }
 }
 
-bool 
+bool
 DjVmNav::isValidBookmark()
 {
   //test if the bookmark is properly given
@@ -311,7 +308,7 @@ DjVmNav::isValidBookmark()
   return true;
 }
 
-int 
+int
 DjVmNav::get_tree(int index, int* count_array, int count_array_size)
 {
   int i=index;

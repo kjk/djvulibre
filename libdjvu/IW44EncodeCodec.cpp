@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // - Author: Leon Bottou, 08/1998
@@ -127,14 +124,14 @@ static const float iw_norm[16] = {
 static const int iw_shift  = 6;
 // static const int iw_round  = (1<<(iw_shift-1));
 
-static const struct { int start; int size; }  
-bandbuckets[] = 
+static const struct { int start; int size; }
+bandbuckets[] =
 {
   // Code first bucket and number of buckets in each band
   { 0, 1 }, // -- band zero contains all lores info
-  { 1, 1 }, { 2, 1 }, { 3, 1 }, 
-  { 4, 4 }, { 8, 4 }, { 12,4 }, 
-  { 16,16 }, { 32,16 }, { 48,16 }, 
+  { 1, 1 }, { 2, 1 }, { 3, 1 },
+  { 4, 4 }, { 8, 4 }, { 12,4 },
+  { 16,16 }, { 32,16 }, { 48,16 },
 };
 
 
@@ -197,10 +194,10 @@ protected:
 class IWPixmap::Encode : public IWPixmap
 {
 public:
-  enum CRCBMode { 
-    CRCBnone=IW44Image::CRCBnone, 
-    CRCBhalf=IW44Image::CRCBhalf, 
-    CRCBnormal=IW44Image::CRCBnormal, 
+  enum CRCBMode {
+    CRCBnone=IW44Image::CRCBnone,
+    CRCBhalf=IW44Image::CRCBhalf,
+    CRCBnormal=IW44Image::CRCBnormal,
     CRCBfull=IW44Image::CRCBfull };
   /// Destructor
   virtual ~Encode(void);
@@ -242,7 +239,7 @@ class IW44Image::Map::Encode : public IW44Image::Map // DJVU_CLASS
 public:
   Encode(const int w, const int h) : Map(w,h) {}
   // creation (from image)
-  void create(const signed char *img8, int imgrowsize, 
+  void create(const signed char *img8, int imgrowsize,
               const signed char *msk8=0, int mskrowsize=0);
   // slash resolution
   void slashres(int res);
@@ -275,16 +272,16 @@ class IW44Image::Transform::Encode : IW44Image::Transform
  // WAVELET TRANSFORM
   /** Forward transform. */
   static void forward(short *p, int w, int h, int rowsize, int begin, int end);
-  
+
   // COLOR TRANSFORM
   /** Extracts Y */
-  static void RGB_to_Y(const GPixel *p, int w, int h, int rowsize, 
+  static void RGB_to_Y(const GPixel *p, int w, int h, int rowsize,
                        signed char *out, int outrowsize);
   /** Extracts Cb */
-  static void RGB_to_Cb(const GPixel *p, int w, int h, int rowsize, 
+  static void RGB_to_Cb(const GPixel *p, int w, int h, int rowsize,
                         signed char *out, int outrowsize);
   /** Extracts Cr */
-  static void RGB_to_Cr(const GPixel *p, int w, int h, int rowsize, 
+  static void RGB_to_Cr(const GPixel *p, int w, int h, int rowsize,
                         signed char *out, int outrowsize);
 };
 
@@ -321,7 +318,7 @@ mmx_fv_1 ( short* &q, short* e, int s, int s3 )
     {
       MMXar( movq,       q-s,mm0);  // MM0=[ b3, b2, b1, b0 ]
       MMXar( movq,       q+s,mm2);  // MM2=[ c3, c2, c1, c0 ]
-      MMXrr( movq,       mm0,mm1);  
+      MMXrr( movq,       mm0,mm1);
       MMXrr( punpcklwd,  mm2,mm0);  // MM0=[ c1, b1, c0, b0 ]
       MMXrr( punpckhwd,  mm2,mm1);  // MM1=[ c3, b3, c2, b2 ]
       MMXar( pmaddwd,    w9,mm0);   // MM0=[ (c1+b1)*9, (c0+b0)*9 ]
@@ -364,7 +361,7 @@ mmx_fv_2 ( short* &q, short* e, int s, int s3 )
     {
       MMXar( movq,       q-s,mm0);  // MM0=[ b3, b2, b1, b0 ]
       MMXar( movq,       q+s,mm2);  // MM2=[ c3, c2, c1, c0 ]
-      MMXrr( movq,       mm0,mm1);  
+      MMXrr( movq,       mm0,mm1);
       MMXrr( punpcklwd,  mm2,mm0);  // MM0=[ c1, b1, c0, b0 ]
       MMXrr( punpckhwd,  mm2,mm1);  // MM1=[ c3, b3, c2, b2 ]
       MMXar( pmaddwd,    w9,mm0);   // MM0=[ (c1+b1)*9, (c0+b0)*9 ]
@@ -399,7 +396,7 @@ mmx_fv_2 ( short* &q, short* e, int s, int s3 )
 // NEW FILTERS
 //////////////////////////////////////////////////////
 
-static void 
+static void
 filter_fv(short *p, int w, int h, int rowsize, int scale)
 {
   int y = 0;
@@ -509,7 +506,7 @@ filter_fv(short *p, int w, int h, int rowsize, int scale)
     }
 }
 
-static void 
+static void
 filter_fh(short *p, int w, int h, int rowsize, int scale)
 {
   int y = 0;
@@ -537,12 +534,12 @@ filter_fh(short *p, int w, int h, int rowsize, int scale)
       while (q+s3 < e)
         {
           // Generic case
-          a0=a1; 
-          a1=a2; 
+          a0=a1;
+          a1=a2;
           a2=a3;
           a3=q[s3];
-          b0=b1; 
-          b1=b2; 
+          b0=b1;
+          b1=b2;
           b2=b3;
           b3 = q[0] - ((((a1+a2)<<3)+(a1+a2)-a0-a3+8) >> 4);
           q[0] = b3;
@@ -552,10 +549,10 @@ filter_fh(short *p, int w, int h, int rowsize, int scale)
       while (q < e)
         {
           // Special case: w-3 <= x < w
-          a1=a2; 
+          a1=a2;
           a2=a3;
-          b0=b1; 
-          b1=b2; 
+          b0=b1;
+          b1=b2;
           b2=b3;
           b3 = q[0] - ((a1+a2+1)>>1);
           q[0] = b3;
@@ -565,8 +562,8 @@ filter_fh(short *p, int w, int h, int rowsize, int scale)
       while (q-s3 < e)
         {
           // Special case  w <= x < w+3
-          b0=b1; 
-          b1=b2; 
+          b0=b1;
+          b1=b2;
           b2=b3;
           b3=0;
           if (q-s3 >= p)
@@ -580,17 +577,17 @@ filter_fh(short *p, int w, int h, int rowsize, int scale)
 
 
 //////////////////////////////////////////////////////
-// WAVELET TRANSFORM 
+// WAVELET TRANSFORM
 //////////////////////////////////////////////////////
 
 
 //----------------------------------------------------
-// Function for applying bidimensional IW44 between 
+// Function for applying bidimensional IW44 between
 // scale intervals begin(inclusive) and end(exclusive)
 
 void
 IW44Image::Transform::Encode::forward(short *p, int w, int h, int rowsize, int begin, int end)
-{ 
+{
 
   // PREPARATION
   filter_begin(w,h);
@@ -617,19 +614,19 @@ IW44Image::Transform::Encode::forward(short *p, int w, int h, int rowsize, int b
 }
 
 //////////////////////////////////////////////////////
-// COLOR TRANSFORM 
+// COLOR TRANSFORM
 //////////////////////////////////////////////////////
 
-static const float 
-rgb_to_ycc[3][3] = 
-{ { 0.304348F,  0.608696F,  0.086956F },      
+static const float
+rgb_to_ycc[3][3] =
+{ { 0.304348F,  0.608696F,  0.086956F },
   { 0.463768F, -0.405797F, -0.057971F },
   {-0.173913F, -0.347826F,  0.521739F } };
 
 
 /* Extracts Y */
-void 
-IW44Image::Transform::Encode::RGB_to_Y(const GPixel *p, int w, int h, int rowsize, 
+void
+IW44Image::Transform::Encode::RGB_to_Y(const GPixel *p, int w, int h, int rowsize,
                       signed char *out, int outrowsize)
 {
   int rmul[256], gmul[256], bmul[256];
@@ -661,8 +658,8 @@ static inline int min(const int x,const int y) {return (x<y)?x:y;}
 static inline int max(const int x,const int y) {return (x>y)?x:y;}
 
 /* Extracts Cb */
-void 
-IW44Image::Transform::Encode::RGB_to_Cb(const GPixel *p, int w, int h, int rowsize, 
+void
+IW44Image::Transform::Encode::RGB_to_Cb(const GPixel *p, int w, int h, int rowsize,
                        signed char *out, int outrowsize)
 {
   int rmul[256], gmul[256], bmul[256];
@@ -685,8 +682,8 @@ IW44Image::Transform::Encode::RGB_to_Cb(const GPixel *p, int w, int h, int rowsi
 }
 
 /* Extracts Cr */
-void 
-IW44Image::Transform::Encode::RGB_to_Cr(const GPixel *p, int w, int h, int rowsize, 
+void
+IW44Image::Transform::Encode::RGB_to_Cr(const GPixel *p, int w, int h, int rowsize,
                        signed char *out, int outrowsize)
 {
   int rmul[256], gmul[256], bmul[256];
@@ -714,7 +711,7 @@ IW44Image::Transform::Encode::RGB_to_Cr(const GPixel *p, int w, int h, int rowsi
 //////////////////////////////////////////////////////
 
 //----------------------------------------------------
-// Function for applying bidimensional IW44 between 
+// Function for applying bidimensional IW44 between
 // scale intervals begin(inclusive) and end(exclusive)
 // with a MASK bitmap
 
@@ -774,11 +771,11 @@ interpolate_mask(short *data16, int w, int h, int rowsize,
             for (ii=istart; ii<i+scale && ii<h; ii+=split, cpp+=w*split, qq+=w*split)
               for (jj=jstart; jj<j+scale && jj<w; jj+=split)
                 {
-                  if (cpp[jj]>0) 
+                  if (cpp[jj]>0)
                     {
                       npix += cpp[jj];
                       gray += cpp[jj] * qq[jj];
-                    } 
+                    }
                   else if (ii>=i && jj>=j)
                     {
                       gotz = 1;
@@ -917,8 +914,8 @@ forward_mask(short *data16, int w, int h, int rowsize, int begin, int end,
   // Free buffers
 }
 
-void 
-IW44Image::Map::Encode::create(const signed char *img8, int imgrowsize, 
+void
+IW44Image::Map::Encode::create(const signed char *img8, int imgrowsize,
                const signed char *msk8, int mskrowsize )
 {
   int i, j;
@@ -969,7 +966,7 @@ IW44Image::Map::Encode::create(const signed char *img8, int imgrowsize,
           short *pp = p + j;
           short *pl = liftblock;
           for (int ii=0; ii<32; ii++, pp+=bw)
-            for (int jj=0; jj<32; jj++) 
+            for (int jj=0; jj<32; jj++)
               *pl++ = pp[jj];
           // transfer into IW44Image::Block (apply zigzag and scaling)
           block->read_liftblock(liftblock, this);
@@ -980,7 +977,7 @@ IW44Image::Map::Encode::create(const signed char *img8, int imgrowsize,
     }
 }
 
-void 
+void
 IW44Image::Map::Encode::slashres(int res)
 {
   int minbucket = 1;
@@ -1002,7 +999,7 @@ IW44Image::Codec::Encode::encode_prepare(int band, int fbucket, int nbucket, IW4
 {
   int bbstate = 0;
   // compute state of all coefficients in all buckets
-  if (band) 
+  if (band)
     {
       // Band other than zero
       int thres = quant_hi[band];
@@ -1074,7 +1071,7 @@ IW44Image::Codec::Encode::encode_prepare(int band, int fbucket, int nbucket, IW4
 // encode_buckets
 // -- code a sequence of buckets in a given block
 void
-IW44Image::Codec::Encode::encode_buckets(ZPCodec &zp, int bit, int band, 
+IW44Image::Codec::Encode::encode_buckets(ZPCodec &zp, int bit, int band,
                          IW44Image::Block &blk, IW44Image::Block &eblk,
                          int fbucket, int nbucket)
 {
@@ -1093,7 +1090,7 @@ IW44Image::Codec::Encode::encode_buckets(ZPCodec &zp, int bit, int band,
       DjVuPrintMessage("bbstate[bit=%d,band=%d] = %d\n", bit, band, bbstate);
 #endif
     }
-  
+
   // code bucket bits
   if (bbstate & NEW)
     for (int buckno=0; buckno<nbucket; buckno++)
@@ -1124,17 +1121,17 @@ IW44Image::Codec::Encode::encode_buckets(ZPCodec &zp, int bit, int band,
 #endif
 #ifndef NOCTX_BUCKET_ACTIVE
             if (bbstate & ACTIVE)
-              ctx |= 4; 
+              ctx |= 4;
 #endif
             // Code
             zp.encoder( (bucketstate[buckno]&NEW) ? 1 : 0, ctxBucket[band][ctx] );
 #ifdef TRACE
-            DjVuPrintMessage("  bucketstate[bit=%d,band=%d,buck=%d] = %d\n", 
+            DjVuPrintMessage("  bucketstate[bit=%d,band=%d,buck=%d] = %d\n",
                    bit, band, buckno, bucketstate[buckno] & ~ZERO);
 #endif
           }
       }
-  
+
   // code new active coefficient (with their sign)
   if (bbstate & NEW)
     {
@@ -1188,7 +1185,7 @@ IW44Image::Codec::Encode::encode_buckets(ZPCodec &zp, int bit, int band,
                       gotcha -= 1;
 #endif
 #ifdef TRACE
-                    DjVuPrintMessage("    coeffstate[bit=%d,band=%d,buck=%d,c=%d] = %d\n", 
+                    DjVuPrintMessage("    coeffstate[bit=%d,band=%d,buck=%d,c=%d] = %d\n",
                            bit, band, buckno, i, cstate[i]);
 #endif
                   }
@@ -1223,7 +1220,7 @@ IW44Image::Codec::Encode::encode_buckets(ZPCodec &zp, int bit, int band,
                     pix = 1;
                   // encode second or lesser mantissa bit
                   if (ecoeff <= 3*thres)
-                    zp.encoder(pix, ctxMant);                      
+                    zp.encoder(pix, ctxMant);
                   else
 					  zp.IWencoder(!!pix);
                   // adjust epcoeff
@@ -1328,9 +1325,9 @@ IW44Image::Codec::Encode::estimate_decibel(float frac)
           while (xmse[l]<pivot || (xmse[l]==pivot && l<h)) l++;
           while (xmse[h]>pivot) h--;
         }
-      if (p>=l) 
+      if (p>=l)
         n = l;
-      else 
+      else
         m = l-1;
     }
   // Compute average mse
@@ -1352,21 +1349,21 @@ IW44Image::Codec::Encode::estimate_decibel(float frac)
 //////////////////////////////////////////////////////
 
 
-void 
+void
 IW44Image::PrimaryHeader::encode(GP<ByteStream> gbs)
 {
   gbs->write8(serial);
   gbs->write8(slices);
 }
 
-void 
+void
 IW44Image::SecondaryHeader::encode(GP<ByteStream> gbs)
 {
   gbs->write8(major);
   gbs->write8(minor);
 }
 
-void 
+void
 IW44Image::TertiaryHeader::encode(GP<ByteStream> gbs)
 {
   gbs->write8(xhi);
@@ -1453,7 +1450,7 @@ IWBitmap::Encode::init(const GBitmap &bm, const GP<GBitmap> gmask)
   eymap->create(buffer, w, msk8, mskrowsize);
 }
 
-void 
+void
 IWBitmap::Encode::close_codec(void)
 {
   delete ycodec_enc;
@@ -1461,7 +1458,7 @@ IWBitmap::Encode::close_codec(void)
   IWBitmap::close_codec();
 }
 
-int  
+int
 IWBitmap::Encode::encode_chunk(GP<ByteStream> gbs, const IWEncoderParms &parm)
 {
   // Check
@@ -1535,7 +1532,7 @@ IWBitmap::Encode::encode_chunk(GP<ByteStream> gbs, const IWEncoderParms &parm)
   return flag;
 }
 
-void 
+void
 IWBitmap::Encode::encode_iff(IFFByteStream &iff, int nchunks, const IWEncoderParms *parms)
 {
   if (ycodec_enc)
@@ -1591,10 +1588,10 @@ IWPixmap::Encode::init(const GPixmap &pm, const GP<GBitmap> gmask, CRCBMode crcb
   Map::Encode *eymap = new Map::Encode(w,h);
   ymap = eymap;
   // Handle CRCB mode
-  switch (crcbmode) 
+  switch (crcbmode)
     {
     case CRCBnone:   crcb_half=1; crcb_delay=-1; break;
-    case CRCBhalf:   crcb_half=1; crcb_delay=10; break;        
+    case CRCBhalf:   crcb_half=1; crcb_delay=10; break;
     case CRCBnormal: crcb_half=0; crcb_delay=10; break;
     case CRCBfull:   crcb_half=0; crcb_delay= 0; break;
     }
@@ -1633,7 +1630,7 @@ IWPixmap::Encode::init(const GPixmap &pm, const GP<GBitmap> gmask, CRCBMode crcb
       ecbmap->create(buffer, w, msk8, mskrowsize);
       // Process CR information
       DJVU_PROGRESS_RUN(create,3);
-      Transform::Encode::RGB_to_Cr(pm[0], w, h, pm.rowsize(), buffer, w); 
+      Transform::Encode::RGB_to_Cr(pm[0], w, h, pm.rowsize(), buffer, w);
       ecrmap->create(buffer, w, msk8, mskrowsize);
       // Perform chrominance reduction (CRCBhalf)
       if (crcb_half)
@@ -1644,7 +1641,7 @@ IWPixmap::Encode::init(const GPixmap &pm, const GP<GBitmap> gmask, CRCBMode crcb
     }
 }
 
-void 
+void
 IWPixmap::Encode::encode_iff(IFFByteStream &iff, int nchunks, const IWEncoderParms *parms)
 {
   if (ycodec_enc)
@@ -1663,7 +1660,7 @@ IWPixmap::Encode::encode_iff(IFFByteStream &iff, int nchunks, const IWEncoderPar
   close_codec();
 }
 
-void 
+void
 IWPixmap::Encode::close_codec(void)
 {
   delete ycodec_enc;
@@ -1673,7 +1670,7 @@ IWPixmap::Encode::close_codec(void)
   IWPixmap::close_codec();
 }
 
-int  
+int
 IWPixmap::Encode::encode_chunk(GP<ByteStream> gbs, const IWEncoderParms &parm)
 {
   // Check
@@ -1777,8 +1774,8 @@ IW44Image::Codec::Encode::code_slice(ZPCodec &zp)
         {
           const int fbucket = bandbuckets[curband].start;
           const int nbucket = bandbuckets[curband].size;
-          encode_buckets(zp, curbit, curband, 
-                         map.blocks[blockno], emap.blocks[blockno], 
+          encode_buckets(zp, curbit, curband,
+                         map.blocks[blockno], emap.blocks[blockno],
                          fbucket, nbucket);
         }
     }

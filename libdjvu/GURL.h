@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _GURL_H_
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -84,7 +81,7 @@ namespace DJVU {
 // From: Leon Bottou, 1/31/2002
 // This has been heavily changed by Lizardtech.
 // They decided to use URLs for everyting, including
-// the most basic file access.  The URL class now is a unholy 
+// the most basic file access.  The URL class now is a unholy
 // mixture of code for syntactically parsing the urls (which is was)
 // and file status code (only for local file: urls).
 
@@ -198,11 +195,11 @@ public:
       /** Returns that part of CGI argument number #num#, which is
 	  after the equal sign. */
    GUTF8String	cgi_value(int num) const;
-   
+
       /** Returns that part of DjVu-related CGI argument number #num#,
 	  which is after the equal sign. */
    GUTF8String	djvu_cgi_value(int num) const;
-   
+
       /** Returns array of all known CGI names (part of CGI argument before
 	  the equal sign) */
    DArray<GUTF8String>cgi_names(void) const;
@@ -210,7 +207,7 @@ public:
       /** Returns array of names of DjVu-related CGI arguments (arguments
 	  following #DJVUOPTS# option. */
    DArray<GUTF8String>djvu_cgi_names(void) const;
-   
+
       /** Returns array of all known CGI names (part of CGI argument before
 	  the equal sign) */
    DArray<GUTF8String>cgi_values(void) const;
@@ -234,7 +231,7 @@ public:
       /** Appends the specified CGI argument. Will insert "#DJVUOPTS#" if
 	  necessary */
    void		add_djvu_cgi_argument(const GUTF8String &name, const char * value=0);
-   
+
       /** Returns the URL corresponding to the directory containing
 	  the document with this URL. The function basically takes the
 	  URL and clears everything after the last slash. */
@@ -288,7 +285,7 @@ public:
    operator	const char*(void) const { return url; };
 
   /** Returns a string representing the URL.  This function normally
-      returns a standard file URL as described in RFC 1738.  
+      returns a standard file URL as described in RFC 1738.
       Some versions of MSIE do not support this standard syntax.
       A brain damaged MSIE compatible syntax is generated
       when the optional argument #useragent# contains string #"MSIE"# or
@@ -331,7 +328,7 @@ public:
   /// Rename a file or directory.
   int renameto(const GURL &newurl) const;
 
-  /// List the contents of a directory. 
+  /// List the contents of a directory.
   GList<GURL> listdir(void) const;
 
   /** Returns a filename for a URL. Argument #url# must be a legal file URL.

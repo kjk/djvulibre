@@ -61,3 +61,12 @@
 Makefile
 Makefile.in
 stamp-h1
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+djvudump
+libdjvu.a
+.ninja_deps
+.ninja_log
+build.ninja
+rules.ninja

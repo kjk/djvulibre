@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,12 +58,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
 
 /** @name BSByteStream.h
-    
+
     Files #"BSByteStream.h"# and #"BSByteStream.cpp"# implement a very compact
     general purpose compressor based on the Burrows-Wheeler transform.  The
     utility program \Ref{bzz} provides a front-end for this class. Although
@@ -88,7 +85,7 @@
     about twice slower than #bzip2# but the sorting algorithms is more
     robust. Unlike #bzip2# (as of August 1998), this code can compress half a
     megabyte of "abababab...." in bounded time.
-    
+
     Here are some comparative results (in bits per character) obtained on the
     Canterbury Corpus (\URL{http://corpus.canterbury.ac.nz}) as of August
     1998. The BSByteStream performance on the single spreadsheet file #Excl#
@@ -99,31 +96,31 @@
 
     {\footnotesize
     \begin{tabular}{lccccccccccccc}
-      & text & fax & Csrc & Excl & SPRC & tech 
+      & text & fax & Csrc & Excl & SPRC & tech
       & poem & html & lisp & man & play & Weighted & Average \\
-      compress 
-      & 3.27 & 0.97 & 3.56 & 2.41 & 4.21 & 3.06 
-      & 3.38 & 3.68 & 3.90 & 4.43 & 3.51 
+      compress
+      & 3.27 & 0.97 & 3.56 & 2.41 & 4.21 & 3.06
+      & 3.38 & 3.68 & 3.90 & 4.43 & 3.51
       & 2.55 & 3.31 \\
       gzip -9
-      & 2.85 & 0.82 & 2.24 & 1.63 & 2.67 & 2.71 
-      & 3.23 & 2.59 & 2.65 & 3.31 & 3.12 
-      & 2.08 & 2.53 \\  
+      & 2.85 & 0.82 & 2.24 & 1.63 & 2.67 & 2.71
+      & 3.23 & 2.59 & 2.65 & 3.31 & 3.12
+      & 2.08 & 2.53 \\
       bzip2 -9
-      & 2.27 & 0.78 & 2.18 & 1.01 & 2.70 & 2.02 
-      & 2.42 & 2.48 & 2.79 & 3.33 & 2.53 
+      & 2.27 & 0.78 & 2.18 & 1.01 & 2.70 & 2.02
+      & 2.42 & 2.48 & 2.79 & 3.33 & 2.53
       & 1.54 & 2.23 \\
       ppmd
-      & 2.31 & 0.99 & 2.11 & 1.08 & 2.68 & 2.19 
-      & 2.48 & 2.38 & 2.43 & 3.00 & 2.53 
+      & 2.31 & 0.99 & 2.11 & 1.08 & 2.68 & 2.19
+      & 2.48 & 2.38 & 2.43 & 3.00 & 2.53
       & 1.65 & 2.20 \\
       fsmx
-      & {\bf 2.10} & 0.79 & {\bf 1.89} & 1.48 & {\bf 2.52} & {\bf 1.84} 
-      & {\bf 2.21} & {\bf 2.24} & {\bf 2.29} & {\bf 2.91} & {\bf 2.35} 
+      & {\bf 2.10} & 0.79 & {\bf 1.89} & 1.48 & {\bf 2.52} & {\bf 1.84}
+      & {\bf 2.21} & {\bf 2.24} & {\bf 2.29} & {\bf 2.91} & {\bf 2.35}
       & 1.63 & {\bf 2.06} \\
       {\bf bzz}
       & 2.25 & {\bf 0.76} & 2.13 & {\bf 0.78} & 2.67 & 2.00
-      & 2.40 & 2.52 & 2.60 & 3.19 & 2.52 
+      & 2.40 & 2.52 & 2.60 & 3.19 & 2.52
       & {\bf 1.44} & 2.16
     \end{tabular}
     }
@@ -158,7 +155,7 @@ namespace DJVU {
 
 
 /** Performs bzz compression/decompression.
-    
+
     Class #BSByteStream# defines a \Ref{ByteStream} which transparently
     performs the BZZ compression/decompression. The constructor of class
     \Ref{BSByteStream} takes another \Ref{ByteStream} as argument.  Any data
@@ -223,7 +220,7 @@ public:
       The BSByteStream will be used for compressing data.
       \begin{description}
       \item[Compression]
-      Set #blocksize# to a positive number smaller than 4096 to 
+      Set #blocksize# to a positive number smaller than 4096 to
       initialize the compressor.  Data written to the BSByteStream will be
       accumulated into an internal buffer.  The buffered data will be
       compressed and written to ByteStream #bs# whenever the buffer sizes
@@ -253,7 +250,7 @@ protected:
   // Coder
   GP<ZPCodec> gzp;
   BitContext ctx[300];
-private:  
+private:
   // Cancel C++ default stuff
   BSByteStream(const BSByteStream &);
   BSByteStream & operator=(const BSByteStream &);

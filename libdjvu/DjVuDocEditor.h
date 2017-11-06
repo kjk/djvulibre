@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _DJVUDOCEDITOR_H
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -196,7 +193,7 @@ public:
       /** Translates page number #page_num# to ID. If #page_num# is invalid,
 	  an exception is thrown. */
    GUTF8String	page_to_id(int page_num) const;
-   
+
    GUTF8String	insert_file(const GURL &url, const GUTF8String &parent_id,
 			    int chunk_num=1, DjVuPort *source=0);
       /** Inserts the referenced file into this DjVu document.
@@ -231,7 +228,7 @@ public:
    void		insert_page(GP<DataPool> & file_pool,
 			    const GURL &fname, int page_num=-1);
       /** Inserts a group of pages into this DjVu document.
-	  
+
 	  Like \Ref{insert_page}() it will insert every page into the document.
 	  The main advantage of calling this function once for the whole
 	  group instead of calling \Ref{insert_page}() for every page is
@@ -283,7 +280,7 @@ public:
 	  moved to the end (or to the beginning, depending on the #shift#
 	  sign) of the document. */
    void		move_pages(const GList<int> & page_list, int shift);
-   
+
       /** Changes the name of the file with ID #id# to #name#.
 	  Refer to \Ref{DjVmDir} for the explanation of {\em IDs},
           {\em names} and {\em titles}. */
@@ -384,7 +381,7 @@ public:
    GP<DjVuFile>       get_shared_anno_file(void);
 
    GURL               get_doc_url(void) const;
-                                                                              
+
       /** Returns TRUE if #class_name# is #"DjVuDocEditor"#,
 	  #"DjVuDocument"# or #"DjVuPort"# */
    virtual bool		inherits(const GUTF8String &class_name) const;

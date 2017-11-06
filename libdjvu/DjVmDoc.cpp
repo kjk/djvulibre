@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVmDoc.h"
@@ -110,11 +107,11 @@ save_file(
           }
           GPosition pos=incl.contains(incl_str);
           if(pos)
-          { 
+          {
             iff_out.get_bytestream()->writestring(incl[pos]);
           }else
           {
-            GP<DjVmDir::File> incl_file=dir.id_to_file(incl_str); 
+            GP<DjVmDir::File> incl_file=dir.id_to_file(incl_str);
             if(incl_file)
             {
               DEBUG_MSG("INCL '"<<(const char *)incl_file->get_save_name()<<"'\n");
@@ -180,7 +177,7 @@ DjVmDoc::insert_file(const GP<DjVmDir::File> & f,
    if (data_pool->get_data(buffer, 0, 4)==4 && !memcmp(buffer, octets, 4))
    {
       data_pool=DataPool::create(data_pool, 4, -1);
-   } 
+   }
    data[f->get_load_name()]=data_pool;
    dir->insert_file(f, pos);
 }
@@ -222,15 +219,15 @@ DjVmDoc::delete_file(const GUTF8String &id)
 {
    DEBUG_MSG("DjVmDoc::delete_file(): deleting file '" << id << "'\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    if (!data.contains(id))
       G_THROW(GUTF8String( ERR_MSG("DjVmDoc.cant_delete") "\t") + id);
-   
+
    data.del(id);
    dir->delete_file(id);
 }
 
-void 
+void
 DjVmDoc::set_djvm_nav(GP<DjVmNav> n)
 {
   if (n && ! n->isValidBookmark())
@@ -256,7 +253,7 @@ DjVmDoc::get_data(const GUTF8String &id) const
     if (size<0 || size>0x7fffffff)
       G_THROW( ERR_MSG("DjVmDoc.not_IFF") "\t" + id);
   }
-  G_CATCH_ALL 
+  G_CATCH_ALL
   {
     G_THROW( ERR_MSG("DjVmDoc.not_IFF") "\t" + id);
   }
@@ -371,7 +368,7 @@ DjVmDoc::write(const GP<ByteStream> &gstr,
     if (!file->size)
       G_THROW( ERR_MSG("DjVmDoc.zero_file") );
   }
-   
+
   const GP<ByteStream> tmp_str(ByteStream::create());
   const GP<IFFByteStream> gtmp_iff(IFFByteStream::create(tmp_str));
   IFFByteStream &tmp_iff=*gtmp_iff;
@@ -392,7 +389,7 @@ DjVmDoc::write(const GP<ByteStream> &gstr,
   {
     if ((offset & 1)!=0)
       offset++;
-      
+
     GP<DjVmDir::File> & file=files_list[pos];
     file->offset=offset;
     offset+=file->size;	// file->size has been set in the first pass
@@ -437,9 +434,9 @@ DjVmDoc::read(const GP<DataPool> & pool)
 {
    DEBUG_MSG("DjVmDoc::read(): reading the BUNDLED doc contents from the pool\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    const GP<ByteStream> str(pool->get_stream());
-   
+
    GP<IFFByteStream> giff=IFFByteStream::create(str);
    IFFByteStream &iff=*giff;
    GUTF8String chkid;
@@ -462,7 +459,7 @@ DjVmDoc::read(const GP<DataPool> & pool)
    for(GPosition pos=files_list;pos;++pos)
    {
       DjVmDir::File * f=files_list[pos];
-      
+
       DEBUG_MSG("reading contents of file '" << f->get_load_name() << "'\n");
       data[f->get_load_name()]=DataPool::create(pool, f->offset, f->size);
    }
@@ -519,7 +516,7 @@ DjVmDoc::read(const GURL &url)
       for(GPosition pos=files_list;pos;++pos)
       {
 	 DjVmDir::File * f=files_list[pos];
-      
+
 	 DEBUG_MSG("reading contents of file '" << f->get_load_name() << "'\n");
 
          const GURL::UTF8 url(f->get_load_name(),dirbase);
@@ -587,7 +584,7 @@ DjVmDoc::save_file(
   save_file(codebase,file,0);
 }
 
-GUTF8String 
+GUTF8String
 DjVmDoc::save_file(const GURL &codebase, const DjVmDir::File &file,
   GMap<GUTF8String,GUTF8String> &incl, const GP<DataPool> &pool) const
 {
@@ -644,7 +641,7 @@ DjVmDoc::expand(const GURL &codebase, const GUTF8String &idx_name)
    if (idx_name.length())
    {
       const GURL::UTF8 idx_url(idx_name, codebase);
-   
+
       DEBUG_MSG("storing index file '" << idx_url << "'\n");
 
       DataPool::load_file(idx_url);

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _GSTRING_H_
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 /** @name GString.h
@@ -80,9 +77,9 @@
     logically derived the new class name.  Native English speakers
     kept laughing in hiding.  This is ironic because we completely
     forgot this letter 'G' when creating more challenging things
-    like the ZP Coder or the IW44 wavelets.  
+    like the ZP Coder or the IW44 wavelets.
 
-    {\bf Later Changes} 
+    {\bf Later Changes}
     When converting to I18N, we (Lizardtech) decided that two string classes
     where needing, replacing the original GString with \Ref{GUTF8String} and
     \Ref{GNativeString}.
@@ -100,7 +97,7 @@
 // In my opinion, the duplication of the string classes is a failed
 // attempt to use the type system to enforce coding policies.
 // This could be fixed.  But there are better things to do in djvulibre.
-    
+
 */
 //@{
 
@@ -1155,7 +1152,7 @@ inline GUTF8String
 GUTF8String::toEscaped( const bool tosevenbit ) const
 { return ptr?GUTF8String((*this)->toEscaped(tosevenbit)):(*this); }
 
-inline GP<GStringRep::Unicode> 
+inline GP<GStringRep::Unicode>
 GUTF8String::get_remainder(void) const
 {
   GP<GStringRep::Unicode> retval;
@@ -1543,7 +1540,7 @@ GNativeString::init(const GP<GStringRep> &rep)
   return *this;
 }
 
-inline GNativeString 
+inline GNativeString
 GNativeString::substr(int from, int len) const
 { return GNativeString(*this, from, len); }
 

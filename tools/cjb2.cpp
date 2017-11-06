@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 /** @name cjb2
@@ -130,20 +127,20 @@
 #undef MIN
 #endif
 
-inline int 
-MIN(int a, int b) 
-{ 
-  return ( a<b ?a :b); 
+inline int
+MIN(int a, int b)
+{
+  return ( a<b ?a :b);
 }
 
 #ifdef MAX
 #undef MAX
 #endif
 
-inline int 
-MAX(int a, int b) 
-{ 
-  return ( a>b ?a :b); 
+inline int
+MAX(int a, int b)
+{
+  return ( a>b ?a :b);
 }
 
 
@@ -156,8 +153,8 @@ MAX(int a, int b)
 // --------------------------------------------------
 
 // -- A run of black pixels
-struct Run    
-{ 
+struct Run
+{
   int y;         // vertical coordinate
   short x1;      // first horizontal coordinate
   short x2;      // last horizontal coordinate
@@ -165,7 +162,7 @@ struct Run
 };
 
 // -- A component descriptor
-struct CC    
+struct CC
 {
   GRect bb;      // bounding box
   int npix;      // number of black pixels
@@ -175,7 +172,7 @@ struct CC
 
 
 // -- An image composed of runs
-class CCImage 
+class CCImage
 {
 public:
   int height;            // Height of the image in pixels
@@ -184,8 +181,8 @@ public:
   GTArray<CC>  ccs;      // Array of component descriptors
   int nregularccs;       // Number of regular ccs (set by merge_and_split_ccs)
   int largesize;         // CCs larger than that are special
-  int smallsize;         // CCs smaller than that are special 
-  int tinysize;          // CCs smaller than that may be removed 
+  int smallsize;         // CCs smaller than that are special
+  int tinysize;          // CCs smaller than that may be removed
   CCImage();
   void init(int width, int height, int dpi);
   void add_single_run(int y, int x1, int x2, int ccid=0);
@@ -196,7 +193,7 @@ public:
   void make_ccs_from_ccids();
   void erase_tiny_ccs();
   void merge_and_split_ccs();
-  void sort_in_reading_order(); 
+  void sort_in_reading_order();
 };
 
 
@@ -230,7 +227,7 @@ CCImage::init(int w, int h, int dpi)
 
 
 // -- Adds a run to the CCImage
-inline void 
+inline void
 CCImage::add_single_run(int y, int x1, int x2, int ccid)
 {
   int index = runs.hbound();
@@ -244,7 +241,7 @@ CCImage::add_single_run(int y, int x1, int x2, int ccid)
 
 
 // -- Adds runs extracted from a bitmap
-void 
+void
 CCImage::add_bitmap_runs(const GBitmap &bm, int offx, int offy, int ccid)
 {
   // Iterate over rows
@@ -343,7 +340,7 @@ CCImage::make_ccs_from_ccids()
   for (n=0; n<=runs.hbound(); n++)
     if (pruns[n].ccid > maxccid)
       maxccid = runs[n].ccid;
-  // Renumber ccs 
+  // Renumber ccs
   GTArray<int> armap(0,maxccid);
   int *rmap = armap;
   for (n=0; n<=maxccid; n++)
@@ -355,18 +352,18 @@ CCImage::make_ccs_from_ccids()
   for (n=0; n<=maxccid; n++)
     if (rmap[n] > 0)
       rmap[n] = nid++;
-  
+
   // Adjust nregularccs (since ccs are renumbered)
   while (nregularccs>0 && rmap[nregularccs-1]<0)
     nregularccs -= 1;
   if (nregularccs>0)
     nregularccs = 1 + rmap[nregularccs-1];
-  
+
   // Prepare cc descriptors
   ccs.resize(0,nid-1);
   for (n=0; n<nid; n++)
     ccs[n].nrun = 0;
-  
+
   // Relabel runs
   for (n=0; n<=runs.hbound(); n++)
     {
@@ -378,10 +375,10 @@ CCImage::make_ccs_from_ccids()
       run.ccid = newccid;
       cc.nrun += 1;
     }
-  
+
   // Compute positions for runs of cc
   int frun = 0;
-  for (n=0; n<nid; n++) 
+  for (n=0; n<nid; n++)
     {
       ccs[n].frun = rmap[n] = frun;
       frun += ccs[n].nrun;
@@ -450,7 +447,7 @@ CCImage::erase_tiny_ccs()
         }
     }
 }
- 
+
 
 // -- Merges small ccs and split large ccs
 void
@@ -497,7 +494,7 @@ CCImage::merge_and_split_ccs()
                 }
               else // gridj_span>0
                 {
-                  // truncate the current run 
+                  // truncate the current run
                   r.ccid = newccid++;
                   int x = (gridj_start+1)*splitsize;
                   r.x2 = x-1;
@@ -517,7 +514,7 @@ CCImage::merge_and_split_ccs()
                   newrun.y = y;
                   newrun.x1 = x;
                   newrun.x2 = x_end;
-                  newrun.ccid = newccid++;                      
+                  newrun.ccid = newccid++;
                 }
             }
         }
@@ -528,7 +525,7 @@ CCImage::merge_and_split_ccs()
 
 
 // -- Helps sorting cc
-static int 
+static int
 top_edges_descending (const void *pa, const void *pb)
 {
   if (((CC*) pa)->bb.ymax != ((CC*) pb)->bb.ymax)
@@ -540,7 +537,7 @@ top_edges_descending (const void *pa, const void *pb)
 
 
 // -- Helps sorting cc
-static int 
+static int
 left_edges_ascending (const void *pa, const void *pb)
 {
   if (((CC*) pa)->bb.xmin != ((CC*) pb)->bb.xmin)
@@ -552,7 +549,7 @@ left_edges_ascending (const void *pa, const void *pb)
 
 
 // -- Helps sorting cc
-static int 
+static int
 integer_ascending (const void *pa, const void *pb)
 {
   return ( *(int*)pb - *(int*)pa );
@@ -560,7 +557,7 @@ integer_ascending (const void *pa, const void *pb)
 
 
 // -- Sort ccs in approximate reading order
-void 
+void
 CCImage::sort_in_reading_order()
 {
   if (nregularccs<2) return;
@@ -574,7 +571,7 @@ CCImage::sort_in_reading_order()
   // Subdivide the ccarray list roughly into text lines [LYB]
   // - Determine maximal top deviation
   int maxtopchange = width / 40;
-  if (maxtopchange < 32) 
+  if (maxtopchange < 32)
     maxtopchange = 32;
   // - Loop until processing all ccs
   int ccno = 0;
@@ -625,7 +622,7 @@ CCImage::sort_in_reading_order()
 
 
 // -- Creates a bitmap for a particular component
-GP<GBitmap>   
+GP<GBitmap>
 CCImage::get_bitmap_for_cc(const int ccid) const
 {
   const CC &cc = ccs[ccid];
@@ -647,7 +644,7 @@ CCImage::get_bitmap_for_cc(const int ccid) const
 
 
 // -- Creates a JB2Image with the remaining components
-GP<JB2Image> 
+GP<JB2Image>
 CCImage::get_jb2image() const
 {
   GP<JB2Image> jimg = JB2Image::create();
@@ -692,8 +689,8 @@ struct cjb2opts {
 
 #if HAVE_TIFF
 
-static int 
-is_tiff(ByteStream *ref) 
+static int
+is_tiff(ByteStream *ref)
 {
   char magic[2];
   magic[0] = magic[1] = 0;
@@ -706,35 +703,35 @@ is_tiff(ByteStream *ref)
   return 0;
 }
 
-static tsize_t readproc(thandle_t h, tdata_t p, tsize_t s) { 
+static tsize_t readproc(thandle_t h, tdata_t p, tsize_t s) {
   ByteStream *bs = (ByteStream*)h;
   return (tsize_t) bs->readall((void*)p, (size_t)s);
 }
 
-static tsize_t writeproc(thandle_t, tdata_t, tsize_t) { 
-  return -1; 
+static tsize_t writeproc(thandle_t, tdata_t, tsize_t) {
+  return -1;
 }
 
-static toff_t seekproc(thandle_t h, toff_t offset, int mode) { 
+static toff_t seekproc(thandle_t h, toff_t offset, int mode) {
   ByteStream *bs = (ByteStream*)h;
   bs->seek((long)offset, mode);
-  return (toff_t)bs->tell(); 
+  return (toff_t)bs->tell();
 }
 
-static int closeproc(thandle_t) { 
-  return 0; 
+static int closeproc(thandle_t) {
+  return 0;
 }
 
-static toff_t sizeproc(thandle_t h) { 
+static toff_t sizeproc(thandle_t h) {
   ByteStream *bs = (ByteStream*)h;
-  return (toff_t) bs->size(); 
+  return (toff_t) bs->size();
 }
 
-static int mapproc(thandle_t, tdata_t*, toff_t*) { 
-  return -1; 
+static int mapproc(thandle_t, tdata_t*, toff_t*) {
+  return -1;
 }
 
-static void unmapproc(thandle_t, tdata_t, toff_t) { 
+static void unmapproc(thandle_t, tdata_t, toff_t) {
 }
 
 static void
@@ -742,7 +739,7 @@ read_tiff(CCImage &rimg, ByteStream *bs, cjb2opts &opts)
 {
   TIFF *tiff = TIFFClientOpen("libtiff", "rm", (thandle_t)bs,
                               readproc, writeproc, seekproc,
-                              closeproc, sizeproc, 
+                              closeproc, sizeproc,
                               mapproc, unmapproc );
   // bitonal
   uint16 bps = 0, spp = 0;
@@ -761,7 +758,7 @@ read_tiff(CCImage &rimg, ByteStream *bs, cjb2opts &opts)
   // resolution
   float xres, yres;
   if (TIFFGetFieldDefaulted(tiff, TIFFTAG_XRESOLUTION, &xres) &&
-      TIFFGetFieldDefaulted(tiff, TIFFTAG_YRESOLUTION, &yres) ) 
+      TIFFGetFieldDefaulted(tiff, TIFFTAG_YRESOLUTION, &yres) )
     {
       if (xres != yres)
         DjVuPrintErrorUTF8( "cjb2: X- and Y-resolution do not match\n");
@@ -788,7 +785,7 @@ read_tiff(CCImage &rimg, ByteStream *bs, cjb2opts &opts)
       unsigned char mask=0, c=0, b=0;
       for (int x=0; x<(int)w; x++)
         {
-          if (! mask) 
+          if (! mask)
             {
               b = scanline[off++];
               while (b==c && x+8<(int)w )
@@ -798,7 +795,7 @@ read_tiff(CCImage &rimg, ByteStream *bs, cjb2opts &opts)
                 }
               mask = 0x80;
             }
-          if ( (b ^ c) & mask ) 
+          if ( (b ^ c) & mask )
             {
               c ^= 0xff;
               if (c)
@@ -818,7 +815,7 @@ read_tiff(CCImage &rimg, ByteStream *bs, cjb2opts &opts)
 #endif // HAVE_TIFF
 
 
-void 
+void
 cjb2(const GURL &urlin, const GURL &urlout, cjb2opts &opts)
 {
   GP<ByteStream> ibs=ByteStream::create(urlin, "rb");
@@ -832,26 +829,26 @@ cjb2(const GURL &urlin, const GURL &urlout, cjb2opts &opts)
     {
       GP<GBitmap> input=GBitmap::create(*ibs);
       rimg.init(input->columns(), input->rows(), opts.dpi);
-      rimg.add_bitmap_runs(*input); 
+      rimg.add_bitmap_runs(*input);
     }
   if (opts.verbose)
-    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cjb2.runs"), 
+    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cjb2.runs"),
                          rimg.runs.size() );
-  
+
   // Component analysis
   rimg.make_ccids_by_analysis(); // obtain ccids
   rimg.make_ccs_from_ccids();    // compute cc descriptors
   if (opts.verbose)
-    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cjb2.ccs_before"), 
+    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cjb2.ccs_before"),
                          rimg.ccs.size());
-  if (opts.losslevel > 0) 
+  if (opts.losslevel > 0)
     rimg.erase_tiny_ccs();       // clean
   rimg.merge_and_split_ccs();    // reorganize weird ccs
   rimg.sort_in_reading_order();  // sort cc descriptors
   if (opts.verbose)
-    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cjb2.ccs_after"), 
+    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cjb2.ccs_after"),
                          rimg.ccs.size());
-  
+
   // Pattern matching
   GP<JB2Image> jimg = rimg.get_jb2image();          // get ``raw'' jb2image
   rimg.runs.empty();                                // save memory
@@ -865,13 +862,13 @@ cjb2(const GURL &urlin, const GURL &urlout, cjb2opts &opts)
       int nshape=0, nrefine=0;
       for (int i=0; i<jimg->get_shape_count(); i++) {
         if (!jimg->get_shape(i).bits) continue;
-        if (jimg->get_shape(i).parent >= 0) nrefine++; 
-        nshape++; 
+        if (jimg->get_shape(i).parent >= 0) nrefine++;
+        nshape++;
       }
-      DjVuFormatErrorUTF8( "%s\t%d\t%d", ERR_MSG("cjb2.shapes"), 
+      DjVuFormatErrorUTF8( "%s\t%d\t%d", ERR_MSG("cjb2.shapes"),
                            nshape, nrefine);
     }
-  
+
   // Code
   GP<ByteStream> obs=ByteStream::create(urlout, "wb");
   GP<IFFByteStream> giff=IFFByteStream::create(obs);
@@ -895,7 +892,7 @@ cjb2(const GURL &urlin, const GURL &urlout, cjb2opts &opts)
   iff.close_chunk();
   // Finished!
 }
-      
+
 
 
 
@@ -925,7 +922,7 @@ usage()
 }
 
 
-int 
+int
 main(int argc, const char **argv)
 {
   DJVU_LOCALE;

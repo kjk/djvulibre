@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // - Author: Leon Bottou, 07/1998
@@ -135,7 +132,7 @@ BSByteStream::create(GP<ByteStream> xbs)
   return retval;
 }
 
-void 
+void
 BSByteStream::Decode::flush()
 {
   size = bptr = 0;
@@ -145,7 +142,7 @@ BSByteStream::Decode::flush()
 // -- Decoding
 
 
-static int 
+static int
 decode_raw(ZPCodec &zp, int bits)
 {
   int n = 1;
@@ -158,7 +155,7 @@ decode_raw(ZPCodec &zp, int bits)
   return n - m;
 }
 
-static inline int 
+static inline int
 decode_binary(ZPCodec &zp, BitContext *ctx, int bits)
 {
   int n = 1;
@@ -171,13 +168,13 @@ decode_binary(ZPCodec &zp, BitContext *ctx, int bits)
     }
   return n - m;
 }
-  
+
 unsigned int
 BSByteStream::Decode::decode(void)
 {
   /////////////////////////////////
   ////////////  Decode input stream
-  
+
   int i;
   // Decode block size
   ZPCodec &zp=*gzp;
@@ -195,7 +192,7 @@ BSByteStream::Decode::decode(void)
         gdata.resize(0);
       }
     }
-  if (! data) 
+  if (! data)
     gdata.resize(blocksize);
   // Decode Estimation Speed
   int fshift = 0;
@@ -256,28 +253,28 @@ BSByteStream::Decode::decode(void)
         { mtfno=0; data[i]=mtf[mtfno]; goto rotate; }
       cx+=CTXIDS;
       if (zp.decoder(cx[ctxid]))
-        { mtfno=1; data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=1; data[i]=mtf[mtfno]; goto rotate; }
       cx+=CTXIDS;
       if (zp.decoder(cx[0]))
-        { mtfno=2+decode_binary(zp,cx+1,1); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=2+decode_binary(zp,cx+1,1); data[i]=mtf[mtfno]; goto rotate; }
       cx+=1+1;
       if (zp.decoder(cx[0]))
-        { mtfno=4+decode_binary(zp,cx+1,2); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=4+decode_binary(zp,cx+1,2); data[i]=mtf[mtfno]; goto rotate; }
       cx+=1+3;
       if (zp.decoder(cx[0]))
-        { mtfno=8+decode_binary(zp,cx+1,3); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=8+decode_binary(zp,cx+1,3); data[i]=mtf[mtfno]; goto rotate; }
       cx+=1+7;
       if (zp.decoder(cx[0]))
-        { mtfno=16+decode_binary(zp,cx+1,4); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=16+decode_binary(zp,cx+1,4); data[i]=mtf[mtfno]; goto rotate; }
       cx+=1+15;
       if (zp.decoder(cx[0]))
-        { mtfno=32+decode_binary(zp,cx+1,5); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=32+decode_binary(zp,cx+1,5); data[i]=mtf[mtfno]; goto rotate; }
       cx+=1+31;
       if (zp.decoder(cx[0]))
-        { mtfno=64+decode_binary(zp,cx+1,6); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=64+decode_binary(zp,cx+1,6); data[i]=mtf[mtfno]; goto rotate; }
       cx+=1+63;
       if (zp.decoder(cx[0]))
-        { mtfno=128+decode_binary(zp,cx+1,7); data[i]=mtf[mtfno]; goto rotate; } 
+        { mtfno=128+decode_binary(zp,cx+1,7); data[i]=mtf[mtfno]; goto rotate; }
       mtfno=256;
       data[i]=0;
       markerpos=i;
@@ -287,7 +284,7 @@ BSByteStream::Decode::decode(void)
       // Adjust frequencies for overflow
       int k;
       fadd = fadd + (fadd>>fshift);
-      if (fadd > 0x10000000) 
+      if (fadd > 0x10000000)
         {
           fadd    >>= 24;
           freq[0] >>= 24;
@@ -301,7 +298,7 @@ BSByteStream::Decode::decode(void)
       unsigned int fc = fadd;
       if (mtfno < FREQMAX)
         fc += freq[mtfno];
-      for (k=mtfno; k>=FREQMAX; k--) 
+      for (k=mtfno; k>=FREQMAX; k--)
         mtf[k] = mtf[k-1];
       for (; k>0 && fc>=freq[k-1]; k--)
         {
@@ -311,11 +308,11 @@ BSByteStream::Decode::decode(void)
       mtf[k] = data[i];
       freq[k] = fc;
     }
-  
+
 
   /////////////////////////////////
   ////////// Reconstruct the string
-  
+
   if (markerpos<1 || markerpos>=size)
     G_THROW( ERR_MSG("ByteStream.corrupt") );
   // Allocate pointers
@@ -327,7 +324,7 @@ BSByteStream::Decode::decode(void)
   for (i=0; i<256; i++)
     count[i] = 0;
   // Fill count buffer
-  for (i=0; i<markerpos; i++) 
+  for (i=0; i<markerpos; i++)
     {
       unsigned char c = data[i];
       posn[i] = (c<<24) | (count[c] & 0xffffff);
@@ -370,13 +367,13 @@ BSByteStream::Decode::decode(void)
 
 
 
-long 
+long
 BSByteStream::tell() const
 {
   return offset;
 }
 
-size_t 
+size_t
 BSByteStream::Decode::read(void *buffer, size_t sz)
 {
   if (eof)
@@ -389,7 +386,7 @@ BSByteStream::Decode::read(void *buffer, size_t sz)
       if (!size)
         {
           bptr = 0;
-          if (! decode()) 
+          if (! decode())
           {
             size = 1 ;
             eof = true;

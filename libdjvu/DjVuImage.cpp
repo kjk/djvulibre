@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuImage.h"
@@ -89,7 +86,7 @@ namespace DJVU {
 
 //// DJVUIMAGE: CONSTRUCTION
 
-DjVuImage::DjVuImage(void) 
+DjVuImage::DjVuImage(void)
 : rotate_count(-1),relayout_sent(false)
 {
 }
@@ -121,7 +118,7 @@ DjVuImage::get_info(const GP<DjVuFile> & file) const
    for(GPosition pos=list;pos;++pos)
    {
       GP<DjVuInfo> info=get_info(list[pos]);
-      if (info) 
+      if (info)
       {
         if(rotate_count<0)
         {
@@ -206,7 +203,7 @@ DjVuImage::get_fgbc(const GP<DjVuFile> & file) const
    return 0;
 }
 
-GP<DjVuInfo>   
+GP<DjVuInfo>
 DjVuImage::get_info() const
 {
    if (file)
@@ -223,7 +220,7 @@ DjVuImage::get_anno() const
 {
    GP<ByteStream> out = ByteStream::create();
    ByteStream &mbs = *out;
-   if (file) 
+   if (file)
    {
      file->merge_anno(mbs);
    }
@@ -240,7 +237,7 @@ DjVuImage::get_text() const
 {
    GP<ByteStream> out = ByteStream::create();
    ByteStream &mbs = *out;
-   if (file) 
+   if (file)
    {
      file->get_text(mbs);
    }
@@ -257,7 +254,7 @@ DjVuImage::get_meta() const
 {
    GP<ByteStream> out = ByteStream::create();
    ByteStream &mbs = *out;
-   if (file) 
+   if (file)
    {
      file->get_meta(mbs);
    }
@@ -269,7 +266,7 @@ DjVuImage::get_meta() const
    return out;
 }
 
-GP<IW44Image>   
+GP<IW44Image>
 DjVuImage::get_bg44() const
 {
    if (file)
@@ -278,7 +275,7 @@ DjVuImage::get_bg44() const
      return 0;
 }
 
-GP<GPixmap>   
+GP<GPixmap>
 DjVuImage::get_bgpm() const
 {
    if (file)
@@ -287,7 +284,7 @@ DjVuImage::get_bgpm() const
      return 0;
 }
 
-GP<JB2Image>   
+GP<JB2Image>
 DjVuImage::get_fgjb() const
 {
    if (file)
@@ -296,7 +293,7 @@ DjVuImage::get_fgjb() const
      return 0;
 }
 
-GP<GPixmap>    
+GP<GPixmap>
 DjVuImage::get_fgpm() const
 {
    if (file)
@@ -305,7 +302,7 @@ DjVuImage::get_fgpm() const
      return 0;
 }
 
-GP<DjVuPalette>    
+GP<DjVuPalette>
 DjVuImage::get_fgbc() const
 {
    if (file)
@@ -360,12 +357,12 @@ int
 DjVuImage::get_rounded_dpi() const
 {
    return (get_dpi()+5)/10*10;
-#if 0   
+#if 0
       /* This code used to round the reported dpi to 25, 50, 75, 100, 150,
 	 300, and 600. Now we just round the dpi to 10ths and return it */
    int dpi=get_dpi();
    if (dpi>700) return dpi;
-  
+
    const int std_dpi[]={ 25, 50, 75, 100, 150, 300, 600 };
    const int std_dpis=sizeof(std_dpi)/sizeof(std_dpi[0]);
    int min_dist=abs(dpi-std_dpi[0]);
@@ -432,7 +429,7 @@ DjVuImage::notify_chunk_done(const DjVuPort *, const GUTF8String & name)
    {
       DjVuPort::get_portcaster()->notify_relayout(this);
       relayout_sent=true;
-   } 
+   }
    else if (!name.cmp("Sxxx", 1) ||
             !name.cmp("BGxx", 2) ||
             !name.cmp("FGxx", 2) ||
@@ -448,7 +445,7 @@ DjVuImage::notify_chunk_done(const DjVuPort *, const GUTF8String & name)
 
 //// DJVUIMAGE: OLD-STYLE DECODING
 
-DjVuInterface::~DjVuInterface() 
+DjVuInterface::~DjVuInterface()
 {
 }
 
@@ -471,7 +468,7 @@ DjVuImageNotifier::DjVuImageNotifier(DjVuInterface *notifier)
 {
 }
 
-GP<DataPool> 
+GP<DataPool>
 DjVuImageNotifier::request_data(const DjVuPort *src, const GURL & url)
 {
   if (url!=stream_url)
@@ -479,21 +476,21 @@ DjVuImageNotifier::request_data(const DjVuPort *src, const GURL & url)
   return stream_pool;
 }
 
-void 
+void
 DjVuImageNotifier::notify_redisplay(const class DjVuImage * source)
 {
   if (notifier)
     notifier->notify_redisplay();
 }
 
-void 
+void
 DjVuImageNotifier::notify_relayout(const class DjVuImage * source)
 {
   if (notifier)
     notifier->notify_relayout();
 }
 
-void 
+void
 DjVuImageNotifier::notify_chunk_done(const DjVuPort *, const GUTF8String &name)
 {
   if (notifier)
@@ -505,7 +502,7 @@ DjVuImage::decode(ByteStream & str, DjVuInterface *notifier)
 {
   DEBUG_MSG("DjVuImage::decode(): decoding old way...\n");
   DEBUG_MAKE_INDENT(3);
-  if (file) 
+  if (file)
     G_THROW( ERR_MSG("DjVuImage.bad_call") );
   GP<DjVuImageNotifier> pport = new DjVuImageNotifier(notifier);
   pport->stream_url=GURL::UTF8("internal://fake/fake.djvu");
@@ -541,7 +538,7 @@ compute_red(int w, int h, int rw, int rh)
 }
 
 
-int 
+int
 DjVuImage::is_legal_bilevel() const
 {
   // Components
@@ -569,12 +566,12 @@ DjVuImage::is_legal_bilevel() const
   return 1;
 }
 
-int 
+int
 DjVuImage::is_legal_photo() const
 {
   // Components
   GP<DjVuInfo> info = get_info();
-  GP<JB2Image> fgjb = get_fgjb(); 
+  GP<JB2Image> fgjb = get_fgjb();
   GP<IW44Image> bg44 = get_bg44();
   GP<GPixmap>  bgpm = get_bgpm();
   GP<GPixmap>  fgpm = get_fgpm();
@@ -598,7 +595,7 @@ DjVuImage::is_legal_photo() const
   return 0;
 }
 
-int 
+int
 DjVuImage::is_legal_compound() const
 {
   // Components
@@ -647,16 +644,16 @@ DjVuImage::is_legal_compound() const
 //// DJVUIMAGE: LOW LEVEL RENDERING
 
 GP<GBitmap>
-DjVuImage::get_bitmap(const GRect &rect, 
+DjVuImage::get_bitmap(const GRect &rect,
                       int subsample, int align) const
 {
   // Access image size
   int width = get_real_width();
   int height = get_real_height();
   GP<JB2Image> fgjb = get_fgjb();
-  if ( width && height && fgjb && 
-       (fgjb->get_width() == width) && 
-       (fgjb->get_height() == height) ) 
+  if ( width && height && fgjb &&
+       (fgjb->get_width() == width) &&
+       (fgjb->get_height() == height) )
     {
       return fgjb->get_bitmap(rect, subsample, align);
     }
@@ -664,12 +661,12 @@ DjVuImage::get_bitmap(const GRect &rect,
 }
 
 GP<GPixmap>
-DjVuImage::get_bg_pixmap(const GRect &rect, 
+DjVuImage::get_bg_pixmap(const GRect &rect,
                          int subsample, double gamma, GPixel white) const
 {
   GP<GPixmap> pm = 0;
   // Access image size
-  
+
   GP<DjVuInfo> info = get_info();
   int width = get_real_width();
   int height = get_real_height();
@@ -684,7 +681,7 @@ DjVuImage::get_bg_pixmap(const GRect &rect,
     gamma_correction = 0.1;
   else if (gamma_correction > 10)
     gamma_correction = 10;
-  
+
   // CASE1: Incremental BG IW44Image
   GP<IW44Image> bg44 = get_bg44();
   if (bg44)
@@ -702,11 +699,11 @@ DjVuImage::get_bg_pixmap(const GRect &rect,
       if (subsample == red)
         pm = bg44->get_pixmap(1,rect);
       else if (subsample == 2*red)
-        pm = bg44->get_pixmap(2,rect);    
+        pm = bg44->get_pixmap(2,rect);
       else if (subsample == 4*red)
-        pm = bg44->get_pixmap(4,rect); 
+        pm = bg44->get_pixmap(4,rect);
       else if (subsample == 8*red)
-        pm = bg44->get_pixmap(8,rect); 
+        pm = bg44->get_pixmap(8,rect);
       // Handle fractional downsampling case
       else if (red*4 == subsample*3)
         {
@@ -717,9 +714,9 @@ DjVuImage::get_bg_pixmap(const GRect &rect,
           xrect.xmax = ((xrect.xmax+2)/3)*4;
           xrect.ymax = ((xrect.ymax+2)/3)*4;
           nrect.translate(-xrect.xmin*3/4, -xrect.ymin*3/4);
-          if (xrect.xmax > w) 
+          if (xrect.xmax > w)
             xrect.xmax = w;
-          if (xrect.ymax > h) 
+          if (xrect.ymax > h)
             xrect.ymax = h;
           GP<GPixmap> ipm = bg44->get_pixmap(1,xrect);
           pm = GPixmap::create();
@@ -812,15 +809,15 @@ DjVuImage::get_bg_pixmap(const GRect &rect, int subsample, double gamma) const
 }
 
 
-int  
+int
 DjVuImage::stencil(GPixmap *pm, const GRect &rect,
 		   int subsample, double gamma, GPixel white) const
 {
-  // Warping and blending. 
+  // Warping and blending.
   if (!pm)
     return 0;
   // Access components
-  
+
   GP<DjVuInfo> info = get_info();
   int width = get_real_width();
   int height = get_real_height();
@@ -830,7 +827,7 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
   GP<JB2Image> fgjb = get_fgjb();
   GP<GPixmap> fgpm = get_fgpm();
   GP<DjVuPalette> fgbc = get_fgbc();
-  
+
   // Compute gamma_correction
   double gamma_correction = 1.0;
   if (gamma > 0)
@@ -846,8 +843,8 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
   if (fgjb)
     {
       JB2Image *jimg = fgjb;
-      if (! (width && height && 
-             jimg->get_width() == width && 
+      if (! (width && height &&
+             jimg->get_width() == width &&
              jimg->get_height() == height ) )
         return 0;
       // Decode bitmap
@@ -868,8 +865,8 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
               // Record component list
               if (fgbc) components.append(blitno);
               // Blit
-              bm->blit(pshape.bits, 
-                       pblit->left - rxmin, pblit->bottom - rymin, 
+              bm->blit(pshape.bits,
+                       pblit->left - rxmin, pblit->bottom - rymin,
                        subsample);
             }
         }
@@ -908,12 +905,12 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
             {
               int blitno = components[pos];
               const JB2Blit *pblit = jimg->get_blit(blitno);
-              if (pblit->left < lastx) break; 
+              if (pblit->left < lastx) break;
               lastx = pblit->left;
               if (fg->colordata[blitno] == colorindex)
                 {
                   const JB2Shape  &pshape = jimg->get_shape(pblit->shapeno);
-                  GRect rect(pblit->left, pblit->bottom, 
+                  GRect rect(pblit->left, pblit->bottom,
                              pshape.bits->columns(), pshape.bits->rows());
                   comprect.recthull(comprect, rect);
                   compset.insert_before(nullpos, components, pos);
@@ -938,12 +935,12 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
               int blitno = compset[pos];
               const JB2Blit *pblit = jimg->get_blit(blitno);
               const JB2Shape  &pshape = jimg->get_shape(pblit->shapeno);
-              bm->blit(pshape.bits, 
-                       pblit->left - rxmin, pblit->bottom - rymin, 
+              bm->blit(pshape.bits,
+                       pblit->left - rxmin, pblit->bottom - rymin,
                        subsample);
             }
           // Blend color into background pixmap
-          pm->blit(bm, comprect.xmin-rect.xmin, comprect.ymin-rect.ymin, 
+          pm->blit(bm, comprect.xmin-rect.xmin, comprect.ymin-rect.ymin,
                    &colors[colorindex]);
         }
       return 1;
@@ -976,9 +973,9 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
       nfg->color_correct(gamma_correction, white);
       pm->blend(bm, 0, 0, nfg); // blend == attenuate + blit
       return 1;
-#else 
+#else
       // Things are now a little bit more complex because the convenient
-      // function GPixmap::stencil() simultaneously upsamples the foreground 
+      // function GPixmap::stencil() simultaneously upsamples the foreground
       // by an integer factor and performs the alpha blending.  We have
       // to determine how and when this facility can be used.
       int w = fgpm->columns();
@@ -997,7 +994,7 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
           pm->stencil(bm, fgpm, supersample, &rect, gamma_correction, white);
           return 1;
         }
-      else 
+      else
         {
           // Must pre-warp foreground pixmap
           GP<GPixmap> nfg;
@@ -1035,14 +1032,14 @@ DjVuImage::stencil(GPixmap *pm, const GRect &rect,
         }
 #endif
     }
-  
+
   // FAILURE
   return 0;
 }
 
 
 GP<GPixmap>
-DjVuImage::get_fg_pixmap(const GRect &rect, 
+DjVuImage::get_fg_pixmap(const GRect &rect,
                          int subsample, double gamma, GPixel white) const
 {
   // Obtain white background pixmap
@@ -1061,7 +1058,7 @@ DjVuImage::get_fg_pixmap(const GRect &rect,
 
 
 GP<GPixmap>
-DjVuImage::get_fg_pixmap(const GRect &rect, 
+DjVuImage::get_fg_pixmap(const GRect &rect,
                          int subsample, double gamma) const
 {
   return get_fg_pixmap(rect, subsample, gamma, GPixel::WHITE);
@@ -1069,7 +1066,7 @@ DjVuImage::get_fg_pixmap(const GRect &rect,
 
 
 GP<GPixmap>
-DjVuImage::get_pixmap(const GRect &rect, int subsample, 
+DjVuImage::get_pixmap(const GRect &rect, int subsample,
                       double gamma, GPixel white) const
 {
   // Get background
@@ -1084,7 +1081,7 @@ DjVuImage::get_pixmap(const GRect &rect, int subsample,
 
 
 GP<GPixmap>
-DjVuImage::get_pixmap(const GRect &rect, int subsample, 
+DjVuImage::get_pixmap(const GRect &rect, int subsample,
                       double gamma) const
 {
   return get_pixmap(rect, subsample, gamma, GPixel::WHITE);
@@ -1122,7 +1119,7 @@ do_bitmap(const DjVuImage &dimg, BImager get,
 
   int rw = all.width();
   int rh = all.height();
-  GRect zrect = rect; 
+  GRect zrect = rect;
   zrect.translate(-all.xmin, -all.ymin);
   for (red=1; red<=15; red++)
     if (rw*red>w-red && rw*red<w+red && rh*red>h-red && rh*red<h+red)
@@ -1162,7 +1159,7 @@ do_bitmap(const DjVuImage &dimg, BImager get,
 
 static GP<GPixmap>
 do_pixmap(const DjVuImage &dimg, PImager get,
-          const GRect &inrect, const GRect &inall, 
+          const GRect &inrect, const GRect &inall,
           double gamma, GPixel white )
 {
   GRect rect=inrect;
@@ -1176,7 +1173,7 @@ do_pixmap(const DjVuImage &dimg, PImager get,
       mapper.map(rect);
       mapper.map(all);
     }
-  
+
   // Sanity
   if (! ( all.contains(rect.xmin, rect.ymin) &&
           all.contains(rect.xmax-1, rect.ymax-1) ))
@@ -1187,13 +1184,13 @@ do_pixmap(const DjVuImage &dimg, PImager get,
   h = dimg.get_real_height();
   rw = all.width();
   rh = all.height();
-  GRect zrect = rect; 
+  GRect zrect = rect;
   zrect.translate(-all.xmin, -all.ymin);
   for (red=1; red<=15; red++)
     if (rw*red>w-red && rw*red<w+red && rh*red>h-red && rh*red<h+red)
     {
       GP<GPixmap> pm = (dimg.*get)(zrect, red, gamma, white);
-        if( pm ) 
+        if( pm )
             return pm->rotate(dimg.get_rotate());
         else
             return NULL;
@@ -1226,49 +1223,49 @@ do_pixmap(const DjVuImage &dimg, PImager get,
       return NULL;
 }
 
-GP<GPixmap>  
+GP<GPixmap>
 DjVuImage::get_pixmap(const GRect &r, const GRect &a, double g, GPixel w) const
 {
   return do_pixmap(*this, &DjVuImage::get_pixmap, r, a, g, w);
 }
 
-GP<GPixmap>  
+GP<GPixmap>
 DjVuImage::get_pixmap(const GRect &r, const GRect &a, double g) const
 {
   return do_pixmap(*this, &DjVuImage::get_pixmap, r, a, g, GPixel::WHITE);
 }
 
-GP<GBitmap>  
+GP<GBitmap>
 DjVuImage::get_bitmap(const GRect &rect, const GRect &all, int align) const
 {
   return do_bitmap(*this, &DjVuImage::get_bitmap, rect, all, align);
 }
 
-GP<GPixmap>  
+GP<GPixmap>
 DjVuImage::get_bg_pixmap(const GRect&r, const GRect&a, double g, GPixel w) const
 {
   return do_pixmap(*this, &DjVuImage::get_bg_pixmap, r, a, g, w);
 }
 
-GP<GPixmap>  
+GP<GPixmap>
 DjVuImage::get_bg_pixmap(const GRect&r, const GRect&a, double g) const
 {
   return do_pixmap(*this, &DjVuImage::get_bg_pixmap, r, a, g, GPixel::WHITE);
 }
 
-GP<GPixmap>  
+GP<GPixmap>
 DjVuImage::get_fg_pixmap(const GRect&r, const GRect&a, double g, GPixel w) const
 {
   return do_pixmap(*this, &DjVuImage::get_fg_pixmap, r, a, g, w);
 }
 
-GP<GPixmap>  
+GP<GPixmap>
 DjVuImage::get_fg_pixmap(const GRect&r, const GRect&a, double g) const
 {
   return do_pixmap(*this, &DjVuImage::get_fg_pixmap, r, a, g, GPixel::WHITE);
 }
 
-int 
+int
 DjVuImage::get_rotate() const
 {
   return (rotate_count<0) ? 0 : rotate_count;
@@ -1276,16 +1273,16 @@ DjVuImage::get_rotate() const
 
 void
 DjVuImage::init_rotate(const DjVuInfo &info)
-{ 
+{
   rotate_count = info.orientation;
 }
 
-void DjVuImage::set_rotate(int count) 
-{ 
+void DjVuImage::set_rotate(int count)
+{
   rotate_count = count % 4;
 }
 
-GP<DjVuAnno> 
+GP<DjVuAnno>
 DjVuImage::get_decoded_anno()
 {
     GP<DjVuInfo> djvuinfo = get_info();
@@ -1293,17 +1290,17 @@ DjVuImage::get_decoded_anno()
     GP<ByteStream> bs=get_anno();
     if( bs )
     {
-      int rotate_count=get_rotate(); 
-      /// Brain damaged adjustment of annotation 
+      int rotate_count=get_rotate();
+      /// Brain damaged adjustment of annotation
       /// coordinates that reflect the orientation
       /// flag in the info chunk....
       if (djvuinfo)
         rotate_count = rotate_count - djvuinfo->orientation;
       ///decode
       djvuanno->decode(bs);
-      ///map hyperlinks correctly for rotation           
+      ///map hyperlinks correctly for rotation
       if( rotate_count & 3 )
-        {   
+        {
           GRect input, output;
           input = GRect(0,0,get_width(),get_height());
           if (rotate_count & 1)
@@ -1313,7 +1310,7 @@ DjVuImage::get_decoded_anno()
           GRectMapper mapper;
           mapper.clear();
           mapper.set_input(input);
-          mapper.set_output(output);               
+          mapper.set_output(output);
           mapper.rotate(-rotate_count);
           GPList<GMapArea> &list=djvuanno->ant->map_areas;
           for(GPosition pos=list;pos;++pos)
@@ -1330,16 +1327,16 @@ void
 DjVuImage::map(GRect &rect) const
 {
     GRect input, output;
-    const int rotate_count=get_rotate(); 
+    const int rotate_count=get_rotate();
     if(rotate_count>0)
-    {  
+    {
         input = GRect(0,0,get_width(), get_height());
         output = GRect(0,0, get_real_width(), get_real_height());
 
         GRectMapper mapper;
         mapper.clear();
         mapper.set_input(input);
-        mapper.set_output(output);               
+        mapper.set_output(output);
         mapper.rotate(-rotate_count);
         mapper.map(rect);
     }
@@ -1349,16 +1346,16 @@ void
 DjVuImage::unmap(GRect &rect) const
 {
     GRect input, output;
-    const int rotate_count=get_rotate(); 
+    const int rotate_count=get_rotate();
     if(rotate_count>0)
-    {  
+    {
         input = GRect(0,0,get_width(), get_height());
         output = GRect(0,0, get_real_width(), get_real_height());
 
         GRectMapper mapper;
         mapper.clear();
         mapper.set_input(input);
-        mapper.set_output(output);               
+        mapper.set_output(output);
         mapper.rotate(-rotate_count);
         mapper.unmap(rect);
     }
@@ -1368,16 +1365,16 @@ void
 DjVuImage::map(int &x, int &y) const
 {
     GRect input, output;
-    const int rotate_count=get_rotate(); 
+    const int rotate_count=get_rotate();
     if(rotate_count>0)
-    {  
+    {
         input = GRect(0,0,get_width(), get_height());
         output = GRect(0,0, get_real_width(), get_real_height());
 
         GRectMapper mapper;
         mapper.clear();
         mapper.set_input(input);
-        mapper.set_output(output);               
+        mapper.set_output(output);
         mapper.rotate(-rotate_count);
         mapper.map(x, y);
     }
@@ -1387,16 +1384,16 @@ void
 DjVuImage::unmap(int &x, int &y) const
 {
     GRect input, output;
-    const int rotate_count=get_rotate(); 
+    const int rotate_count=get_rotate();
     if(rotate_count>0)
-    {  
+    {
         input = GRect(0,0,get_width(), get_height());
         output = GRect(0,0, get_real_width(), get_real_height());
 
         GRectMapper mapper;
         mapper.clear();
         mapper.set_input(input);
-        mapper.set_output(output);               
+        mapper.set_output(output);
         mapper.rotate(-rotate_count);
         mapper.unmap(x, y);
     }
@@ -1405,7 +1402,7 @@ DjVuImage::unmap(int &x, int &y) const
 bool
 DjVuImage::wait_for_complete_decode(void)
 {
-  if (file) 
+  if (file)
   {
     file->resume_decode(true);
     return file->is_decode_ok();
@@ -1418,7 +1415,7 @@ void
 DjVuImage::writeXML(ByteStream &str_out,const GURL &doc_url,const int flags) const
 {
   const int height=get_height();
-  
+
   static const char *Object="<OBJECT data=\"";
   const GURL url(get_djvu_file()->get_url());
   const GUTF8String pagename(url.fname());

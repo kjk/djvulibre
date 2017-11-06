@@ -19,9 +19,6 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation "miniexp.h"
-#endif
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -40,7 +37,7 @@
 # define BEGIN_ANONYMOUS_NAMESPACE namespace {
 # define END_ANONYMOUS_NAMESPACE }
 #else
-# define BEGIN_ANONYMOUS_NAMESPACE 
+# define BEGIN_ANONYMOUS_NAMESPACE
 # define END_ANONYMOUS_NAMESPACE
 #endif
 
@@ -50,8 +47,8 @@
 /* -------------------------------------------------- */
 
 #if defined(__GNUC__)
-static void 
-assertfail(const char *fn, int ln) 
+static void
+assertfail(const char *fn, int ln)
   __attribute__((noreturn));
 #endif
 
@@ -76,7 +73,7 @@ assertfail(const char *fn, int ln)
 #  define USE_WINTHREADS 1
 # elif defined(HAVE_PTHREAD)
 #  include <pthread.h>
-#  define USE_PTHREADS 1 
+#  define USE_PTHREADS 1
 # endif
 #endif
 
@@ -84,8 +81,8 @@ assertfail(const char *fn, int ln)
 // Windows critical section
 # define CSLOCK(name) CSLocker name
 BEGIN_ANONYMOUS_NAMESPACE
-struct CS { 
-  CRITICAL_SECTION cs; 
+struct CS {
+  CRITICAL_SECTION cs;
   CS() { InitializeCriticalSection(&cs); }
   ~CS() { DeleteCriticalSection(&cs); } };
 static CS globalCS;
@@ -103,7 +100,7 @@ struct CSLocker {
   CSLocker() { pthread_mutex_lock(&globalCS); }
   ~CSLocker() { pthread_mutex_unlock(&globalCS); } };
 END_ANONYMOUS_NAMESPACE
-  
+
 #else
 // No critical sections
 # define CSLOCK(name) /**/
@@ -114,7 +111,7 @@ END_ANONYMOUS_NAMESPACE
 /* SYMBOLS                                            */
 /* -------------------------------------------------- */
 
-static unsigned int 
+static unsigned int
 hashcode(const char *s)
 {
   long h = 0x1013;
@@ -129,7 +126,7 @@ hashcode(const char *s)
 
 BEGIN_ANONYMOUS_NAMESPACE
 
-class symtable_t 
+class symtable_t
 {
 public:
   int nelems;
@@ -139,7 +136,7 @@ public:
   symtable_t();
   ~symtable_t();
   struct sym *lookup(const char *n, bool create=false);
-  void resize(int); 
+  void resize(int);
 private:
   symtable_t(const symtable_t&);
   symtable_t& operator=(const symtable_t&);
@@ -208,11 +205,11 @@ symtable_t::lookup(const char *n, bool create)
     }
   return r;
 }
-  
+
 END_ANONYMOUS_NAMESPACE
 
 static symtable_t *symbols;
- 
+
 const char *
 miniexp_to_name(miniexp_t p)
 {
@@ -225,7 +222,7 @@ miniexp_to_name(miniexp_t p)
   return 0;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_symbol(const char *name)
 {
   struct symtable_t::sym *r;
@@ -250,9 +247,9 @@ miniexp_symbol(const char *name)
 // The first two pointers are used to hold mark bytes for the rest.
 // Chunks are carved from blocks of nptrs_block pointers.
 //
-// Dirty hack: The sixteen most recently created pairs are 
+// Dirty hack: The sixteen most recently created pairs are
 // not destroyed by automatic garbage collection, in order
-// to preserve transient objects created in the course 
+// to preserve transient objects created in the course
 // of evaluating complicated expressions.
 
 #define nptrs_chunk  (4*sizeof(void*))
@@ -272,7 +269,7 @@ struct gctls_t {
   ~gctls_t();
 };
 
-struct block_t 
+struct block_t
 {
   block_t *next;
   void **lo;
@@ -353,7 +350,7 @@ static gctls_t *gctls() {
 }
 # endif
 
-#elif USE_WINTHREADS 
+#elif USE_WINTHREADS
 
 // Manage thread specific data with win32
 #if defined(_MSC_VER) && defined(USE_MSVC_TLS)
@@ -364,7 +361,7 @@ static gctls_t *gctls() {
   return gctls_tv;
 }
 static void NTAPI gctls_cb(PVOID, DWORD dwReason, PVOID) {
-  if (dwReason == DLL_THREAD_DETACH && gctls_tv) 
+  if (dwReason == DLL_THREAD_DETACH && gctls_tv)
     { CSLOCK(locker); delete gctls_tv; gctls_tv=0; } }
 # else
 // -- Using Tls{Alloc,SetValue,GetValue,Free} instead.
@@ -450,7 +447,7 @@ collect_free(block_t *b, void **&freelist, int &count, bool destroy)
         if (! c[i])
           {
             miniobj_t *obj = (miniobj_t*)m[i+i];
-            if (destroy && obj && m[i+i]==m[i+i+1]) 
+            if (destroy && obj && m[i+i]==m[i+i+1])
               obj->destroy();
             m[i+i] = (void*)freelist;
             m[i+i+1] = 0;
@@ -497,7 +494,7 @@ gc_mark_check(void *p)
 {
   if (((size_t)p) & 2)
     return false;
-  void **v = (void**)(((size_t)p) & ~(size_t)3); 
+  void **v = (void**)(((size_t)p) & ~(size_t)3);
   if (! v)
     return false;
   char *m = markbyte(v);
@@ -540,7 +537,7 @@ gc_mark_object(void **v)
 {
   ASSERT(v[0] == v[1]);
   miniobj_t *obj = (miniobj_t*)v[0];
-  if (obj) 
+  if (obj)
     obj->mark(gc_mark);
 }
 
@@ -643,7 +640,7 @@ minilisp_release_gc_lock(miniexp_t x)
   return x;
 }
 
-void 
+void
 minilisp_gc(void)
 {
   CSLOCK(locker);
@@ -653,20 +650,20 @@ minilisp_gc(void)
   gc_run();
 }
 
-void 
+void
 minilisp_debug(int debug)
 {
   gc.debug = debug;
 }
 
-void 
+void
 minilisp_info(void)
 {
   CSLOCK(locker);
   time_t tim = time(0);
   const char *dat = ctime(&tim);
   printf("--- begin info -- %s", dat);
-  printf("symbols: %d symbols in %d buckets\n", 
+  printf("symbols: %d symbols in %d buckets\n",
          symbols->nelems, symbols->nbuckets);
   if (gc.debug)
     printf("gc.debug: true\n");
@@ -721,10 +718,10 @@ minivar_t::minivar_t(const minivar_t &v)
 }
 
 minivar_t::~minivar_t()
-{ 
+{
   CSLOCK(locker);
-  if ((*pprev = next)) 
-    next->pprev = pprev; 
+  if ((*pprev = next))
+    next->pprev = pprev;
 }
 
 minivar_t *minivar_t::vars = 0;
@@ -742,7 +739,7 @@ minivar_alloc(void)
   return new minivar_t;
 }
 
-void 
+void
 minivar_free(minivar_t *v)
 {
   delete v;
@@ -769,7 +766,7 @@ cdr(miniexp_t p) {
   return ((miniexp_t*)p)[1];
 }
 
-int 
+int
 miniexp_length(miniexp_t p)
 {
   int n = 0;
@@ -787,61 +784,61 @@ miniexp_length(miniexp_t p)
   return n;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_caar(miniexp_t p)
 {
-  return miniexp_car(miniexp_car(p)); 
+  return miniexp_car(miniexp_car(p));
 }
 
-miniexp_t 
+miniexp_t
 miniexp_cadr(miniexp_t p)
 {
-  return miniexp_car(miniexp_cdr(p)); 
+  return miniexp_car(miniexp_cdr(p));
 }
 
-miniexp_t 
+miniexp_t
 miniexp_cdar(miniexp_t p)
 {
-  return miniexp_cdr(miniexp_car(p)); 
+  return miniexp_cdr(miniexp_car(p));
 }
 
-miniexp_t 
+miniexp_t
 miniexp_cddr(miniexp_t p)
 {
-  return miniexp_cdr(miniexp_cdr(p)); 
+  return miniexp_cdr(miniexp_cdr(p));
 }
 
-miniexp_t 
+miniexp_t
 miniexp_caddr(miniexp_t p)
 {
   return miniexp_car(miniexp_cdr(miniexp_cdr(p)));
 }
 
-miniexp_t 
+miniexp_t
 miniexp_cdddr(miniexp_t p)
 {
   return miniexp_cdr(miniexp_cdr(miniexp_cdr(p)));
 }
 
-miniexp_t 
+miniexp_t
 miniexp_nth(int n, miniexp_t l)
 {
-  while (--n>=0 && miniexp_consp(l)) 
+  while (--n>=0 && miniexp_consp(l))
     l = cdr(l);
   return miniexp_car(l);
 }
 
-miniexp_t 
+miniexp_t
 miniexp_cons(miniexp_t a, miniexp_t d)
 {
   CSLOCK(locker);
-  miniexp_t r = (miniexp_t)gc_alloc_pair((void*)a, (void*)d); 
+  miniexp_t r = (miniexp_t)gc_alloc_pair((void*)a, (void*)d);
   gctls_t *tls = gctls();
   tls->recent[(++(tls->recentindex)) & (recentsize-1)] = (void**)r;
   return r;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_rplaca(miniexp_t pair, miniexp_t newcar)
 {
   if (miniexp_consp(pair))
@@ -849,7 +846,7 @@ miniexp_rplaca(miniexp_t pair, miniexp_t newcar)
   return 0;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_rplacd(miniexp_t pair, miniexp_t newcdr)
 {
   if (miniexp_consp(pair))
@@ -857,7 +854,7 @@ miniexp_rplacd(miniexp_t pair, miniexp_t newcdr)
   return 0;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_reverse(miniexp_t p)
 {
   miniexp_t l = 0;
@@ -888,12 +885,12 @@ miniobj_t::isa(miniexp_t) const
   return false;
 }
 
-void 
+void
 miniobj_t::mark(minilisp_mark_t*)
 {
 }
 
-void 
+void
 miniobj_t::destroy()
 {
   delete this;
@@ -920,7 +917,7 @@ miniobj_t::doublep(double&) const
   return false;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_object(miniobj_t *obj)
 {
   CSLOCK(locker);
@@ -931,15 +928,15 @@ miniexp_object(miniobj_t *obj)
   return (miniexp_t)(v);
 }
 
-miniexp_t 
-miniexp_classof(miniexp_t p) 
+miniexp_t
+miniexp_classof(miniexp_t p)
 {
   miniobj_t *obj = miniexp_to_obj(p);
   if (obj) return obj->classof();
   return miniexp_nil;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_isa(miniexp_t p, miniexp_t c)
 {
   miniobj_t *obj = miniexp_to_obj(p);
@@ -955,7 +952,7 @@ miniexp_isa(miniexp_t p, miniexp_t c)
 
 BEGIN_ANONYMOUS_NAMESPACE
 
-class ministring_t : public miniobj_t 
+class ministring_t : public miniobj_t
 {
   MINIOBJ_DECLARE(ministring_t,miniobj_t,"string");
 public:
@@ -1050,7 +1047,7 @@ static void
 char_out(int c, char* &d, int &n)
 {
   n++;
-  if (d) 
+  if (d)
     *d++ = c;
 }
 
@@ -1060,7 +1057,7 @@ print_c_string(const char *s, char *d, int flags, size_t len)
   int c;
   int n = 0;
   char_out('\"', d, n);
-  while (len-- > 0) 
+  while (len-- > 0)
     {
       c = (unsigned char)(*s++);
       if (char_quoted(c, flags))
@@ -1073,7 +1070,7 @@ print_c_string(const char *s, char *d, int flags, size_t len)
           for (int i=0; tr2[i]; i++)
             if (c == tr2[i])
               buffer[0] = tr1[i];
-          if (buffer[0] == 0 && c >= 0x80 
+          if (buffer[0] == 0 && c >= 0x80
               && (flags & (miniexp_io_u4escape | miniexp_io_u6escape))
               && char_utf8(c, s, len) )
             {
@@ -1082,8 +1079,8 @@ print_c_string(const char *s, char *d, int flags, size_t len)
               else if (flags & miniexp_io_u6escape) // c# style
                 sprintf(buffer,"U%06X", c);
               else if (flags & miniexp_io_u4escape) // json style
-                sprintf(buffer,"u%04X\\u%04X", 
-                        0xd800+(((c-0x10000)>>10)&0x3ff), 
+                sprintf(buffer,"u%04X\\u%04X",
+                        0xd800+(((c-0x10000)>>10)&0x3ff),
                         0xdc00+(c&0x3ff));
             }
           if (buffer[0] == 0 && c == 0)
@@ -1102,7 +1099,7 @@ print_c_string(const char *s, char *d, int flags, size_t len)
   return n;
 }
 
-int 
+int
 miniexp_stringp(miniexp_t p)
 {
   const char *s; size_t l;
@@ -1137,14 +1134,14 @@ miniexp_string(const char *s)
   return miniexp_lstring(strlen(s), s);
 }
 
-miniexp_t 
+miniexp_t
 miniexp_lstring(size_t len, const char *s)
 {
   ministring_t *obj = new ministring_t(len,s);
   return miniexp_object(obj);
 }
 
-miniexp_t 
+miniexp_t
 miniexp_substring(const char *s, int len)
 {
   size_t l = strlen(s);
@@ -1152,7 +1149,7 @@ miniexp_substring(const char *s, int len)
   return miniexp_lstring((l < n) ? l : n, s);
 }
 
-miniexp_t 
+miniexp_t
 miniexp_concat(miniexp_t p)
 {
   miniexp_t l = p;
@@ -1181,7 +1178,7 @@ miniexp_concat(miniexp_t p)
 
 BEGIN_ANONYMOUS_NAMESPACE
 
-class minifloat_t : public miniobj_t 
+class minifloat_t : public miniobj_t
 {
   MINIOBJ_DECLARE(minifloat_t,miniobj_t,"floatnum");
 public:
@@ -1198,13 +1195,13 @@ MINIOBJ_IMPLEMENT(minifloat_t,miniobj_t,"floatnum");
 
 END_ANONYMOUS_NAMESPACE
 
-int 
+int
 miniexp_floatnump(miniexp_t p)
 {
   return miniexp_isa(p, minifloat_t::classname) ? 1 : 0;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_floatnum(double x)
 {
   minifloat_t *obj = new minifloat_t(x);
@@ -1221,7 +1218,7 @@ miniexp_doublep(miniexp_t p)
   return 0;
 }
 
-double 
+double
 miniexp_to_double(miniexp_t p)
 {
   double v = 0.0;
@@ -1232,7 +1229,7 @@ miniexp_to_double(miniexp_t p)
   return v;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_double(double x)
 {
   miniexp_t exp = miniexp_number((int)(x));
@@ -1269,10 +1266,10 @@ str_is_double(const char *s, double &x)
       char *end;
       errno = 0;
       x = (double) strtol(s, &end, 0);
-      if (*end == 0 && errno == 0) 
+      if (*end == 0 && errno == 0)
         return true;
       x = (double) strtod(s, &end);
-      if (*end == 0 && errno == 0) 
+      if (*end == 0 && errno == 0)
         return true;
     }
   return false;
@@ -1288,11 +1285,11 @@ static int true_stdio_fputs(miniexp_io_t *io, const char *s) {
   FILE *f = (io->data[1]) ? (FILE*)(io->data[1]) : stdout;
   return ::fputs(s, f);
 }
-static int compat_puts(const char *s) { 
-  return true_stdio_fputs(&miniexp_io, s); 
+static int compat_puts(const char *s) {
+  return true_stdio_fputs(&miniexp_io, s);
 }
 static int stdio_fputs(miniexp_io_t *io, const char *s) {
-  if (io == &miniexp_io) 
+  if (io == &miniexp_io)
     return (*minilisp_puts)(s);
   return true_stdio_fputs(io, s);
 }
@@ -1301,12 +1298,12 @@ static int true_stdio_fgetc(miniexp_io_t *io) {
   FILE *f = (io->data[0]) ? (FILE*)(io->data[0]) : stdin;
   return ::getc(f);
 }
-static int compat_getc() { 
-  return true_stdio_fgetc(&miniexp_io); 
+static int compat_getc() {
+  return true_stdio_fgetc(&miniexp_io);
 }
 static int stdio_fgetc(miniexp_io_t *io)
 {
-  if (io == &miniexp_io) 
+  if (io == &miniexp_io)
     return (*minilisp_getc)();
   return true_stdio_fgetc(io);
 }
@@ -1315,17 +1312,17 @@ static int true_stdio_ungetc(miniexp_io_t *io, int c) {
   FILE *f = (io->data[0]) ? (FILE*)(io->data[0]) : stdin;
   return ::ungetc(c, f);
 }
-static int compat_ungetc(int c) { 
-  return true_stdio_ungetc(&miniexp_io, c); 
+static int compat_ungetc(int c) {
+  return true_stdio_ungetc(&miniexp_io, c);
 }
 static int stdio_ungetc(miniexp_io_t *io, int c) {
-  if (io == &miniexp_io) 
+  if (io == &miniexp_io)
     return (*minilisp_ungetc)(c);
   return true_stdio_ungetc(io, c);
 }
 
-extern "C" 
-{ 
+extern "C"
+{
   // SunCC needs this to be defined inside extern "C" { ... }
   // Beware the difference between extern "C" {...} and extern "C".
   miniexp_t (*minilisp_macrochar_parser[128])(void);
@@ -1334,20 +1331,20 @@ extern "C"
   int minilisp_print_7bits;
 }
 
-miniexp_io_t miniexp_io = { 
+miniexp_io_t miniexp_io = {
   stdio_fputs, stdio_fgetc, stdio_ungetc, { 0, 0, 0, 0 },
   (int*)&minilisp_print_7bits,
-  (miniexp_macrochar_t*)minilisp_macrochar_parser, 
-  (miniexp_macrochar_t*)minilisp_diezechar_parser, 
+  (miniexp_macrochar_t*)minilisp_macrochar_parser,
+  (miniexp_macrochar_t*)minilisp_diezechar_parser,
   (minivar_t*)&minilisp_macroqueue,
   0
-};  
+};
 
 int (*minilisp_puts)(const char *) = compat_puts;
 int (*minilisp_getc)(void) = compat_getc;
 int (*minilisp_ungetc)(int) = compat_ungetc;
 
-void 
+void
 miniexp_io_init(miniexp_io_t *io)
 {
   io->fputs = stdio_fputs;
@@ -1361,14 +1358,14 @@ miniexp_io_init(miniexp_io_t *io)
   io->p_reserved = 0;
 }
 
-void 
+void
 miniexp_io_set_output(miniexp_io_t* io, FILE *f)
 {
   io->fputs = stdio_fputs;
   io->data[1] = f;
 }
 
-void 
+void
 miniexp_io_set_input(miniexp_io_t* io, FILE *f)
 {
   io->fgetc = stdio_fgetc;
@@ -1381,7 +1378,7 @@ miniexp_io_set_input(miniexp_io_t* io, FILE *f)
 
 BEGIN_ANONYMOUS_NAMESPACE
 
-struct printer_t 
+struct printer_t
 {
   int tab;
   bool dryrun;
@@ -1480,7 +1477,7 @@ printer_t::print(miniexp_t p)
       size_t len = miniexp_to_lstr(p, &s);
       int n = print_c_string(s, 0, flags, len);
       char *d = new char[n];
-      if (d) 
+      if (d)
         print_c_string(s, d, flags, len);
       mlput(d);
       delete [] d;
@@ -1511,9 +1508,9 @@ printer_t::print(miniexp_t p)
           skip -= 1;
 	  if (multiline || (newline() && skip<0 && tab>indent))
             {
-              mlput("\n"); 
-              mltab(indent); 
-              multiline=true; 
+              mlput("\n");
+              mltab(indent);
+              multiline=true;
             }
           print(car(p));
           if ((p = cdr(p)))
@@ -1531,9 +1528,9 @@ printer_t::print(miniexp_t p)
           skip -= 1;
 	  if (multiline || (newline() && skip<0 && tab>indent))
             {
-              mlput("\n"); 
-              mltab(indent); 
-              multiline=true; 
+              mlput("\n");
+              mltab(indent);
+              multiline=true;
             }
           mlput(". ");
           print(p);
@@ -1546,7 +1543,7 @@ printer_t::print(miniexp_t p)
   end(b);
 }
 
-struct pprinter_t : public printer_t 
+struct pprinter_t : public printer_t
 {
   int width;
   minivar_t l;
@@ -1556,7 +1553,7 @@ struct pprinter_t : public printer_t
   virtual void end(miniexp_t);
 };
 
-miniexp_t 
+miniexp_t
 pprinter_t::begin()
 {
   if (dryrun)
@@ -1573,7 +1570,7 @@ pprinter_t::begin()
     }
 }
 
-bool 
+bool
 pprinter_t::newline()
 {
   if (! dryrun)
@@ -1587,7 +1584,7 @@ pprinter_t::newline()
   return false;
 }
 
-void 
+void
 pprinter_t::end(miniexp_t p)
 {
   if (dryrun)
@@ -1602,7 +1599,7 @@ pprinter_t::end(miniexp_t p)
 
 END_ANONYMOUS_NAMESPACE
 
-miniexp_t 
+miniexp_t
 miniexp_prin_r(miniexp_io_t *io, miniexp_t p)
 {
   minivar_t xp = p;
@@ -1611,7 +1608,7 @@ miniexp_prin_r(miniexp_io_t *io, miniexp_t p)
   return p;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_print_r(miniexp_io_t *io, miniexp_t p)
 {
   minivar_t xp = p;
@@ -1620,9 +1617,9 @@ miniexp_print_r(miniexp_io_t *io, miniexp_t p)
   return p;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_pprin_r(miniexp_io_t *io, miniexp_t p, int width)
-{  
+{
   minivar_t xp = p;
   pprinter_t printer(io);
   printer.width = width;
@@ -1640,7 +1637,7 @@ miniexp_pprin_r(miniexp_io_t *io, miniexp_t p, int width)
   return p;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_pprint_r(miniexp_io_t *io, miniexp_t p, int width)
 {
   miniexp_pprin_r(io, p, width);
@@ -1674,7 +1671,7 @@ pname_fputs(miniexp_io_t *io, const char *s)
   return x;
 }
 
-miniexp_t 
+miniexp_t
 miniexp_pname(miniexp_t p, int width)
 {
   minivar_t r;
@@ -1726,7 +1723,7 @@ static void
 append_utf8(int x, char *&s, size_t &l, size_t &m)
 {
   if (x >= 0 && x <= 0x10ffff)
-    { 
+    {
       if (l + 4 >= m)
         grow(s, l, m);
       if (x <= 0x7f) {
@@ -1851,7 +1848,7 @@ read_c_string(miniexp_io_t *io, int &c)
               while (x >= 0xd800 && x <= 0xdbff && c == '\\')
                 {
                   c = io->fgetc(io);
-                  if (c != 'u' && c != 'U') 
+                  if (c != 'u' && c != 'U')
                     {
                       io->ungetc(io, c);
                       c = '\\';
@@ -1925,9 +1922,9 @@ read_symbol_or_number(miniexp_io_t *io, int &c)
   size_t m = 0;
   for(;;)
     {
-      if (c==EOF || c=='(' || c==')' || c=='|' || c=='\"'  
-          || isspace(c) || !isascii(c) || !isprint(c) 
-          || (io->p_macrochar && io->p_macroqueue  
+      if (c==EOF || c=='(' || c==')' || c=='|' || c=='\"'
+          || isspace(c) || !isascii(c) || !isprint(c)
+          || (io->p_macrochar && io->p_macroqueue
               && c < 128 && c >= 0 && io->p_macrochar[c] ) )
         break;
       append(c,s,l,m);
@@ -1981,7 +1978,7 @@ read_miniexp(miniexp_io_t *io, int &c)
                 {
                   int d = io->fgetc(io);
                   io->ungetc(io, d);
-                  if (isspace(d)) 
+                  if (isspace(d))
                     break;
                 }
               p = read_miniexp(io, c);
@@ -2012,7 +2009,7 @@ read_miniexp(miniexp_io_t *io, int &c)
         {
           return read_quoted_symbol(io, c);
         }
-      else if (io->p_macrochar && io->p_macroqueue 
+      else if (io->p_macrochar && io->p_macroqueue
                && c >= 0 && c < 128 && io->p_macrochar[c])
         {
           miniexp_t p = io->p_macrochar[c](io);
@@ -2047,7 +2044,7 @@ read_miniexp(miniexp_io_t *io, int &c)
     }
 }
 
-miniexp_t 
+miniexp_t
 miniexp_read_r(miniexp_io_t *io)
 {
   int c = io->fgetc(io);
@@ -2085,14 +2082,14 @@ miniexp_t miniexp_pprint(miniexp_t p, int w)
   return miniexp_pprint_r(&miniexp_io, p, w);
 }
 
-void 
+void
 minilisp_set_output(FILE *f)
 {
   minilisp_puts = compat_puts;
   miniexp_io_set_output(&miniexp_io, f);
 }
 
-void 
+void
 minilisp_set_input(FILE *f)
 {
   minilisp_getc = compat_getc;

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _DJVUPORT_H
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -115,7 +112,7 @@ class DataPool;
     The \Ref{DjVuPortcaster} is responsible for keeping the map up to date by
     getting rid of destinations that have been destroyed.  Map updates are
     performed from a single place and are serialized by a global monitor.
-    
+
     @memo DjVu decoder communication mechanism.
     @author Andrei Erofeev <eaf@geocities.com>\\
             L\'eon Bottou <leonb@research.att.com>
@@ -167,10 +164,10 @@ public:
 	  is either #DjVuPort# or #DjVuFile# */
    virtual bool		inherits(const GUTF8String &class_name) const;
 
-      /** @name Notifications. 
+      /** @name Notifications.
           These virtual functions may be overridden by the subclasses
           of #DjVuPort#.  They are called by the \Ref{DjVuPortcaster}
-          when the port is alive and when there is a route between the 
+          when the port is alive and when there is a route between the
           source of the notification and this port. */
       //@{
 
@@ -198,7 +195,7 @@ public:
    virtual GP<DataPool>	request_data(const DjVuPort * source, const GURL & url);
 
       /** This notification is sent when an error occurs and the error message
-	  should be shown to the user.  The receiver should return #0# if it is 
+	  should be shown to the user.  The receiver should return #0# if it is
           unable to process the request. Otherwise the receiver should return 1. */
    virtual bool		notify_error(const DjVuPort * source, const GUTF8String &msg);
 
@@ -228,7 +225,7 @@ public:
 	    \item All data has been received
 	    \item All included files have been created
 	  \end{itemize}
-	  
+
 	  @param source \Ref{DjVuFile}, which flags have been changed
 	  @param set_mask bits, which have been set
 	  @param clr_mask bits, which have been cleared */
@@ -244,7 +241,7 @@ public:
 	  @param clr_mask bits, which have been cleared */
    virtual void		notify_doc_flags_changed(const class DjVuDocument * source,
 						 long set_mask, long clr_mask);
-   
+
       /** This notification is sent from time to time while decoding is in
 	  progress. The purpose is obvious: to provide a way to know how much
 	  is done and how long the decoding will continue.  Argument #done# is
@@ -252,11 +249,11 @@ public:
    virtual void		notify_decode_progress(const DjVuPort * source, float done);
 
       /** This is the standard types for defining what to do in case of errors.
-          This is only used by some of the subclasses, but it needs to be 
+          This is only used by some of the subclasses, but it needs to be
           defined here to guarantee all subclasses use the same enum types.
           In general, many errors are non recoverable.  Using a setting
           other than ABORT may just result in even more errors. */
-   enum ErrorRecoveryAction {ABORT=0,SKIP_PAGES=1,SKIP_CHUNKS=2,KEEP_ALL=3 }; 
+   enum ErrorRecoveryAction {ABORT=0,SKIP_PAGES=1,SKIP_CHUNKS=2,KEEP_ALL=3 };
       //@}
 public:
    class DjVuPortCorpse;
@@ -267,7 +264,7 @@ private:
    static int			corpse_num;
 };
 
-/** Simple port.  
+/** Simple port.
     An instance of #DjVuSimplePort# is automatically created when you create a
     \Ref{DjVuFile} or a \Ref{DjVuDocument} without specifying a port.  This
     simple port can retrieve data for local urls (i.e. urls referring to local
@@ -286,7 +283,7 @@ public:
 
       /// Displays error on #stderr#. Always returns 1.
    virtual bool		notify_error(const DjVuPort * source, const GUTF8String &msg);
-   
+
       /// Displays status on #stderr#. Always returns 1.
    virtual bool		notify_status(const DjVuPort * source, const GUTF8String &msg);
 };
@@ -329,7 +326,7 @@ private:
     The caller can modify the route map any way he likes (see
     \Ref{add_route}(), \Ref{del_route}(), \Ref{copy_routes}(),
     etc. functions). Any port can be either a sender of a message, an
-    intermediary receiver or a final destination.  
+    intermediary receiver or a final destination.
 
     When a request is sent, the #DjVuPortcaster# computes the list of
     destinations by consulting with the route map.  Notifications are only
@@ -370,7 +367,7 @@ public:
 	  be able to receive or generate messages and will be considered
     {\bf "dead"} by \Ref{is_port_alive}() function. */
    void		del_port(const DjVuPort * port);
-   
+
       /** Adds route from #src# to #dst#. Whenever a request is
 	  sent or received by #src#, it will be forwarded to #dst# as well.
 	  @param src The source
@@ -467,7 +464,7 @@ public:
 	  the closest. */
    virtual void		notify_doc_flags_changed(const class DjVuDocument * source,
 						 long set_mask, long clr_mask);
-   
+
       /** Computes destination list for #source# and calls the corresponding
 	  function in each of the ports from the destination list starting from
 	  the closest. */

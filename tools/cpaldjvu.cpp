@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -56,9 +56,6 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
-#endif
 
 /** @name cpaldjvu
 
@@ -68,13 +65,13 @@
     \end{verbatim}
 
     {\bf Description}
-    
+
     File #"cpaldjvu.cpp"# demonstrates a simple quasi-lossless compressor for
     low resolution, low color, images with a reduced number of colors (e.g
     screendumps).  It simply quantizes the image on a limited number of
     colors, uses the dominant color to construct a uniform background, then
-    performs lossless jb2 compression for all remaining objects.  
-    
+    performs lossless jb2 compression for all remaining objects.
+
     Options
     \begin{description}
     \item[-colors n]  Maximum number of colors during quantization (default 256)
@@ -132,8 +129,8 @@ inline int MAX(int a, int b) { return ( a>b ?a :b); }
 // --------------------------------------------------
 
 // -- A run of pixels with the same color
-struct Run    
-{ 
+struct Run
+{
   short y;       // vertical coordinate
   short x1;      // first horizontal coordinate
   short x2;      // last horizontal coordinate
@@ -143,7 +140,7 @@ struct Run
 
 
 // -- A component descriptor
-struct CC    
+struct CC
 {
   GRect bb;      // bounding box
   int npix;      // number of black pixels
@@ -154,7 +151,7 @@ struct CC
 
 
 // -- An image composed of runs
-class CCImage 
+class CCImage
 {
 public:
   int height;            // Height of the image in pixels
@@ -168,7 +165,7 @@ public:
   void make_ccids_by_analysis();
   void make_ccs_from_ccids();
   void merge_and_split_ccs(int smallsize, int largesize);
-  void sort_in_reading_order(); 
+  void sort_in_reading_order();
   void erase_cc(int ccid);
 };
 
@@ -189,7 +186,7 @@ CCImage::CCImage(int width, int height)
 
 
 // -- Adds a run to the CCImage
-inline void 
+inline void
 CCImage::add_single_run(int y, int x1, int x2, int color, int ccid)
 {
   int index = runs.hbound();
@@ -200,7 +197,7 @@ CCImage::add_single_run(int y, int x1, int x2, int color, int ccid)
   run.x2 = x2;
   run.color = color;
   run.ccid = ccid;
-  
+
 }
 
 
@@ -284,7 +281,7 @@ CCImage::make_ccs_from_ccids()
       maxccid = runs[n].ccid;
   GTArray<int> armap(0,maxccid);
   int *rmap = armap;
-  // Renumber ccs 
+  // Renumber ccs
   for (n=0; n<=maxccid; n++)
     armap[n] = -1;
   for (n=0; n<=runs.hbound(); n++)
@@ -316,7 +313,7 @@ CCImage::make_ccs_from_ccids()
     }
   // Compute positions for runs of cc
   int frun = 0;
-  for (n=0; n<nid; n++) 
+  for (n=0; n<nid; n++)
     {
       ccs[n].frun = rmap[n] = frun;
       frun += ccs[n].nrun;
@@ -364,7 +361,7 @@ CCImage::make_ccs_from_ccids()
 
 
 // -- Helper for merge_and_split_ccs
-struct Grid_x_Color 
+struct Grid_x_Color
 {
   short gridi;
   short gridj;
@@ -374,7 +371,7 @@ struct Grid_x_Color
 
 // -- Helper for merge_and_split_ccs
 static inline unsigned int
-hash(const Grid_x_Color &x) 
+hash(const Grid_x_Color &x)
 {
   return (x.gridi<<16) ^ (x.gridj<<8) ^ x.color;
 }
@@ -438,7 +435,7 @@ CCImage::merge_and_split_ccs(int smallsize, int largesize)
               r->ccid = makeccid(key, map, ncc);
               if (gridj_span>0)
                 {
-                  // truncate current run 
+                  // truncate current run
                   runs.touch(nruns+gridj_span-1);
                   r = &runs[runid];
                   int x = key.gridj*splitsize + splitsize;
@@ -472,7 +469,7 @@ CCImage::merge_and_split_ccs(int smallsize, int largesize)
 
 
 // -- Helps sorting cc
-static int 
+static int
 top_edges_descending (const void *pa, const void *pb)
 {
   if (((CC*) pa)->bb.ymax != ((CC*) pb)->bb.ymax)
@@ -484,7 +481,7 @@ top_edges_descending (const void *pa, const void *pb)
 
 
 // -- Helps sorting cc
-static int 
+static int
 left_edges_ascending (const void *pa, const void *pb)
 {
   if (((CC*) pa)->bb.xmin != ((CC*) pb)->bb.xmin)
@@ -496,7 +493,7 @@ left_edges_ascending (const void *pa, const void *pb)
 
 
 // -- Helps sorting cc
-static int 
+static int
 integer_ascending (const void *pa, const void *pb)
 {
   return ( *(int*)pb - *(int*)pa );
@@ -504,7 +501,7 @@ integer_ascending (const void *pa, const void *pb)
 
 
 // -- Sort ccs in approximate reading order
-void 
+void
 CCImage::sort_in_reading_order()
 {
   if (nregularccs<2) return;
@@ -517,7 +514,7 @@ CCImage::sort_in_reading_order()
   qsort (ccarray, nregularccs, sizeof(CC), top_edges_descending);
   // Subdivide the ccarray list roughly into text lines
   int maxtopchange = width / 40;
-  if (maxtopchange < 32) 
+  if (maxtopchange < 32)
     maxtopchange = 32;
   // - Loop until processing all ccs
   int ccno = 0;
@@ -568,7 +565,7 @@ CCImage::sort_in_reading_order()
 
 
 // -- Creates a bitmap for a particular component
-GP<GBitmap>   
+GP<GBitmap>
 CCImage::get_bitmap_for_cc(const int ccid) const
 {
   const CC &cc = ccs[ccid];
@@ -590,7 +587,7 @@ CCImage::get_bitmap_for_cc(const int ccid) const
 
 
 // -- Marks cc for deletion
-void 
+void
 CCImage::erase_cc(int ccid)
 {
   CC &cc = ccs[ccid];
@@ -610,7 +607,7 @@ CCImage::erase_cc(int ccid)
 // --------------------------------------------------
 
 
-// ISSUE: DEMOTION OF CCS (UNIMPLEMENTED) 
+// ISSUE: DEMOTION OF CCS (UNIMPLEMENTED)
 
 // The current code uses a single color for the background layer.  Many large,
 // non matching, ccs however may be better encoded as part of the background
@@ -641,7 +638,7 @@ struct cpaldjvuopts
 
 
 // -- Compresses low color pixmap.
-void 
+void
 cpaldjvu(ByteStream *ibs, GURL &urlout, const cpaldjvuopts &opts)
 {
   GP<GPixmap> ginput=GPixmap::create(*ibs);
@@ -676,12 +673,12 @@ cpaldjvu(ByteStream *ibs, GURL &urlout, const cpaldjvuopts &opts)
     }
   if (opts.verbose)
     DjVuFormatErrorUTF8( "%s\t%d\t%d\t%d",
-                         ERR_MSG("cpaldjvu.quantizied"), 
+                         ERR_MSG("cpaldjvu.quantizied"),
                          w, h, pal.size());
   if (opts.verbose && !opts.bgwhite)
-    DjVuPrintErrorUTF8("cpaldjvu: background color is #%02x%02x%02x.\n", 
+    DjVuPrintErrorUTF8("cpaldjvu: background color is #%02x%02x%02x.\n",
                        bgcolor.r, bgcolor.g, bgcolor.b);
-  
+
   // Fill CCImage with color runs
   int xruncount=0,yruncount=0;
   CCImage rimg(w, h);
@@ -720,21 +717,21 @@ cpaldjvu(ByteStream *ibs, GURL &urlout, const cpaldjvuopts &opts)
     }
   ginput = 0; //save memory
   if (opts.verbose)
-    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cpaldjvu.color_runs"), 
+    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cpaldjvu.color_runs"),
                          rimg.runs.size());
 
   // Perform Color Connected Component Analysis
   rimg.make_ccids_by_analysis();                  // Obtain ccids
   rimg.make_ccs_from_ccids();                     // Compute cc descriptors
   if (opts.verbose)
-    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cpaldjvu.ccs_before"), 
+    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cpaldjvu.ccs_before"),
                          rimg.ccs.size());
   rimg.merge_and_split_ccs(smallsize,largesize);  // Eliminates gross ccs
   if (opts.verbose)
-    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cpaldjvu.ccs_after"), 
+    DjVuFormatErrorUTF8( "%s\t%d", ERR_MSG("cpaldjvu.ccs_after"),
                          rimg.ccs.size());
   rimg.sort_in_reading_order();                   // Sort cc descriptors
-  
+
   // Create JB2Image and fill colordata
   GP<JB2Image> gjimg=JB2Image::create();
   JB2Image &jimg=*gjimg;
@@ -758,7 +755,7 @@ cpaldjvu(ByteStream *ibs, GURL &urlout, const cpaldjvuopts &opts)
       pal.colordata.touch(blitno);
       pal.colordata[blitno] = cc.color;
     }
-  
+
   // Organize JB2Image
   tune_jb2image_lossless(&jimg);
   if (opts.verbose)
@@ -766,14 +763,14 @@ cpaldjvu(ByteStream *ibs, GURL &urlout, const cpaldjvuopts &opts)
       int nshape=0, nrefine=0;
       for (int i=0; i<jimg.get_shape_count(); i++) {
         if (!jimg.get_shape(i).bits) continue;
-        if (jimg.get_shape(i).parent >= 0) nrefine++; 
-        nshape++; 
+        if (jimg.get_shape(i).parent >= 0) nrefine++;
+        nshape++;
       }
       DjVuFormatErrorUTF8( "%s\t%d\t%d",
-                       ERR_MSG("cpaldjvu.cross_code"), 
+                       ERR_MSG("cpaldjvu.cross_code"),
                        nshape, nrefine);
     }
-  
+
   // Create background image
 #ifdef BACKGROUND_SUBSAMPLING_FACTOR
   // -- we may create the background by masking and subsampling
@@ -833,7 +830,7 @@ cpaldjvu(ByteStream *ibs, GURL &urlout, const cpaldjvuopts &opts)
   // -- terminate main composite chunk
   iff.close_chunk();
   // Finished!
-}  
+}
 
 
 
@@ -861,7 +858,7 @@ usage()
 }
 
 
-int 
+int
 main(int argc, const char **argv)
 {
   DJVU_LOCALE;

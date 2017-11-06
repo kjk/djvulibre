@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,9 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
 
 /** @name GPixmap.h
 
@@ -70,9 +67,9 @@
     is used consistently in the DjVu library.  Line zero of a GPixmap is the
     bottom line in the color image.  Pixels are organized from left to right
     within each line.
-    
-    {\bf ToDo} --- More sophisticated color correction schemes. 
-    
+
+    {\bf ToDo} --- More sophisticated color correction schemes.
+
     @memo
     Generic support for color images.
     @author
@@ -96,7 +93,7 @@ class GRect;
 class ByteStream;
 
 
-/** Color pixel as a RGB triple.  
+/** Color pixel as a RGB triple.
     The colors are represented using three bytes named #r#, #g# and #b#.  The
     value of these bytes represent additive amounts of light.  Color white is
     represented by setting all three bytes to #255#.  Color black is
@@ -119,22 +116,22 @@ struct DJVUAPI GPixel
   /** Returns a hash code for the color. */
   friend unsigned int hash(const GPixel &p);
   /** @name Predefined colors. */
-  //@{ 
+  //@{
   /// GPixel::WHITE is initialized to #rgb:255/255/255#.
-  static const GPixel WHITE; 
+  static const GPixel WHITE;
   /// GPixel::BLACK is initialized to #rgb:0/0/0#.
-  static const GPixel BLACK; 
+  static const GPixel BLACK;
   /// GPixel::BLUE is initialized to #rgb:0/0/255#.
-  static const GPixel BLUE;  
+  static const GPixel BLUE;
   /// GPixel::GREEN is initialized to #rgb:0/255/0#.
-  static const GPixel GREEN; 
+  static const GPixel GREEN;
   /// GPixel::RED is initialized to #rgb:255/0/0#.
   static const GPixel RED;
   //@}
 };
 
 
-/** RGB Color images.  
+/** RGB Color images.
     Instances of class #GPixmap# represent color images as a two dimensional
     array of pixels \Ref{GPixel}.  The bracket operator returns a pointer to
     the pixels composing one line of the image.  This pointer can be used as
@@ -167,7 +164,7 @@ public:
   static GP<GPixmap> create(void) {return new GPixmap();}
 
   /** Creates a GPixmap with #nrows# rows and #ncolumns# columns.  When the
-      optional argument #filler# is specified, all pixels are initialized 
+      optional argument #filler# is specified, all pixels are initialized
       with the corresponding color. */
   static GP<GPixmap> create(
     const int nrows, const int ncolumns, const GPixel *filler=0)
@@ -217,9 +214,9 @@ public:
   /** Resets the GPixmap by copying the rectangle #rect# of the color image #ref#.
       The previous content of the GPixmap is discarded. */
   void init(const GPixmap &ref, const GRect &rect);
-  /** Resets the GPixmap by copying the size and the contents of the gray 
-      level image #ref#.  The optional argument #ramp# is an array of 256 
-      pixel values used for mapping the gray levels to color values. 
+  /** Resets the GPixmap by copying the size and the contents of the gray
+      level image #ref#.  The optional argument #ramp# is an array of 256
+      pixel values used for mapping the gray levels to color values.
       Setting #ramp# to zero selects a linear ramp of shades of gray. */
   void init(const GBitmap &ref, const GPixel *ramp=0);
   /** Resets the GPixmap by copying the rectangle #rect# of the gray level
@@ -283,7 +280,7 @@ public:
       full rescaled image is copied if #rect# is a null pointer.  Both
       operations are however performed together for efficiency reasons.  This
       function has been superseded by class \Ref{GPixmapScaler}. */
-  void downsample43(const GPixmap *src, const GRect *rect=0); 
+  void downsample43(const GPixmap *src, const GRect *rect=0);
   /** Resets this GPixmap with a rescaled segment of #src# (zoom 150%).  This
       function conceptually rescales image #src# by a factor #3:2# and copies
       rectangle #rect# of the rescaled image into the current GPixmap.  The
@@ -293,18 +290,18 @@ public:
   void upsample23(const GPixmap *src, const GRect *rect=0);
   //@}
 
-  /** @name Blitting and applying stencils.  
+  /** @name Blitting and applying stencils.
       These function is essential for rendering DjVu images.  The elementary
       functions are \Ref{attenuate} and \Ref{blit}.  The combined functions
       \Ref{blend} and \Ref{stencil} should be viewed as optimizations.  */
   //@{
-  /** Attenuates the color image in preparation for a blit.  
+  /** Attenuates the color image in preparation for a blit.
       Bitmap #bm# is positionned at location #x#,#y# over this color image.
       The matching color image pixels are then multiplied by #1.0-Alpha# where
       #Alpha# denotes the gray value, in range #[0,1]#, represented by the
       corresponding pixel of bitmap #bm#. */
   void attenuate(const GBitmap *bm, int x, int y);
-  /** Blits solid color #color# through transparency mask #bm#.  
+  /** Blits solid color #color# through transparency mask #bm#.
       Bitmap #bm# is positionned at location #x#,#y# over this color image.
       The matching color image pixels are then modified by adding color
       #color# multiplied by #Alpha#, where #Alpha# denotes the gray value, in
@@ -329,14 +326,14 @@ public:
       color correction #corr# (see \Ref{color_correct}).  This intermediate
       color image is then blended into this pixel map according to the alpha
       map #bm# (see \Ref{blend}). */
-  void stencil(const GBitmap *bm, 
-               const GPixmap *pm, int pms, 
+  void stencil(const GBitmap *bm,
+               const GPixmap *pm, int pms,
                const GRect *pmr, double corr, GPixel white);
-  void stencil(const GBitmap *bm, 
-               const GPixmap *pm, int pms, 
+  void stencil(const GBitmap *bm,
+               const GPixmap *pm, int pms,
                const GRect *pmr, double corr=1.0);
   //@}
-  
+
   /** @name Manipulating colors. */
   //@{
   /** Dithers the image to 216 colors.  This function applies an ordered
@@ -363,20 +360,20 @@ public:
       these arguments eliminates dithering artifacts on the tile
       boundaries. */
   void ordered_32k_dither(int xmin=0, int ymin=0);
-  /** Applies a luminance gamma correction factor of #corr#.  
-      Values greater than #1.0# make the image brighter.  
-      Values smaller than #1.0# make the image darker.  
+  /** Applies a luminance gamma correction factor of #corr#.
+      Values greater than #1.0# make the image brighter.
+      Values smaller than #1.0# make the image darker.
       The documentation of program \Ref{ppmcoco} explains how to
       properly use this function. */
   void color_correct(double corr);
   void color_correct(double corr, GPixel white);
-  /** Applies a luminance gamma correction to an array of pixels. 
+  /** Applies a luminance gamma correction to an array of pixels.
       This function is {\em static} and does not modify this pixmap. */
   static void color_correct(double corr, GPixel *pix, int npix);
   static void color_correct(double corr, GPixel white, GPixel *pix, int npix);
 
   //@}
-  
+
   /** @name Miscellaneous. */
   //@{
   /** Returns the number of bytes allocated for this image. */
@@ -406,24 +403,24 @@ public:
       object does not ``own'' the buffer: you must explicitly de-allocate the
       buffer using #operator delete []#.  This de-allocation should take place
       after the destruction or the re-initialization of the GPixmap object.  */
-  inline void borrow_data(GPixel &data, int w, int h); 
-  /// Identical to the above, but GPixmap will do the delete []. 
-  void donate_data(GPixel *data, int w, int h); 
-  
+  inline void borrow_data(GPixel &data, int w, int h);
+  /// Identical to the above, but GPixmap will do the delete [].
+  void donate_data(GPixel *data, int w, int h);
+
   /** Rotates pixmap by 90, 180 or 270 degrees anticlockwise
-      and returns a new pixmap, input pixmap is not changed. 
+      and returns a new pixmap, input pixmap is not changed.
       count can be 1, 2, or 3 for 90, 180, 270 degree rotation.
       It returns the same pixmap if not rotated. */
   GP<GPixmap> rotate(int count=0);
 
   //@}
-  
+
   // Please ignore these two functions. Their only purpose is to allow
-  // DjVu viewer compile w/o errors. eaf. 
+  // DjVu viewer compile w/o errors. eaf.
   // Is this still useful ?. lyb.
   int get_grays(void) const { return 256; };
   void set_grays(int) {};\
-  
+
 protected:
   // data
   unsigned short nrows;
@@ -439,19 +436,19 @@ protected:
 // INLINE --------------------------
 
 
-inline int 
+inline int
 operator==(const GPixel & p1, const GPixel & p2)
 {
   return p1.r==p2.r && p1.g==p2.g && p1.b==p2.b;
 }
 
-inline int 
+inline int
 operator!=(const GPixel & p1, const GPixel & p2)
 {
   return p1.r!=p2.r || p1.g!=p2.g || p1.b!=p2.b;
 }
 
-inline unsigned int 
+inline unsigned int
 hash(const GPixel &p)
 {
   unsigned int x = (p.b<<16)|(p.g<<8)|(p.r);
@@ -490,14 +487,14 @@ GPixmap::operator[](int row) const
   return &pixels[row * nrowsize];
 }
 
-inline GPixmap & 
+inline GPixmap &
 GPixmap::operator=(const GBitmap &ref)
 {
   init(ref);
   return *this;
 }
 
-inline GPixmap & 
+inline GPixmap &
 GPixmap::operator=(const GPixmap &ref)
 {
   init(ref);
@@ -516,7 +513,7 @@ GPixmap::borrow_data(GPixel &data, int w, int h)
 //////////////////////////////////////////////////
 
 
-inline unsigned int 
+inline unsigned int
 GPixmap::get_memory_usage() const
 {
   return  sizeof(GPixmap)+(nrows * ncolumns * sizeof(GPixel));

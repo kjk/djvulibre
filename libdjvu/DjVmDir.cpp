@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVmDir.h"
@@ -208,13 +205,13 @@ DjVmDir::File::get_str_type(void) const
 
 const int DjVmDir::version=1;
 
-void 
+void
 DjVmDir::decode(const GP<ByteStream> &gstr)
 {
    ByteStream &str=*gstr;
    DEBUG_MSG("DjVmDir::decode(): decoding contents of 'DIRM' chunk...\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    GCriticalSectionLock lock(&class_lock);
 
    GPosition pos;
@@ -230,7 +227,7 @@ DjVmDir::decode(const GP<ByteStream> &gstr)
 
    DEBUG_MSG("DIRM version=" << ver << ", our version=" << version << "\n");
    if (ver>version)
-      G_THROW( ERR_MSG("DjVmDir.version_error") "\t" 
+      G_THROW( ERR_MSG("DjVmDir.version_error") "\t"
                + GUTF8String(version) + "\t" + GUTF8String(ver));
    // Unable to read DJVM directories of versions higher than xxx
    // Data version number is yyy.
@@ -267,7 +264,7 @@ DjVmDir::decode(const GP<ByteStream> &gstr)
          for(GPosition pos=files_list;pos;++pos)
             files_list[pos]->size=bs_str.read24();
       }
-         
+
       DEBUG_MSG("reading and decompressing flags...\n");
       for(pos=files_list;pos;++pos)
          files_list[pos]->flags=bs_str.read8();
@@ -287,7 +284,7 @@ DjVmDir::decode(const GP<ByteStream> &gstr)
             files_list[pos]->flags=flags_1;
          }
       }
-   
+
       DEBUG_MSG("reading and decompressing names...\n");
       GTArray<char> strings;
       char buffer[1024];
@@ -299,7 +296,7 @@ DjVmDir::decode(const GP<ByteStream> &gstr)
          memcpy((char*) strings+strings_size, buffer, length);
       }
       DEBUG_MSG("size of decompressed names block=" << strings.size() << "\n");
-   
+
          // Copy names into the files
       const char * ptr=strings;
       for(pos=files_list;pos;++pos)
@@ -322,7 +319,7 @@ DjVmDir::decode(const GP<ByteStream> &gstr)
        ptr+=file->title.length()+1;
          } else
        file->title=file->id;
-   /* msr debug:  multipage file, file->title is null.  
+   /* msr debug:  multipage file, file->title is null.
          DEBUG_MSG(file->name << ", " << file->id << ", " << file->title << ", " <<
                    file->offset << ", " << file->size << ", " <<
                    file->is_page() << "\n"); */
@@ -399,13 +396,13 @@ DjVmDir::encode(const GP<ByteStream> &gstr, const bool bundled, const bool do_re
   ByteStream &str=*gstr;
   DEBUG_MSG("DjVmDir::encode(): encoding contents of the 'DIRM' chunk do_rename=" << do_rename << "\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   GCriticalSectionLock lock((GCriticalSection *) &class_lock);
   GPosition pos;
 
   DEBUG_MSG("encoding version number=" << version << ", bundled=" << bundled << "\n");
   str.write8(version | ((int) bundled<< 7));
-   
+
   DEBUG_MSG("storing the number of records=" << files_list.size() << "\n");
   str.write16(files_list.size());
 
@@ -418,7 +415,7 @@ DjVmDir::encode(const GP<ByteStream> &gstr, const bool bundled, const bool do_re
           shared_anno_cnt++;
       if (shared_anno_cnt>1)
         G_THROW( ERR_MSG("DjVmDir.multi_save") );
-      
+
       if (bundled)
         {
           // We need to store offsets uncompressed. That's because when
@@ -612,7 +609,7 @@ int
 DjVmDir::get_page_pos(int page_num) const
 {
    GCriticalSectionLock lock((GCriticalSection *) &class_lock);
-   
+
    GP<File> file=page_to_file(page_num);
    return (file)?get_file_pos(file):(-1);
 }
@@ -638,12 +635,12 @@ DjVmDir::get_shared_anno_file(void) const
 int
 DjVmDir::insert_file(const GP<File> & file, int pos_num)
 {
-   DEBUG_MSG("DjVmDir::insert_file(): name='" 
+   DEBUG_MSG("DjVmDir::insert_file(): name='"
              << file->name << "', pos=" << pos_num << "\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    GCriticalSectionLock lock((GCriticalSection *) &class_lock);
-   
+
    if (pos_num<0)
      pos_num=files_list.size();
 
@@ -656,7 +653,7 @@ DjVmDir::insert_file(const GP<File> & file, int pos_num)
      G_THROW( ERR_MSG("DjVmDir.dupl_name2") "\t" + file->name);
    name2file[file->name]=file;
    id2file[file->id]=file;
-   
+
       // Make sure that there is no more than one file with shared annotations
    if (file->is_shared_anno())
    {
@@ -664,7 +661,7 @@ DjVmDir::insert_file(const GP<File> & file, int pos_num)
          if (files_list[pos]->is_shared_anno())
             G_THROW( ERR_MSG("DjVmDir.multi_save2") );
    }
-   
+
       // Add the file to the list
    int cnt;
    GPosition pos;
@@ -707,7 +704,7 @@ DjVmDir::delete_file(const GUTF8String &id)
    DEBUG_MAKE_INDENT(3);
 
    GCriticalSectionLock lock((GCriticalSection *) &class_lock);
-   
+
    for(GPosition pos=files_list;pos;++pos)
    {
       GP<File> & f=files_list[pos];
@@ -742,11 +739,11 @@ DjVmDir::set_file_name(const GUTF8String &id, const GUTF8String &name)
 {
    DEBUG_MSG("DjVmDir::set_file_name(): id='" << id << "', name='" << name << "'\n");
    DEBUG_MAKE_INDENT(3);
-   
+
    GCriticalSectionLock lock((GCriticalSection *) &class_lock);
 
    GPosition pos;
-   
+
       // First see, if the name is unique
    for(pos=files_list;pos;++pos)
    {

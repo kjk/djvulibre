@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,14 +58,11 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
 
 // From: Leon Bottou, 1/31/2002
 // All these I18N XML messages are Lizardtech innovations.
 // For DjvuLibre, I changed the path extraction logic
-// and added support for non I18N messages. 
+// and added support for non I18N messages.
 
 
 #include "GString.h"
@@ -82,28 +79,28 @@ class ByteStream;
 
 /** Exception causes and external messages are passed as message lists which
     have the following syntax:
-  
+
     message_list ::= single_message |
                      single_message separator message_list
-    
+
     separator ::= newline |
                   newline | separator
-    
+
     single_message ::= CTRLC message_ID |
                        CTRLC message_ID parameters
-    
+
     parameters ::= tab string |
                    tab string parameters
-    
+
     Message_IDs are looked up an external file and replaced by the message
     text strings they are mapped to. The message text may contain the
     following:
-    
+
     Parameter specifications: These are modelled after printf format
     specifications and have one of the following forms:
-  
+
       %n!s! %n!d! %n!i! %n!u! %n!x! %n!X!
-  
+
     where n is the parameter number. The parameter number is indicated
     explicitly to allow for the possibility that the parameter order may
     change when the message text is translated into another language.
@@ -129,8 +126,8 @@ class ByteStream;
             &#34;        [double quote]
             &lt;         [less than sign]
             &gt;         [greater than sign]
-  
-    After parameters have been inserted in the message text, the formatting 
+
+    After parameters have been inserted in the message text, the formatting
     strings are replaced by their usual equivalents (newline and tab
     respectively).
 

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // -- Implements class PIXMAP
@@ -126,20 +123,20 @@ new_gray_ramp(int grays,GPixel *ramp)
 
 
 static inline int
-mini(int x, int y) 
-{ 
+mini(int x, int y)
+{
   return (x < y ? x : y);
 }
 
 
 static inline int
-maxi(int x, int y) 
-{ 
+maxi(int x, int y)
+{
   return (x > y ? x : y);
 }
 
 
-static inline void 
+static inline void
 euclidian_ratio(int a, int b, int &q, int &r)
 {
   q = a / b;
@@ -281,7 +278,7 @@ GPixmap::GPixmap(const GPixmap &ref, const GRect &rect)
 //////////////////////////////////////////////////
 
 
-void 
+void
 GPixmap::init(int arows, int acolumns, const GPixel *filler)
 {
   size_t np = arows * acolumns;
@@ -298,15 +295,15 @@ GPixmap::init(int arows, int acolumns, const GPixel *filler)
   {
     pixels = pixels_data = new GPixel[npix];
     if (filler)
-    { 
-      while (--npix>=0) 
+    {
+      while (--npix>=0)
         pixels_data[npix] = *filler;
     }
   }
 }
 
 
-void 
+void
 GPixmap::init(const GBitmap &ref, const GPixel *userramp)
 {
   init(ref.rows(), ref.columns(), 0);
@@ -337,7 +334,7 @@ GPixmap::init(const GBitmap &ref, const GPixel *userramp)
 }
 
 
-void 
+void
 GPixmap::init(const GBitmap &ref, const GRect &rect, const GPixel *userramp)
 {
   init(rect.height(), rect.width(), 0);
@@ -373,7 +370,7 @@ GPixmap::init(const GBitmap &ref, const GRect &rect, const GPixel *userramp)
 }
 
 
-void 
+void
 GPixmap::init(const GPixmap &ref)
 {
   init(ref.rows(), ref.columns(), 0);
@@ -390,7 +387,7 @@ GPixmap::init(const GPixmap &ref)
 }
 
 
-void 
+void
 GPixmap::init(const GPixmap &ref, const GRect &rect)
 {
   init(rect.height(), rect.width(), 0);
@@ -412,7 +409,7 @@ GPixmap::init(const GPixmap &ref, const GRect &rect)
 }
 
 
-void 
+void
 GPixmap::donate_data(GPixel *data, int w, int h)
 {
   destroy();
@@ -439,23 +436,23 @@ GPixmap::take_data(size_t &offset)
 //////////////////////////////////////////////////
 
 
-static unsigned int 
+static unsigned int
 read_integer(char &c, ByteStream &bs)
 {
   unsigned int x = 0;
   // eat blank before integer
-  while (c==' ' || c=='\t' || c=='\r' || c=='\n' || c=='#') 
+  while (c==' ' || c=='\t' || c=='\r' || c=='\n' || c=='#')
     {
-      if (c=='#') 
+      if (c=='#')
         do { } while (bs.read(&c,1) && c!='\n' && c!='\r');
-      c = 0; 
+      c = 0;
       bs.read(&c, 1);
     }
   // check integer
   if (c<'0' || c>'9')
     G_THROW( ERR_MSG("GPixmap.no_int") );
   // eat integer
-  while (c>='0' && c<='9') 
+  while (c>='0' && c<='9')
     {
       x = x*10 + c - '0';
       c = 0;
@@ -465,7 +462,7 @@ read_integer(char &c, ByteStream &bs)
 }
 
 
-void 
+void
 GPixmap::init(ByteStream &bs)
 {
   // Read header
@@ -486,9 +483,9 @@ GPixmap::init(ByteStream &bs)
       raw = true;
       break;
     case ('P'<<8)+'1':
-    case ('P'<<8)+'4': 
+    case ('P'<<8)+'4':
       bs.seek(0L);
-      bm = GBitmap::create(bs); 
+      bm = GBitmap::create(bs);
       init(*bm);
       return;
     default:
@@ -497,7 +494,7 @@ GPixmap::init(ByteStream &bs)
       JPEGDecoder::decode(bs,*this);
       return;
 #else
-      
+
       G_THROW( ERR_MSG("GPixmap.unk_PPM") );
 #endif
     }
@@ -525,7 +522,7 @@ GPixmap::init(ByteStream &bs)
     {
       bytesperrow = ncolumns * bytespercomp;
       GTArray<unsigned char> line(bytesperrow);
-      for (int y=nrows-1; y>=0; y--) 
+      for (int y=nrows-1; y>=0; y--)
         {
           GPixel *p = (*this)[y];
           unsigned char *g = &line[0];
@@ -547,7 +544,7 @@ GPixmap::init(ByteStream &bs)
     {
       bytesperrow = ncolumns * bytespercomp * 3;
       GTArray<unsigned char> line(bytesperrow);
-      for (int y=nrows-1; y>=0; y--) 
+      for (int y=nrows-1; y>=0; y--)
         {
           GPixel *p = (*this)[y];
           unsigned char *rgb = &line[0];
@@ -573,7 +570,7 @@ GPixmap::init(ByteStream &bs)
     }
   else
     {
-      for (int y=nrows-1; y>=0; y--) 
+      for (int y=nrows-1; y>=0; y--)
         {
           GPixel *p = (*this)[y];
           for (int x=0; x<ncolumns; x++)
@@ -592,7 +589,7 @@ GPixmap::init(ByteStream &bs)
 }
 
 
-void 
+void
 GPixmap::save_ppm(ByteStream &bs, int raw) const
 {
   GUTF8String head;
@@ -602,11 +599,11 @@ GPixmap::save_ppm(ByteStream &bs, int raw) const
     {
       int rowsize = ncolumns+ncolumns+ncolumns;
       GTArray<unsigned char> xrgb(rowsize);
-      for (int y=nrows-1; y>=0; y--) 
+      for (int y=nrows-1; y>=0; y--)
         {
           const GPixel *p = (*this)[y];
           unsigned char *d = xrgb;
-          for (int x=0; x<ncolumns; x++) 
+          for (int x=0; x<ncolumns; x++)
             {
               *d++ = p[x].r;
               *d++ = p[x].g;
@@ -617,7 +614,7 @@ GPixmap::save_ppm(ByteStream &bs, int raw) const
     }
   else
     {
-      for (int y=nrows-1; y>=0; y--) 
+      for (int y=nrows-1; y>=0; y--)
         {
           const GPixel *p = (*this)[y];
           unsigned char eol='\n';
@@ -626,8 +623,8 @@ GPixmap::save_ppm(ByteStream &bs, int raw) const
               head.format("%d %d %d  ", p[x].r, p[x].g, p[x].b);
               bs.writall((void*)(const char *)head, head.length());
               x += 1;
-              if (x==ncolumns || (x&0x7)==0) 
-                bs.write((void*)&eol, 1);          
+              if (x==ncolumns || (x&0x7)==0)
+                bs.write((void*)&eol, 1);
             }
         }
     }
@@ -664,7 +661,7 @@ color_correction_table(double gamma, GPixel white,
           double t = ( sqrt(1.0+(gamma*gamma-1.0)*x) - 1.0 ) / (gamma - 1.0);
           x = ( (1.0 - gamma)*t + 2.0 * gamma ) * t / (gamma + 1.0);
 #else
-          x = pow(x, 1.0/gamma);        
+          x = pow(x, 1.0/gamma);
 #endif
           gtable[i][0] = (int) floor(white.b * x + 0.5);
           gtable[i][1] = (int) floor(white.g * x + 0.5);
@@ -705,7 +702,7 @@ color_correction_table_cache(double gamma, GPixel white,
     }
 }
 
-void 
+void
 GPixmap::color_correct(double gamma_correction, GPixel white)
 {
   // Trivial corrections
@@ -727,7 +724,7 @@ GPixmap::color_correct(double gamma_correction, GPixel white)
   }
 }
 
-void 
+void
 GPixmap::color_correct(double gamma_correction)
 {
   // Trivial corrections
@@ -736,7 +733,7 @@ GPixmap::color_correct(double gamma_correction)
 }
 
 
-void 
+void
 GPixmap::color_correct(double gamma_correction, GPixel white,
                        GPixel *pix, int npixels)
 {
@@ -757,7 +754,7 @@ GPixmap::color_correct(double gamma_correction, GPixel white,
 }
 
 
-void 
+void
 GPixmap::color_correct(double gamma_correction, GPixel *pix, int npixels)
 {
   // Trivial corrections
@@ -777,7 +774,7 @@ GPixmap::ordered_666_dither(int xmin, int ymin)
   static unsigned char quantize[256+0x33+0x33];
   static unsigned char *quant = quantize + 0x33;
   static char  dither_ok = 0;
-  static short dither[16][16] = 
+  static short dither[16][16] =
   {
     {   0,192, 48,240, 12,204, 60,252,  3,195, 51,243, 15,207, 63,255 },
     { 128, 64,176,112,140, 76,188,124,131, 67,179,115,143, 79,191,127 },
@@ -802,7 +799,7 @@ GPixmap::ordered_666_dither(int xmin, int ymin)
     int i, j;
     for (i=0; i<16; i++)
       for (j=0; j<16; j++)
-        dither[i][j] = ((255 - 2*dither[i][j]) * 0x33) / 512;    
+        dither[i][j] = ((255 - 2*dither[i][j]) * 0x33) / 512;
     j = -0x33;
     for (i=0x19; i<256; i+=0x33)
       while (j <= i)
@@ -831,7 +828,7 @@ GPixmap::ordered_32k_dither(int xmin, int ymin)
   static unsigned char quantize[256+8+8];
   static unsigned char *quant = quantize + 8;
   static char  dither_ok = 0;
-  static short dither[16][16] = 
+  static short dither[16][16] =
   {
     {   0,192, 48,240, 12,204, 60,252,  3,195, 51,243, 15,207, 63,255 },
     { 128, 64,176,112,140, 76,188,124,131, 67,179,115,143, 79,191,127 },
@@ -856,7 +853,7 @@ GPixmap::ordered_32k_dither(int xmin, int ymin)
     int i, j;
     for (i=0; i<16; i++)
       for (j=0; j<16; j++)
-        dither[i][j] = ((255 - 2*dither[i][j]) * 8) / 512;    
+        dither[i][j] = ((255 - 2*dither[i][j]) * 8) / 512;
     j = -8;
     for (i=3; i<256; i+=8)
       while (j <= i)
@@ -884,16 +881,16 @@ GPixmap::ordered_32k_dither(int xmin, int ymin)
 //////////////////////////////////////////////////
 
 
-void  
+void
 GPixmap::downsample(const GPixmap *src, int factor, const GRect *pdr)
 {
   // check arguments
   GRect rect(0, 0, (src->columns()+factor-1)/factor, (src->rows()+factor-1)/factor);
   if (pdr != 0)
   {
-    if (pdr->xmin < rect.xmin || 
-        pdr->ymin < rect.ymin || 
-        pdr->xmax > rect.xmax || 
+    if (pdr->xmin < rect.xmin ||
+        pdr->ymin < rect.ymin ||
+        pdr->xmax > rect.xmax ||
         pdr->ymax > rect.ymax  )
       G_THROW( ERR_MSG("GPixmap.overflow1") );
     rect = *pdr;
@@ -908,7 +905,7 @@ GPixmap::downsample(const GPixmap *src, int factor, const GRect *pdr)
     for (int i=1; i<(int)(sizeof(invmap)/sizeof(int)); i++)
       invmap[i] = 0x10000 / i;
   }
-  
+
   // initialise pixmap
   init(rect.height(), rect.width(), 0);
 
@@ -970,16 +967,16 @@ GPixmap::downsample(const GPixmap *src, int factor, const GRect *pdr)
   }
 }
 
-void  
+void
 GPixmap::upsample(const GPixmap *src, int factor, const GRect *pdr)
 {
   // check arguments
   GRect rect(0, 0, src->columns()*factor, src->rows()*factor);
   if (pdr != 0)
   {
-    if (pdr->xmin < rect.xmin || 
-        pdr->ymin < rect.ymin || 
-        pdr->xmax > rect.xmax || 
+    if (pdr->xmin < rect.xmin ||
+        pdr->ymin < rect.ymin ||
+        pdr->xmax > rect.xmax ||
         pdr->ymax > rect.ymax  )
       G_THROW( ERR_MSG("GPixmap.overflow2") );
     rect = *pdr;
@@ -1119,20 +1116,20 @@ copy_line(const GPixel *s, int smin, int smax,
           GPixel *d, int dmin, int dmax)
 {
   int x = dmin;
-  while (x < smin) 
-  { 
-    d[x] = s[smin]; 
-    x++; 
-  }
-  while (x < dmax && x < smax)  
-  { 
-    d[x] = s[x]; 
-    x++; 
-  }
-  while (x < dmax)              
+  while (x < smin)
   {
-    d[x] = s[smax-1]; 
-    x++; 
+    d[x] = s[smin];
+    x++;
+  }
+  while (x < dmax && x < smax)
+  {
+    d[x] = s[x];
+    x++;
+  }
+  while (x < dmax)
+  {
+    d[x] = s[smax-1];
+    x++;
   }
 }
 
@@ -1170,7 +1167,7 @@ copy_from_partial(int w, int h,
 
 
 
-void  
+void
 GPixmap::downsample43(const GPixmap *src, const GRect *pdr)
 {
   // check arguments
@@ -1181,9 +1178,9 @@ GPixmap::downsample43(const GPixmap *src, const GRect *pdr)
   GRect rect(0, 0, destwidth, destheight);
   if (pdr != 0)
   {
-    if (pdr->xmin < rect.xmin || 
-        pdr->ymin < rect.ymin || 
-        pdr->xmax > rect.xmax || 
+    if (pdr->xmin < rect.xmin ||
+        pdr->ymin < rect.ymin ||
+        pdr->xmax > rect.xmax ||
         pdr->ymax > rect.ymax  )
       G_THROW( ERR_MSG("GPixmap.overflow3") );
     rect = *pdr;
@@ -1198,7 +1195,7 @@ GPixmap::downsample43(const GPixmap *src, const GRect *pdr)
   int sxz, sy;   // location of bottomleft block in source image
   euclidian_ratio(rect.ymin, 3, sy, dy);
   euclidian_ratio(rect.xmin, 3, sxz, dxz);
-  sxz = 4 * sxz;   
+  sxz = 4 * sxz;
   sy  = 4 * sy;
   dxz = - dxz;
   dy  = - dy;
@@ -1237,13 +1234,13 @@ GPixmap::downsample43(const GPixmap *src, const GRect *pdr)
         {
           if (sx+4<=srcwidth && sy+4<=srcheight)
             {
-              downsample_4x4_to_3x3(sptr+sx, sadd, xout, 3);  
+              downsample_4x4_to_3x3(sptr+sx, sadd, xout, 3);
               copy_to_partial(3,3, xout, 3, dptr+dx, dadd,-dx,destwidth-dx,-dy,destheight-dy);
             }
           else
             {
               copy_from_partial(4,4, sptr+sx,sadd,-sx,srcwidth-sx,-sy,srcheight-sy, xin,4);
-              downsample_4x4_to_3x3(xin, 4, xout, 3);  
+              downsample_4x4_to_3x3(xin, 4, xout, 3);
               copy_to_partial(3,3, xout,3, dptr+dx,dadd,-dx,destwidth-dx,-dy,destheight-dy);
             }
         }
@@ -1260,7 +1257,7 @@ GPixmap::downsample43(const GPixmap *src, const GRect *pdr)
 }
 
 
-void  
+void
 GPixmap::upsample23(const GPixmap *src, const GRect *pdr)
 {
   // check arguments
@@ -1271,9 +1268,9 @@ GPixmap::upsample23(const GPixmap *src, const GRect *pdr)
   GRect rect(0, 0, destwidth, destheight);
   if (pdr != 0)
   {
-    if (pdr->xmin < rect.xmin || 
-        pdr->ymin < rect.ymin || 
-        pdr->xmax > rect.xmax || 
+    if (pdr->xmin < rect.xmin ||
+        pdr->ymin < rect.ymin ||
+        pdr->xmax > rect.xmax ||
         pdr->ymax > rect.ymax  )
       G_THROW( ERR_MSG("GPixmap.overflow4") );
     rect = *pdr;
@@ -1288,7 +1285,7 @@ GPixmap::upsample23(const GPixmap *src, const GRect *pdr)
   int sxz, sy;   // location of bottomleft block in source image
   euclidian_ratio(rect.ymin, 3, sy, dy);
   euclidian_ratio(rect.xmin, 3, sxz, dxz);
-  sxz = 2 * sxz;   
+  sxz = 2 * sxz;
   sy  = 2 * sy;
   dxz = - dxz;
   dy  = - dy;
@@ -1327,13 +1324,13 @@ GPixmap::upsample23(const GPixmap *src, const GRect *pdr)
       {
         if (sx+2<=srcwidth && sy+2<=srcheight)
         {
-          upsample_2x2_to_3x3( sptr+sx, sadd, xout, 3);  
+          upsample_2x2_to_3x3( sptr+sx, sadd, xout, 3);
           copy_to_partial(3,3, xout, 3, dptr+dx, dadd, -dx, destwidth-dx, -dy, destheight-dy);
         }
         else
         {
           copy_from_partial(2, 2, sptr+sx, sadd, -sx, srcwidth-sx, -sy, srcheight-sy, xin, 2);
-          upsample_2x2_to_3x3(xin, 2, xout, 3);  
+          upsample_2x2_to_3x3(xin, 2, xout, 3);
           copy_to_partial(3,3, xout, 3, dptr+dx, dadd, -dx, destwidth-dx, -dy, destheight-dy);
         }
       }
@@ -1367,7 +1364,7 @@ compute_clip()
 }
 
 
-void 
+void
 GPixmap::attenuate(const GBitmap *bm, int xpos, int ypos)
 {
   // Check
@@ -1417,7 +1414,7 @@ GPixmap::attenuate(const GBitmap *bm, int xpos, int ypos)
 }
 
 
-void 
+void
 GPixmap::blit(const GBitmap *bm, int xpos, int ypos, const GPixel *color)
 {
   // Check
@@ -1473,7 +1470,7 @@ GPixmap::blit(const GBitmap *bm, int xpos, int ypos, const GPixel *color)
 }
 
 
-void 
+void
 GPixmap::blit(const GBitmap *bm, int xpos, int ypos, const GPixmap *color)
 {
   // Check
@@ -1531,7 +1528,7 @@ GPixmap::blit(const GBitmap *bm, int xpos, int ypos, const GPixmap *color)
 
 
 
-void 
+void
 GPixmap::blend(const GBitmap *bm, int xpos, int ypos, const GPixmap *color)
 {
   // Check
@@ -1590,18 +1587,18 @@ GPixmap::blend(const GBitmap *bm, int xpos, int ypos, const GPixmap *color)
 
 
 
-void 
-GPixmap::stencil(const GBitmap *bm, 
-                const GPixmap *pm, int pms, const GRect *pmr, 
+void
+GPixmap::stencil(const GBitmap *bm,
+                const GPixmap *pm, int pms, const GRect *pmr,
                  double corr, GPixel white)
 {
   // Check arguments
   GRect rect(0, 0, pm->columns()*pms, pm->rows()*pms);
   if (pmr != 0)
     {
-      if (pmr->xmin < rect.xmin || 
-          pmr->ymin < rect.ymin || 
-          pmr->xmax > rect.xmax || 
+      if (pmr->xmin < rect.xmin ||
+          pmr->ymin < rect.ymin ||
+          pmr->xmax > rect.xmax ||
           pmr->ymax > rect.ymax  )
         G_THROW( ERR_MSG("GPixmap.overflow5") );
       rect = *pmr;
@@ -1673,13 +1670,13 @@ GPixmap::stencil(const GBitmap *bm,
     {
       fgy1 = 0;
       fg += pm->rowsize();
-    } 
+    }
   }
 }
 
-void 
-GPixmap::stencil(const GBitmap *bm, 
-                const GPixmap *pm, int pms, const GRect *pmr, 
+void
+GPixmap::stencil(const GBitmap *bm,
+                const GPixmap *pm, int pms, const GRect *pmr,
                 double corr)
 {
   stencil(bm, pm, pms, pmr, corr, GPixel::WHITE);

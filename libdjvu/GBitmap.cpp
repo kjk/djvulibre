@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "GBitmap.h"
@@ -97,21 +94,21 @@ GBitmap::destroy(void)
 }
 
 GBitmap::GBitmap()
-  : nrows(0), ncolumns(0), border(0), 
-    bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data), 
+  : nrows(0), ncolumns(0), border(0),
+    bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data),
     grle(rle), grlerows(rlerows), rlelength(0),
     monitorptr(0)
 {
 }
 
 GBitmap::GBitmap(int nrows, int ncolumns, int border)
-  : nrows(0), ncolumns(0), border(0), 
-    bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data), 
+  : nrows(0), ncolumns(0), border(0),
+    bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data),
     grle(rle), grlerows(rlerows), rlelength(0),
     monitorptr(0)
 {
   G_TRY
-  { 
+  {
     init(nrows, ncolumns, border);
   }
   G_CATCH_ALL
@@ -123,13 +120,13 @@ GBitmap::GBitmap(int nrows, int ncolumns, int border)
 }
 
 GBitmap::GBitmap(ByteStream &ref, int border)
-  : nrows(0), ncolumns(0), border(0), 
+  : nrows(0), ncolumns(0), border(0),
     bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data),
     grle(rle), grlerows(rlerows), rlelength(0),
     monitorptr(0)
 {
   G_TRY
-  { 
+  {
     init(ref, border);
   }
   G_CATCH_ALL
@@ -141,13 +138,13 @@ GBitmap::GBitmap(ByteStream &ref, int border)
 }
 
 GBitmap::GBitmap(const GBitmap &ref)
-  : nrows(0), ncolumns(0), border(0), 
-    bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data), 
+  : nrows(0), ncolumns(0), border(0),
+    bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data),
     grle(rle), grlerows(rlerows), rlelength(0),
     monitorptr(0)
 {
   G_TRY
-  { 
+  {
     init(ref, ref.border);
   }
   G_CATCH_ALL
@@ -159,13 +156,13 @@ GBitmap::GBitmap(const GBitmap &ref)
 }
 
 GBitmap::GBitmap(const GBitmap &ref, int border)
-  : nrows(0), ncolumns(0), border(0), 
+  : nrows(0), ncolumns(0), border(0),
     bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data),
     grle(rle), grlerows(rlerows), rlelength(0),
     monitorptr(0)
 {
   G_TRY
-  { 
+  {
     init(ref, border);
   }
   G_CATCH_ALL
@@ -178,13 +175,13 @@ GBitmap::GBitmap(const GBitmap &ref, int border)
 
 
 GBitmap::GBitmap(const GBitmap &ref, const GRect &rect, int border)
-  : nrows(0), ncolumns(0), border(0), 
+  : nrows(0), ncolumns(0), border(0),
     bytes_per_row(0), grays(0), bytes(0), gbytes_data(bytes_data),
     grle(rle), grlerows(rlerows), rlelength(0),
     monitorptr(0)
 {
   G_TRY
-  { 
+  {
     init(ref, rect, border);
   }
   G_CATCH_ALL
@@ -202,7 +199,7 @@ GBitmap::GBitmap(const GBitmap &ref, const GRect &rect, int border)
 
 // ----- initialization
 
-void 
+void
 GBitmap::init(int arows, int acolumns, int aborder)
 {
   size_t np = arows * (acolumns + aborder) + aborder;
@@ -220,7 +217,7 @@ GBitmap::init(int arows, int acolumns, int aborder)
   bytes_per_row = ncolumns + border;
   int npixels = nrows * bytes_per_row + border;
   gzerobuffer=zeroes(bytes_per_row + border);
-  if (npixels > 0) 
+  if (npixels > 0)
     {
       gbytes_data.resize(npixels);
       gbytes_data.clear();
@@ -229,11 +226,11 @@ GBitmap::init(int arows, int acolumns, int aborder)
 }
 
 
-void 
+void
 GBitmap::init(const GBitmap &ref, int aborder)
 {
   GMonitorLock lock(monitor());
-  if (this != &ref) 
+  if (this != &ref)
     {
       GMonitorLock lock(ref.monitor());
       init(ref.nrows, ref.ncolumns, aborder);
@@ -249,7 +246,7 @@ GBitmap::init(const GBitmap &ref, int aborder)
 }
 
 
-void 
+void
 GBitmap::init(const GBitmap &ref, const GRect &rect, int border)
 {
   GMonitorLock lock(monitor());
@@ -293,7 +290,7 @@ GBitmap::init(const GBitmap &ref, const GRect &rect, int border)
 }
 
 
-void 
+void
 GBitmap::init(ByteStream &ref, int aborder)
 {
   GMonitorLock lock(monitor());
@@ -313,25 +310,25 @@ GBitmap::init(ByteStream &ref, int aborder)
         {
         case '1':
           grays = 2;
-          read_pbm_text(ref); 
+          read_pbm_text(ref);
           return;
         case '2':
           maxval = read_integer(lookahead, ref);
           if (maxval > 65535)
             G_THROW("Cannot read PGM with depth greater than 16 bits.");
           grays = (maxval>255 ? 256 : maxval+1);
-          read_pgm_text(ref, maxval); 
+          read_pgm_text(ref, maxval);
           return;
         case '4':
           grays = 2;
-          read_pbm_raw(ref); 
+          read_pbm_raw(ref);
           return;
         case '5':
           maxval = read_integer(lookahead, ref);
           if (maxval > 65535)
             G_THROW("Cannot read PGM with depth greater than 16 bits.");
           grays = (maxval>255 ? 256 : maxval+1);
-          read_pgm_raw(ref, maxval); 
+          read_pgm_raw(ref, maxval);
           return;
         }
     }
@@ -341,7 +338,7 @@ GBitmap::init(ByteStream &ref, int aborder)
         {
         case '4':
           grays = 2;
-          read_rle_raw(ref); 
+          read_rle_raw(ref);
           return;
         }
     }
@@ -393,13 +390,13 @@ GBitmap::get_rle(unsigned int &rle_length)
   if(!rle)
     compress();
   rle_length=rlelength;
-  return rle; 
+  return rle;
 }
 
 // ----- compression
 
 
-void 
+void
 GBitmap::compress()
 {
   if (grays > 2)
@@ -428,7 +425,7 @@ GBitmap::uncompress()
 
 
 
-unsigned int 
+unsigned int
 GBitmap::get_memory_usage() const
 {
   unsigned long usage = sizeof(GBitmap);
@@ -440,7 +437,7 @@ GBitmap::get_memory_usage() const
 }
 
 
-void 
+void
 GBitmap::minborder(int minimum)
 {
   if (border < minimum)
@@ -491,7 +488,7 @@ GBitmap::set_grays(int ngrays)
     uncompress();
 }
 
-void 
+void
 GBitmap::change_grays(int ngrays)
 {
   GMonitorLock lock(monitor());
@@ -517,7 +514,7 @@ GBitmap::change_grays(int ngrays)
     }
 }
 
-void 
+void
 GBitmap::binarize_grays(int threshold)
 {
   GMonitorLock lock(monitor());
@@ -540,24 +537,24 @@ GBitmap::binarize_grays(int threshold)
 #undef max
 
 static inline int
-min(int x, int y) 
-{ 
+min(int x, int y)
+{
   return (x < y ? x : y);
 }
 
 static inline int
-max(int x, int y) 
-{ 
+max(int x, int y)
+{
   return (x > y ? x : y);
 }
 
-void 
+void
 GBitmap::blit(const GBitmap *bm, int x, int y)
 {
   // Check boundaries
-  if ((x >= ncolumns)              || 
+  if ((x >= ncolumns)              ||
       (y >= nrows)                 ||
-      (x + (int)bm->columns() < 0) || 
+      (x + (int)bm->columns() < 0) ||
       (y + (int)bm->rows() < 0)     )
     return;
 
@@ -573,7 +570,7 @@ GBitmap::blit(const GBitmap *bm, int x, int y)
       unsigned char *drow = bytes_data + border + y*bytes_per_row + x;
       for (int sr = 0; sr < bm->nrows; sr++)
         {
-          if (sr+y>=0 && sr+y<nrows) 
+          if (sr+y>=0 && sr+y<nrows)
             {
               int sc = max(0, -x);
               int sc1 = min(bm->ncolumns, ncolumns-x);
@@ -604,21 +601,21 @@ GBitmap::blit(const GBitmap *bm, int x, int y)
           if (sc+z > bm->ncolumns)
             G_THROW( ERR_MSG("GBitmap.lost_sync") );
           int nc = sc + z;
-          if (p && sr+y>=0 && sr+y<nrows) 
+          if (p && sr+y>=0 && sr+y<nrows)
             {
-              if (sc + x < 0) 
-                sc = min(-x, nc); 
+              if (sc + x < 0)
+                sc = min(-x, nc);
               while (sc < nc && sc + x<ncolumns)
                 drow[sc++] += 1;
             }
           sc = nc;
           p = 1 - p;
-          if (sc >= bm->ncolumns) 
+          if (sc >= bm->ncolumns)
             {
               p = 0;
               sc = 0;
               drow -= bytes_per_row;
-              sr -= 1; 
+              sr -= 1;
             }
         }
     }
@@ -626,7 +623,7 @@ GBitmap::blit(const GBitmap *bm, int x, int y)
 
 
 
-void 
+void
 GBitmap::blit(const GBitmap *bm, int xh, int yh, int subsample)
 {
   // Use code when no subsampling is necessary
@@ -637,9 +634,9 @@ GBitmap::blit(const GBitmap *bm, int xh, int yh, int subsample)
     }
 
   // Check boundaries
-  if ((xh >= ncolumns * subsample) || 
+  if ((xh >= ncolumns * subsample) ||
       (yh >= nrows * subsample)    ||
-      (xh + (int)bm->columns() < 0)   || 
+      (xh + (int)bm->columns() < 0)   ||
       (yh + (int)bm->rows() < 0)     )
     return;
 
@@ -658,15 +655,15 @@ GBitmap::blit(const GBitmap *bm, int xh, int yh, int subsample)
       unsigned char *drow = bytes_data + border + dr*bytes_per_row;
       for (int sr = 0; sr < bm->nrows; sr++)
         {
-          if (dr>=0 && dr<nrows) 
+          if (dr>=0 && dr<nrows)
             {
               int dc = zdc;
               int dc1 = zdc1;
-              for (int sc=0; sc < bm->ncolumns; sc++) 
+              for (int sc=0; sc < bm->ncolumns; sc++)
                 {
                   if (dc>=0 && dc<ncolumns)
                     drow[dc] += srow[sc];
-                  if (++dc1 >= subsample) 
+                  if (++dc1 >= subsample)
                     {
                       dc1 = 0;
                       dc += 1;
@@ -710,9 +707,9 @@ GBitmap::blit(const GBitmap *bm, int xh, int yh, int subsample)
             while (z>0 && dc<ncolumns)
               {
                 int zd = subsample - dc1;
-                if (zd > z) 
+                if (zd > z)
                   zd = z;
-                if (p && dc>=0) 
+                if (p && dc>=0)
                   drow[dc] += zd;
                 z -= zd;
                 dc1 += zd;
@@ -725,13 +722,13 @@ GBitmap::blit(const GBitmap *bm, int xh, int yh, int subsample)
           // next fractional row
           sc = nc;
           p = 1 - p;
-          if (sc >= bm->ncolumns) 
+          if (sc >= bm->ncolumns)
             {
               sc = 0;
               dc = zdc;
               dc1 = zdc1;
               p = 0;
-              sr -= 1; 
+              sr -= 1;
               if (--dr1 < 0)
                 {
                   dr1 = subsample - 1;
@@ -748,23 +745,23 @@ GBitmap::blit(const GBitmap *bm, int xh, int yh, int subsample)
 // ------ load bitmaps
 
 
-unsigned int 
+unsigned int
 GBitmap::read_integer(char &c, ByteStream &bs)
 {
   unsigned int x = 0;
   // eat blank before integer
-  while (c==' ' || c=='\t' || c=='\r' || c=='\n' || c=='#') 
+  while (c==' ' || c=='\t' || c=='\r' || c=='\n' || c=='#')
     {
-      if (c=='#') 
+      if (c=='#')
         do { } while (bs.read(&c,1) && c!='\n' && c!='\r');
-      c = 0; 
+      c = 0;
       bs.read(&c, 1);
     }
   // check integer
   if (c<'0' || c>'9')
     G_THROW( ERR_MSG("GBitmap.not_int") );
   // eat integer
-  while (c>='0' && c<='9') 
+  while (c>='0' && c<='9')
     {
       x = x*10 + c - '0';
       c = 0;
@@ -774,21 +771,21 @@ GBitmap::read_integer(char &c, ByteStream &bs)
 }
 
 
-void 
+void
 GBitmap::read_pbm_text(ByteStream &bs)
 {
   unsigned char *row = bytes_data + border;
   row += (nrows-1) * bytes_per_row;
-  for (int n = nrows-1; n>=0; n--) 
+  for (int n = nrows-1; n>=0; n--)
     {
-      for (int c = 0; c<ncolumns; c++) 
+      for (int c = 0; c<ncolumns; c++)
         {
           char bit = 0;
           bs.read(&bit,1);
           while (bit==' ' || bit=='\t' || bit=='\r' || bit=='\n')
-            { 
-              bit=0; 
-              bs.read(&bit,1); 
+            {
+              bit=0;
+              bs.read(&bit,1);
             }
           if (bit=='1')
             row[c] = 1;
@@ -801,7 +798,7 @@ GBitmap::read_pbm_text(ByteStream &bs)
     }
 }
 
-void 
+void
 GBitmap::read_pgm_text(ByteStream &bs, int maxval)
 {
   unsigned char *row = bytes_data + border;
@@ -810,7 +807,7 @@ GBitmap::read_pgm_text(ByteStream &bs, int maxval)
   GTArray<unsigned char> ramp(0, maxval);
   for (int i=0; i<=maxval; i++)
     ramp[i] = (i<maxval ? ((grays-1)*(maxval-i) + maxval/2) / maxval : 0);
-  for (int n = nrows-1; n>=0; n--) 
+  for (int n = nrows-1; n>=0; n--)
     {
       for (int c = 0; c<ncolumns; c++)
         row[c] = ramp[(int)read_integer(lookahead, bs)];
@@ -818,18 +815,18 @@ GBitmap::read_pgm_text(ByteStream &bs, int maxval)
     }
 }
 
-void 
+void
 GBitmap::read_pbm_raw(ByteStream &bs)
 {
   unsigned char *row = bytes_data + border;
   row += (nrows-1) * bytes_per_row;
-  for (int n = nrows-1; n>=0; n--) 
+  for (int n = nrows-1; n>=0; n--)
     {
       unsigned char acc = 0;
       unsigned char mask = 0;
       for (int c = 0; c<ncolumns; c++)
         {
-          if (!mask) 
+          if (!mask)
             {
               bs.read(&acc, 1);
               mask = (unsigned char)0x80;
@@ -844,7 +841,7 @@ GBitmap::read_pbm_raw(ByteStream &bs)
     }
 }
 
-void 
+void
 GBitmap::read_pgm_raw(ByteStream &bs, int maxval)
 {
   int maxbin = (maxval>255) ? 65536 : 256;
@@ -854,7 +851,7 @@ GBitmap::read_pgm_raw(ByteStream &bs, int maxval)
   unsigned char *bramp = ramp;
   unsigned char *row = bytes_data + border;
   row += (nrows-1) * bytes_per_row;
-  for (int n = nrows-1; n>=0; n--) 
+  for (int n = nrows-1; n>=0; n--)
     {
       if (maxbin > 256)
         {
@@ -878,7 +875,7 @@ GBitmap::read_pgm_raw(ByteStream &bs, int maxval)
     }
 }
 
-void 
+void
 GBitmap::read_rle_raw(ByteStream &bs)
 {
   // interpret runs data
@@ -902,12 +899,12 @@ GBitmap::read_rle_raw(ByteStream &bs)
       while (x-- > 0)
         row[c++] = p;
       p = 1 - p;
-      if (c >= ncolumns) 
+      if (c >= ncolumns)
         {
           c = 0;
           p = 0;
           row -= bytes_per_row;
-          n -= 1; 
+          n -= 1;
         }
     }
 }
@@ -915,7 +912,7 @@ GBitmap::read_rle_raw(ByteStream &bs)
 
 // ------ save bitmaps
 
-void 
+void
 GBitmap::save_pbm(ByteStream &bs, int raw)
 {
   // check arguments
@@ -958,8 +955,8 @@ GBitmap::save_pbm(ByteStream &bs, int raw)
         unsigned char bit= (row[c] ? '1' : '0');
         bs.write((void*)&bit, 1);
         c += 1;
-        if (c==ncolumns || (c&(int)RUNMSBMASK)==0) 
-          bs.write((void*)&eol, 1);          
+        if (c==ncolumns || (c&(int)RUNMSBMASK)==0)
+          bs.write((void*)&eol, 1);
        }
       // next row
       row -= bytes_per_row;
@@ -968,7 +965,7 @@ GBitmap::save_pbm(ByteStream &bs, int raw)
   }
 }
 
-void 
+void
 GBitmap::save_pgm(ByteStream &bs, int raw)
 {
   // checks
@@ -993,7 +990,7 @@ GBitmap::save_pgm(ByteStream &bs, int raw)
               bs.write((void*)&x, 1);
             }
         }
-      else 
+      else
         {
           unsigned char eol='\n';
           for (int c=0; c<ncolumns; )
@@ -1001,8 +998,8 @@ GBitmap::save_pgm(ByteStream &bs, int raw)
               head.format("%d ", grays - 1 - row[c]);
               bs.writall((void*)(const char *)head, head.length());
               c += 1;
-              if (c==ncolumns || (c&0x1f)==0) 
-                bs.write((void*)&eol, 1);          
+              if (c==ncolumns || (c&0x1f)==0)
+                bs.write((void*)&eol, 1);
             }
         }
       row -= bytes_per_row;
@@ -1010,7 +1007,7 @@ GBitmap::save_pgm(ByteStream &bs, int raw)
     }
 }
 
-void 
+void
 GBitmap::save_rle(ByteStream &bs)
 {
   // checks
@@ -1108,7 +1105,7 @@ GBitmap::rle_get_bitmap (
   }
 }
 
-int 
+int
 GBitmap::rle_get_bits(int rowno, unsigned char *bits) const
 {
   GMonitorLock lock(monitor());
@@ -1138,7 +1135,7 @@ GBitmap::rle_get_bits(int rowno, unsigned char *bits) const
 }
 
 
-int 
+int
 GBitmap::rle_get_runs(int rowno, int *rlens) const
 {
   GMonitorLock lock(monitor());
@@ -1163,7 +1160,7 @@ GBitmap::rle_get_runs(int rowno, int *rlens) const
           n--;
           d = d-rlens[n];
         }
-      else 
+      else
         {
           rlens[n++] = (c+=x)-d;
           d = c;
@@ -1173,11 +1170,11 @@ GBitmap::rle_get_runs(int rowno, int *rlens) const
 }
 
 
-int 
+int
 GBitmap::rle_get_rect(GRect &rect) const
 {
   GMonitorLock lock(monitor());
-  if (!rle) 
+  if (!rle)
     return 0;
   int area = 0;
   unsigned char *runs = rle;
@@ -1198,9 +1195,9 @@ GBitmap::rle_get_rect(GRect &rect) const
             {
               if (p)
                 {
-                  if (c < rect.xmin) 
+                  if (c < rect.xmin)
                     rect.xmin = c;
-                  if ((c += x) > rect.xmax) 
+                  if ((c += x) > rect.xmax)
                     rect.xmax = c-1;
                   n += x;
                 }
@@ -1215,7 +1212,7 @@ GBitmap::rle_get_rect(GRect &rect) const
       if (n)
         {
           rect.ymin = r;
-          if (r > rect.ymax) 
+          if (r > rect.ymax)
             rect.ymax = r;
         }
     }
@@ -1276,7 +1273,7 @@ GBitmap::encode(unsigned char *&pruns,GPBuffer<unsigned char> &gpruns) const
   return pos;
 }
 
-void 
+void
 GBitmap::decode(unsigned char *runs)
 {
   // initialize pixel array
@@ -1308,12 +1305,12 @@ GBitmap::decode(unsigned char *runs)
       while (x-- > 0)
         row[c++] = p;
       p = 1 - p;
-      if (c >= ncolumns) 
+      if (c >= ncolumns)
         {
           c = 0;
           p = 0;
           row -= bytes_per_row;
-          n -= 1; 
+          n -= 1;
         }
     }
   // Free rle data possibly attached to this bitmap
@@ -1344,128 +1341,128 @@ GBitmap::ZeroBuffer::ZeroBuffer(const unsigned int zerosize)
 static const unsigned char static_zerobuffer[]=
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 32
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 64
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 96 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 128 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 96
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 128
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 160
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 192
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 234
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 256
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 288
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 320
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 352 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 384 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 352
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 384
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 416
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 448
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 480
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 512
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 544
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 576
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 608 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 640 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 608
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 640
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 672
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 704
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 736
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 768
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 800
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 832
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 864 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 896 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 864
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 896
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 928
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 960
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 992
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+32
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+64
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+96 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+128 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+96
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+128
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+160
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+192
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+234
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+256
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+288
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+320
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+352 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+384 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+352
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+384
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+416
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+448
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+480
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+512
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+544
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+576
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+608 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+640 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+608
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+640
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+672
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+704
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+736
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+768
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+800
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+832
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+864 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+896 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+864
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+896
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+928
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+960
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 1024+992
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+32
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+64
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+96 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+128 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+96
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+128
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+160
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+192
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+234
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+256
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+288
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+320
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+352 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+384 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+352
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+384
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+416
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+448
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+480
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+512
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+544
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+576
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+608 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+640 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+608
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+640
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+672
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+704
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+736
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+768
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+800
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+832
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+864 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+896 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+864
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+896
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+928
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+960
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 2048+992
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+32
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+64
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+96 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+128 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+96
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+128
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+160
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+192
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+234
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+256
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+288
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+320
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+352 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+384 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+352
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+384
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+416
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+448
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+480
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+512
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+544
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+576
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+608 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+640 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+608
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+640
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+672
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+704
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+736
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+768
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+800
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+832
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+864 
- 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+896 
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+864
+ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+896
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+928
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+960
  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // 3072+992
@@ -1492,7 +1489,7 @@ GBitmap::zeroes(int required)
 
 
 // Fills a bitmap with the given value
-void 
+void
 GBitmap::fill(unsigned char value)
 {
   GMonitorLock lock(monitor());
@@ -1505,7 +1502,7 @@ GBitmap::fill(unsigned char value)
 }
 
 
-void 
+void
 GBitmap::append_long_run(unsigned char *&data, int count)
 {
   while (count > MAXRUNSIZE)
@@ -1538,12 +1535,12 @@ GBitmap::append_line(unsigned char *&data,const unsigned char *row,
   while(row<rowend)
     {
       int count=0;
-      if ((p=!p)) 
+      if ((p=!p))
         {
           if(*row)
             for(++count,++row;(row<rowend)&&*row;++count,++row)
             	EMPTY_LOOP;
-        } 
+        }
       else if(!*row)
         {
           for(++count,++row;(row<rowend)&&!*row;++count,++row)
@@ -1582,7 +1579,7 @@ GetRowTDRLNR(
 }
 #endif // 0
 
-GP<GBitmap> 
+GP<GBitmap>
 GBitmap::rotate(int count)
 {
   GP<GBitmap> newbitmap=this;
@@ -1655,7 +1652,7 @@ GBitmap::rotate(int count)
 }
 
 #ifndef NDEBUG
-void 
+void
 GBitmap::check_border() const
 {int col ;
   if (bytes)

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,10 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
-
 
 /** @name IW44Image.h
 
@@ -83,10 +79,10 @@
     \begin{verbatim}
     % djvuinfo lag.iw4
     lag.iw4:
-      FORM:PM44 [62598] 
+      FORM:PM44 [62598]
         PM44 [10807]              #1 - 74 slices - v1.2 (color) - 684x510
-        PM44 [23583]              #2 - 13 slices 
-        PM44 [28178]              #3 - 10 slices 
+        PM44 [23583]              #2 - 13 slices
+        PM44 [28178]              #3 - 10 slices
     \end{verbatim}
 
     {\bf Embedded IW44 Images} --- These IW44 data chunks can also appear within
@@ -97,16 +93,16 @@
     actually regular IW44 data chunks with a different chunk identifier.  This
     information too can be displayed using program \Ref{djvuinfo}.
     \begin{verbatim}
-    % djvuinfo graham1.djvu 
+    % djvuinfo graham1.djvu
     graham1.djvu:
-      FORM:DJVU [32553] 
+      FORM:DJVU [32553]
         INFO [5]            3156x2325, version 17
-        Sjbz [17692] 
+        Sjbz [17692]
         BG44 [2570]         #1 - 74 slices - v1.2 (color) - 1052x775
         FG44 [1035]         #1 - 100 slices - v1.2 (color) - 263x194
-        BG44 [3048]         #2 - 10 slices 
-        BG44 [894]          #3 - 4 slices 
-        BG44 [7247]         #4 - 9 slices 
+        BG44 [3048]         #2 - 10 slices
+        BG44 [894]          #3 - 4 slices
+        BG44 [7247]         #4 - 9 slices
     \end{verbatim}
 
     {\bf Performance} --- The main design objective for the DjVu wavelets
@@ -119,7 +115,7 @@
     important role in the DjVu system.  We have investigated various
     state-of-the-art wavelet compression schemes: although these schemes may
     achieve slightly smaller file sizes, the decoding functions did not even
-    approach our requirements.  
+    approach our requirements.
 
     The IW44 wavelets satisfy these requirements today. It performs very well
     for quality settings resulting in high compression ratios.  It should not
@@ -148,7 +144,7 @@
     improvements may be implemented in future version, if (and only if) they
     can meet our decoding constraints.  Future versions will probably split
     file #"IW44Image.cpp"# which currently contains everything.
- 
+
     @memo
     Wavelet encoded images.
     @author
@@ -181,12 +177,12 @@ class GPixmap;
 
 
 
-/** IW44 encoding parameters.  
+/** IW44 encoding parameters.
     This data structure gathers the quality specification parameters needed
     for encoding each chunk of an IW44 file.  Chunk data is generated until
     meeting either the slice target, the size target or the decibel target.  */
 
-struct DJVUAPI IWEncoderParms 
+struct DJVUAPI IWEncoderParms
 {
   /** Slice target.  Data generation for the current chunk stops if the total
       number of slices (in this chunk and all the previous chunks) reaches
@@ -228,22 +224,22 @@ public:
       argument to the following \Ref{IWPixmap} constructor to indicate how the
       chrominance information should be processed. There are four possible values:
       \begin{description}
-      \item[CRCBnone:] The wavelet transform will discard the chrominance 
+      \item[CRCBnone:] The wavelet transform will discard the chrominance
            information and only keep the luminance. The image will show in shades of gray.
-      \item[CRCBhalf:] The wavelet transform will process the chrominance at only 
+      \item[CRCBhalf:] The wavelet transform will process the chrominance at only
            half the image resolution. This option creates smaller files but may create
            artifacts in highly colored images.
-      \item[CRCBnormal:] The wavelet transform will process the chrominance at full 
+      \item[CRCBnormal:] The wavelet transform will process the chrominance at full
            resolution. This is the default.
-      \item[CRCBfull:] The wavelet transform will process the chrominance at full 
+      \item[CRCBfull:] The wavelet transform will process the chrominance at full
            resolution. This option also disables the chrominance encoding delay
            (see \Ref{parm_crcbdelay}) which usually reduces the bitrate associated with the
            chrominance information.
       \end{description} */
-  enum CRCBMode { 
-    CRCBnone, 
-    CRCBhalf, 
-    CRCBnormal, 
+  enum CRCBMode {
+    CRCBnone,
+    CRCBhalf,
+    CRCBnormal,
     CRCBfull };
   class Transform;
   class Map;
@@ -262,7 +258,7 @@ public:
   /** Null constructor.  Constructs an empty IW44Image object. This object does
       not contain anything meaningful. You must call function \Ref{init},
       \Ref{decode_iff} or \Ref{decode_chunk} to populate the wavelet
-      coefficient data structure. You may not use \Ref{encode_iff} or 
+      coefficient data structure. You may not use \Ref{encode_iff} or
       \Ref{encode_chunk}. */
   static GP<IW44Image> create_decode(const ImageType itype=COLOR);
   /** Null constructor.  Constructs an empty IW44Image object. This object does
@@ -565,7 +561,7 @@ public:
  // WAVELET TRANSFORM
   /*x Forward transform. */
   static void backward(short *p, int w, int h, int rowsize, int begin, int end);
-  
+
   // COLOR TRANSFORM
   /*x Converts YCbCr to RGB. */
   static void YCbCr_to_RGB(GPixel *p, int w, int h, int rowsize);
@@ -609,10 +605,10 @@ public:
   Map(int w, int h);
   ~Map();
   // image access
-  void image(signed char *img8, int rowsize, 
+  void image(signed char *img8, int rowsize,
              int pixsep=1, int fast=0);
-  void image(int subsample, const GRect &rect, 
-             signed char *img8, int rowsize, 
+  void image(int subsample, const GRect &rect,
+             signed char *img8, int rowsize,
              int pixsep=1, int fast=0);
   // array of blocks
   IW44Image::Block *blocks;
@@ -631,7 +627,7 @@ public:
 };
 
 //////////////////////////////////////////////////////
-// ENCODING/DECODING WAVELET COEFFICIENTS 
+// ENCODING/DECODING WAVELET COEFFICIENTS
 //    USING HIERARCHICAL SET DIFFERENCE
 //////////////////////////////////////////////////////
 
@@ -640,7 +636,7 @@ public:
 // Class IW44Image::Codec [declaration+implementation]
 // Maintains information shared while encoding or decoding
 
-class IW44Image::Codec 
+class IW44Image::Codec
 {
 public:
   class Decode;
@@ -691,7 +687,7 @@ struct IW44Image::PrimaryHeader {
   unsigned char slices;
   void encode(GP<ByteStream> gbs);
   void decode(GP<ByteStream> gbs);
-};  
+};
 
 struct IW44Image::SecondaryHeader {
   unsigned char major;
@@ -708,7 +704,7 @@ struct IW44Image::TertiaryHeader {
   void decode(GP<ByteStream> gbs, int major=1, int minor=2);
 };
 
-inline const short* 
+inline const short*
 IW44Image::Block::data(int n) const
 {
   if (! pdata[n>>4])
@@ -716,7 +712,7 @@ IW44Image::Block::data(int n) const
   return pdata[n>>4][n&15];
 }
 
-inline short* 
+inline short*
 IW44Image::Block::data(int n, IW44Image::Map *map)
 {
   if (! pdata[n>>4])
@@ -726,7 +722,7 @@ IW44Image::Block::data(int n, IW44Image::Map *map)
   return pdata[n>>4][n&15];
 }
 
-inline short 
+inline short
 IW44Image::Block::get(int n) const
 {
   int n1 = (n>>4);
@@ -736,7 +732,7 @@ IW44Image::Block::get(int n) const
   return d[n&15];
 }
 
-inline void  
+inline void
 IW44Image::Block::set(int n, int val, IW44Image::Map *map)
 {
   int n1 = (n>>4);

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // -- Implementation of class GRect and GRectMapper
@@ -77,19 +74,19 @@ namespace DJVU {
 
 // -- Local utilities
 
-static inline int 
+static inline int
 imin(int x, int y)
 {
-  if (x < y) 
+  if (x < y)
     return x;
   else
     return y;
 }
 
-static inline int 
+static inline int
 imax(int x, int y)
 {
-  if (x > y) 
+  if (x > y)
     return x;
   else
     return y;
@@ -103,7 +100,7 @@ iswap(int &x, int &y)
 
 // -- Class GRect
 
-int 
+int
 operator==(const GRect & r1, const GRect & r2)
 {
   bool isempty1 = r1.isempty();
@@ -111,52 +108,52 @@ operator==(const GRect & r1, const GRect & r2)
   if (isempty1 || isempty2)
     if (isempty1 && isempty2)
       return 1;
-  if ( r1.xmin==r2.xmin && r1.xmax==r2.xmax 
+  if ( r1.xmin==r2.xmin && r1.xmax==r2.xmax
        && r1.ymin==r2.ymin && r1.ymax==r2.ymax )
     return 1;
   return 0;
 }
 
-int 
+int
 GRect::inflate(int dx, int dy)
 {
   xmin -= dx;
   xmax += dx;
   ymin -= dy;
   ymax += dy;
-  if (! isempty()) 
+  if (! isempty())
     return 1;
   xmin = ymin = xmax = ymax = 0;
   return 0;
 }
 
-int 
+int
 GRect::translate(int dx, int dy)
 {
   xmin += dx;
   xmax += dx;
   ymin += dy;
   ymax += dy;
-  if (! isempty()) 
+  if (! isempty())
     return 1;
   xmin = ymin = xmax = ymax = 0;
   return 0;
 }
 
-int  
+int
 GRect::intersect(const GRect &rect1, const GRect &rect2)
 {
   xmin = imax(rect1.xmin, rect2.xmin);
   xmax = imin(rect1.xmax, rect2.xmax);
   ymin = imax(rect1.ymin, rect2.ymin);
   ymax = imin(rect1.ymax, rect2.ymax);
-  if (! isempty()) 
+  if (! isempty())
     return 1;
   xmin = ymin = xmax = ymax = 0;
   return 0;
 }
 
-int  
+int
 GRect::recthull(const GRect &rect1, const GRect &rect2)
 {
   if (rect1.isempty())
@@ -220,18 +217,18 @@ inline
 GRectMapper::GRatio::GRatio(int p, int q)
   : p(p), q(q)
 {
-  if (q == 0) 
+  if (q == 0)
     G_THROW( ERR_MSG("GRect.div_zero") );
   if (p == 0)
     q = 1;
   if (q < 0)
     {
-      p = -p; 
-      q = -q; 
+      p = -p;
+      q = -q;
     }
   int gcd = 1;
-  int g1 = p; 
-  int g2 = q; 
+  int g1 = p;
+  int g2 = q;
   if (g1 > g2)
     {
       gcd = g1;
@@ -255,9 +252,9 @@ GRectMapper::GRatio::GRatio(int p, int q)
 #define llint_t long int
 #endif
 
-inline int 
+inline int
 operator*(int n, GRectMapper::GRatio r )
-{ 
+{
   /* [LB] -- This computation is carried out with integers and
      rational numbers because it must be exact.  Some lizard changed
      it to double and this is wrong.  I suspect they did so because
@@ -269,9 +266,9 @@ operator*(int n, GRectMapper::GRatio r )
     return - ((r.q/2 - x) / r.q);
 }
 
-inline int 
+inline int
 operator/(int n, GRectMapper::GRatio r )
-{ 
+{
   /* [LB] -- See comment in operator*() above. */
   llint_t x = (llint_t) n * (llint_t) r.q;
   if (x >= 0)
@@ -289,7 +286,7 @@ operator/(int n, GRectMapper::GRatio r )
 
 
 GRectMapper::GRectMapper()
-: rectFrom(0,0,1,1), 
+: rectFrom(0,0,1,1),
   rectTo(0,0,1,1),
   code(0)
 {
@@ -304,7 +301,7 @@ GRectMapper::clear()
   code = 0;
 }
 
-void 
+void
 GRectMapper::set_input(const GRect &rect)
 {
   if (rect.isempty())
@@ -318,7 +315,7 @@ GRectMapper::set_input(const GRect &rect)
   rw = rh = GRatio();
 }
 
-void 
+void
 GRectMapper::set_output(const GRect &rect)
 {
   if (rect.isempty())
@@ -327,7 +324,7 @@ GRectMapper::set_output(const GRect &rect)
   rw = rh = GRatio();
 }
 
-void 
+void
 GRectMapper::rotate(int count)
 {
   int oldcode = code;
@@ -346,20 +343,20 @@ GRectMapper::rotate(int count)
       break;
     }
   if ((oldcode ^ code) & SWAPXY)
-    { 
+    {
       iswap(rectFrom.xmin, rectFrom.ymin);
       iswap(rectFrom.xmax, rectFrom.ymax);
       rw = rh = GRatio();
     }
 }
 
-void 
+void
 GRectMapper::mirrorx()
 {
   code ^= MIRRORX;
 }
 
-void 
+void
 GRectMapper::mirrory()
 {
   code ^= MIRRORY;
@@ -374,7 +371,7 @@ GRectMapper::precalc()
   rh = GRatio(rectTo.height(), rectFrom.height());
 }
 
-void 
+void
 GRectMapper::map(int &x, int &y)
 {
   int mx = x;
@@ -394,10 +391,10 @@ GRectMapper::map(int &x, int &y)
   y = rectTo.ymin + (my - rectFrom.ymin) * rh;
 }
 
-void 
+void
 GRectMapper::unmap(int &x, int &y)
 {
-  // precalc 
+  // precalc
   if (! (rw.p && rh.p))
     precalc();
   // scale and translate
@@ -414,7 +411,7 @@ GRectMapper::unmap(int &x, int &y)
   y = my;
 }
 
-void 
+void
 GRectMapper::map(GRect &rect)
 {
   map(rect.xmin, rect.ymin);
@@ -425,7 +422,7 @@ GRectMapper::map(GRect &rect)
     iswap(rect.ymin, rect.ymax);
 }
 
-void 
+void
 GRectMapper::unmap(GRect &rect)
 {
   unmap(rect.xmin, rect.ymin);
@@ -436,13 +433,13 @@ GRectMapper::unmap(GRect &rect)
     iswap(rect.ymin, rect.ymax);
 }
 
-GRect 
+GRect
 GRectMapper::get_input()
 {
     return rectFrom;
 }
 
-GRect 
+GRect
 GRectMapper::get_output()
 {
     return rectTo;

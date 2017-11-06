@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -61,9 +61,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // - Author: Leon Bottou, 04/1997
@@ -121,7 +118,7 @@ namespace DJVU {
 
 const char *ByteStream::EndOfFile=ERR_MSG("EOF");
 
-/** ByteStream interface for stdio files. 
+/** ByteStream interface for stdio files.
     The virtual member functions #read#, #write#, #tell# and #seek# are mapped
     to the well known stdio functions #fread#, #fwrite#, #ftell# and #fseek#.
     @see Unix man page fopen(3), fread(3), fwrite(3), ftell(3), fseek(3) */
@@ -179,7 +176,7 @@ ByteStream::Stdio::init(FILE * const f,const char mode[],const bool closeme)
 }
 
 
-/** ByteStream interface managing a memory buffer.  
+/** ByteStream interface managing a memory buffer.
     Class #ByteStream::Memory# manages a dynamically resizable buffer from
     which data can be read or written.  The buffer itself is organized as an
     array of blocks of 4096 bytes.  */
@@ -258,7 +255,7 @@ ByteStream::Memory::operator[] (long n)
 
 
 
-/** Read-only ByteStream interface to a memory area.  
+/** Read-only ByteStream interface to a memory area.
     Class #ByteStream::Static# implements a read-only ByteStream interface for a
     memory area specified by the user at construction time. Calls to function
     #read# directly access this memory area.  The user must therefore make
@@ -304,7 +301,7 @@ class MemoryMapByteStream : public ByteStream::Static
 {
 public:
   MemoryMapByteStream(void);
-  virtual ~MemoryMapByteStream();  
+  virtual ~MemoryMapByteStream();
 private:
   GUTF8String init(const int fd, const bool closeme);
   GUTF8String init(FILE *const f,const bool closeme);
@@ -319,21 +316,21 @@ ByteStream::~ByteStream()
 {
 }
 
-int 
+int
 ByteStream::scanf(const char *fmt, ...)
 {
   G_THROW( ERR_MSG("ByteStream.not_implemented") ); // This is a place holder function.
   return 0;
 }
 
-size_t 
+size_t
 ByteStream::read(void *buffer, size_t sz)
 {
   G_THROW( ERR_MSG("ByteStream.cant_read") );      //  Cannot read from a ByteStream created for writing
   return 0;
 }
 
-size_t 
+size_t
 ByteStream::write(const void *buffer, size_t sz)
 {
   G_THROW( ERR_MSG("ByteStream.cant_write") );      //  Cannot write from a ByteStream created for reading
@@ -356,7 +353,7 @@ ByteStream::seek(long offset, int whence, bool nothrow)
       nwhere=0; break;
     case SEEK_CUR:
       nwhere=ncurrent; break;
-    case SEEK_END: 
+    case SEEK_END:
       {
         if(offset)
           {
@@ -374,7 +371,7 @@ ByteStream::seek(long offset, int whence, bool nothrow)
       G_THROW( ERR_MSG("ByteStream.bad_arg") );       //  Illegal argument in seek
     }
   nwhere += offset;
-  if (nwhere < ncurrent) 
+  if (nwhere < ncurrent)
     {
       //  Seeking backwards is not supported by this ByteStream
       if (nothrow)
@@ -398,7 +395,7 @@ ByteStream::seek(long offset, int whence, bool nothrow)
   return 0;
 }
 
-size_t 
+size_t
 ByteStream::readall(void *buffer, size_t size)
 {
   size_t total = 0;
@@ -409,12 +406,12 @@ ByteStream::readall(void *buffer, size_t size)
       // as there is no guarantee, that errno is right. Still, throwing
       // exception instead of continuing to loop is better.
       // - eaf
-      if(nitems < 0) 
+      if(nitems < 0)
         G_THROW(strerror(errno));               //  (No error in the DjVuMessageFile)
       if (nitems == 0)
         break;
       total += nitems;
-      size -= nitems; 
+      size -= nitems;
       buffer = (void*)((char*)buffer + nitems);
     }
   return total;
@@ -424,7 +421,7 @@ size_t
 ByteStream::format(const char *fmt, ... )
 {
   va_list args;
-  va_start(args, fmt); 
+  va_start(args, fmt);
   const GUTF8String message(fmt,args);
   return writestring(message);
 }
@@ -439,7 +436,7 @@ ByteStream::writestring(const GNativeString &s)
     if(cp == AUTO)
       cp=NATIVE; // Avoid mixing string types.
   }else
-  { 
+  {
     const GUTF8String msg(s.getNative2UTF8());
     retval=writall((const char *)msg,msg.length());
   }
@@ -456,14 +453,14 @@ ByteStream::writestring(const GUTF8String &s)
     if(cp == AUTO)
       cp=UTF8; // Avoid mixing string types.
   }else
-  { 
+  {
     const GNativeString msg(s.getUTF82Native());
     retval=writall((const char *)msg,msg.length());
   }
   return retval;
 }
 
-size_t 
+size_t
 ByteStream::writall(const void *buffer, size_t size)
 {
   size_t total = 0;
@@ -473,13 +470,13 @@ ByteStream::writall(const void *buffer, size_t size)
       if (nitems == 0)
         G_THROW( ERR_MSG("ByteStream.write_error") );      //  Unknown error in write
       total += nitems;
-      size -= nitems; 
+      size -= nitems;
       buffer = (void*)((char*)buffer + nitems);
     }
   return total;
 }
 
-size_t 
+size_t
 ByteStream::copy(ByteStream &bsfrom, size_t size)
 {
   size_t total = 0;
@@ -504,7 +501,7 @@ ByteStream::copy(ByteStream &bsfrom, size_t size)
 }
 
 
-void 
+void
 ByteStream::write8 (unsigned int card)
 {
   unsigned char c[1];
@@ -513,7 +510,7 @@ ByteStream::write8 (unsigned int card)
     G_THROW(strerror(errno));   //  (No error in the DjVuMessageFile)
 }
 
-void 
+void
 ByteStream::write16(unsigned int card)
 {
   unsigned char c[2];
@@ -523,7 +520,7 @@ ByteStream::write16(unsigned int card)
     G_THROW(strerror(errno));   //  (No error in the DjVuMessageFile)
 }
 
-void 
+void
 ByteStream::write24(unsigned int card)
 {
   unsigned char c[3];
@@ -534,7 +531,7 @@ ByteStream::write24(unsigned int card)
     G_THROW(strerror(errno));   //  (No error in the DjVuMessageFile)
 }
 
-void 
+void
 ByteStream::write32(unsigned int card)
 {
   unsigned char c[4];
@@ -546,7 +543,7 @@ ByteStream::write32(unsigned int card)
     G_THROW(strerror(errno));   //  (No error in the DjVuMessageFile)
 }
 
-unsigned int 
+unsigned int
 ByteStream::read8 ()
 {
   unsigned char c[1];
@@ -555,7 +552,7 @@ ByteStream::read8 ()
   return c[0];
 }
 
-unsigned int 
+unsigned int
 ByteStream::read16()
 {
   unsigned char c[2];
@@ -564,7 +561,7 @@ ByteStream::read16()
   return (c[0]<<8)+c[1];
 }
 
-unsigned int 
+unsigned int
 ByteStream::read24()
 {
   unsigned char c[3];
@@ -573,7 +570,7 @@ ByteStream::read24()
   return (((c[0]<<8)+c[1])<<8)+c[2];
 }
 
-unsigned int 
+unsigned int
 ByteStream::read32()
 {
   unsigned char c[4];
@@ -605,13 +602,13 @@ ByteStream::Stdio::init(const char mode[])
     must_close=false;
   for (const char *s=mode; s && *s; s++)
   {
-    switch(*s) 
+    switch(*s)
     {
       case 'r':
         can_read=true;
         if(!fp) fp=stdin;
         break;
-      case 'w': 
+      case 'w':
       case 'a':
         can_write=true;
         if(!fp) fp=stdout;
@@ -707,7 +704,7 @@ ByteStream::Stdio::init(const GURL &url, const char mode[])
   return retval.length()?retval:init(mode);
 }
 
-size_t 
+size_t
 ByteStream::Stdio::read(void *buffer, size_t size)
 {
   if (!can_read)
@@ -716,7 +713,7 @@ ByteStream::Stdio::read(void *buffer, size_t size)
   do
   {
     clearerr(fp);
-    nitems = fread(buffer, 1, size, fp); 
+    nitems = fread(buffer, 1, size, fp);
     if (nitems<=0 && ferror(fp))
     {
 #ifdef EINTR
@@ -731,7 +728,7 @@ ByteStream::Stdio::read(void *buffer, size_t size)
   return nitems;
 }
 
-size_t 
+size_t
 ByteStream::Stdio::write(const void *buffer, size_t size)
 {
   if (!can_write)
@@ -762,7 +759,7 @@ ByteStream::Stdio::flush()
     G_THROW(strerror(errno)); //  (No error in the DjVuMessageFile)
 }
 
-long 
+long
 ByteStream::Stdio::tell(void) const
 {
   long x = ftell(fp);
@@ -783,9 +780,9 @@ ByteStream::Stdio::seek(long offset, int whence, bool nothrow)
   if (whence==SEEK_SET && offset>=0 && offset==ftell(fp))
     return 0;
   clearerr(fp);
-  if (fseek(fp, offset, whence)) 
+  if (fseek(fp, offset, whence))
     {
-      if (nothrow) 
+      if (nothrow)
         return -1;
       G_THROW(strerror(errno)); //  (No error in the DjVuMessageFile)
     }
@@ -819,7 +816,7 @@ ByteStream::Memory::init(void const * const buffer, const size_t sz)
   return retval;
 }
 
-void 
+void
 ByteStream::Memory::empty()
 {
   for (int b=0; b<nblocks; b++)
@@ -837,7 +834,7 @@ ByteStream::Memory::~Memory()
   empty();
 }
 
-size_t 
+size_t
 ByteStream::Memory::write(const void *buffer, size_t sz)
 {
   long nsz = (long)sz;
@@ -854,7 +851,7 @@ ByteStream::Memory::write(const void *buffer, size_t sz)
           gblocks.resize(nblocks);
           char const ** eblocks=(char const **)(blocks+old_nblocks);
           for(char const * const * const new_eblocks=blocks+nblocks;
-              eblocks <new_eblocks; eblocks++) 
+              eblocks <new_eblocks; eblocks++)
             {
               *eblocks = 0;
             }
@@ -882,7 +879,7 @@ ByteStream::Memory::write(const void *buffer, size_t sz)
   return sz;
 }
 
-size_t 
+size_t
 ByteStream::Memory::readat(void *buffer, size_t sz, long pos)
 {
   if ((long)sz > bsize - pos)
@@ -903,7 +900,7 @@ ByteStream::Memory::readat(void *buffer, size_t sz, long pos)
   return sz;
 }
 
-size_t 
+size_t
 ByteStream::Memory::read(void *buffer, size_t sz)
 {
   sz = readat(buffer,sz,where);
@@ -911,7 +908,7 @@ ByteStream::Memory::read(void *buffer, size_t sz)
   return sz;
 }
 
-long 
+long
 ByteStream::Memory::tell(void) const
 {
   return where;
@@ -958,7 +955,7 @@ ByteStream::Static::Static(const void * const buffer, const size_t sz)
 {
 }
 
-size_t 
+size_t
 ByteStream::Static::read(void *buffer, size_t sz)
 {
   long nsz = (long)sz;
@@ -991,7 +988,7 @@ ByteStream::Static::seek(long offset, int whence, bool nothrow)
   return 0;
 }
 
-long 
+long
 ByteStream::Static::tell(void) const
 {
   return where;
@@ -1018,7 +1015,7 @@ ByteStream::create(const GURL &url,char const * const xmode)
   GP<ByteStream> retval;
   const char *mode = ((xmode) ? xmode : "rb");
 #ifdef UNIX
-  if (!strcmp(mode,"rb")) 
+  if (!strcmp(mode,"rb"))
     {
       int fd = urlopen(url,O_RDONLY,0777);
       if (fd >= 0)
@@ -1037,7 +1034,7 @@ ByteStream::create(const GURL &url,char const * const xmode)
           if (! retval)
             {
               FILE *f = fdopen(fd, mode);
-              if (f) 
+              if (f)
                 {
                   Stdio *sbs=new Stdio();
                   retval=sbs;
@@ -1048,7 +1045,7 @@ ByteStream::create(const GURL &url,char const * const xmode)
             }
           if (! retval)
             close(fd);
-        }     
+        }
     }
 #endif
   if (! retval)
@@ -1082,7 +1079,7 @@ ByteStream::create(const int fd,char const * const mode,const bool closeme)
   GP<ByteStream> retval;
   const char *default_mode="rb";
 #if HAS_MEMMAP
-  if (   (!mode&&(fd!=0)&&(fd!=1)&&(fd!=2)) 
+  if (   (!mode&&(fd!=0)&&(fd!=1)&&(fd!=2))
       || (mode&&(GUTF8String("rb") == mode)))
   {
     MemoryMapByteStream *rb=new MemoryMapByteStream();
@@ -1098,14 +1095,14 @@ ByteStream::create(const int fd,char const * const mode,const bool closeme)
   {
     int fd2 = fd;
     FILE *f = 0;
-    if (fd == 0 && !closeme 
+    if (fd == 0 && !closeme
         && (!mode || mode[0]=='r') )
       {
         f=stdin;
         default_mode = "r";
         fd2=(-1);
       }
-    else if (fd == 1 && !closeme 
+    else if (fd == 1 && !closeme
              && (!mode || mode[0]=='a' || mode[0]=='w') )
       {
         default_mode = "a";
@@ -1229,21 +1226,21 @@ MemoryMapByteStream::~MemoryMapByteStream()
 ByteStream::Wrapper::~Wrapper() {}
 
 
-GP<ByteStream> 
+GP<ByteStream>
 ByteStream::get_stdin(char const *mode)
 {
   static GP<ByteStream> gp = ByteStream::create(0,mode,false);
   return gp;
 }
 
-GP<ByteStream> 
+GP<ByteStream>
 ByteStream::get_stdout(char const *mode)
 {
   static GP<ByteStream> gp = ByteStream::create(1,mode,false);
   return gp;
 }
 
-GP<ByteStream> 
+GP<ByteStream>
 ByteStream::get_stderr(char const *mode)
 {
   static GP<ByteStream> gp = ByteStream::create(2,mode,false);
@@ -1266,7 +1263,7 @@ void ByteStream::writemessage( const char *message )
   writestring( DjVuMessage::LookUpUTF8( message ) );
 }
 
-static void 
+static void
 read_file(ByteStream &bs,char *&buffer,GPBuffer<char> &gbuffer)
 {
   const int size=bs.size();
@@ -1323,11 +1320,11 @@ DjVuPrintErrorUTF8(const char *fmt, ... )
       {
         errout->cp=ByteStream::NATIVE;
         va_list args;
-        va_start(args, fmt); 
+        va_start(args, fmt);
         const GUTF8String message(fmt,args);
         errout->writestring(message);
       }
-    // Need to catch all exceptions because these might be 
+    // Need to catch all exceptions because these might be
     // called from an outer exception handler (with prejudice)
   } G_CATCH_ALL { } G_ENDCATCH;
 }
@@ -1341,11 +1338,11 @@ DjVuPrintErrorNative(const char *fmt, ... )
       {
         errout->cp=ByteStream::NATIVE;
         va_list args;
-        va_start(args, fmt); 
+        va_start(args, fmt);
         const GNativeString message(fmt,args);
         errout->writestring(message);
       }
-    // Need to catch all exceptions because these might be 
+    // Need to catch all exceptions because these might be
     // called from an outer exception handler (with prejudice)
   } G_CATCH_ALL { } G_ENDCATCH;
 }
@@ -1363,7 +1360,7 @@ DjVuPrintMessageUTF8(const char *fmt, ... )
         const GUTF8String message(fmt,args);
         strout->writestring(message);
       }
-    // Need to catch all exceptions because these might be 
+    // Need to catch all exceptions because these might be
     // called from an outer exception handler (with prejudice)
   } G_CATCH_ALL { } G_ENDCATCH;
 }
@@ -1381,7 +1378,7 @@ DjVuPrintMessageNative(const char *fmt, ... )
         const GNativeString message(fmt,args);
         strout->writestring(message);
       }
-    // Need to catch all exceptions because these might be 
+    // Need to catch all exceptions because these might be
     // called from an outer exception handler (with prejudice)
   } G_CATCH_ALL { } G_ENDCATCH;
 }

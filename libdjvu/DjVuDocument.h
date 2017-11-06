@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,10 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
-
 
 #include "DjVuPort.h"
 
@@ -136,7 +132,7 @@ class ByteStream;
        // Do something
     };
     \end{verbatim}
-    
+
     {\bf Comments for the code above}
     \begin{enumerate}
        \item Since the document is assumed to be stored on the hard drive,
@@ -208,7 +204,7 @@ class ByteStream;
 		      The initializating code finished.
 	     \end{itemize}
     \end{enumerate} */
-    
+
 class DJVUAPI DjVuDocument : public DjVuPort
 {
 public:
@@ -514,7 +510,7 @@ public:
    { return url.fname(); }
 
       /** Translates the textual ID to the complete URL if possible.
-	  
+
 	  Depending on the document format the translation is done in the
 	  following way:
 	  \begin{itemize}
@@ -613,7 +609,7 @@ public:
 	  #ZERO# or just empty, page number #-1# is assumed. Otherwise
 	  the ID is translated to the URL using \Ref{id_to_url}(). */
    GP<DjVuImage> get_page(const GUTF8String &id, bool sync=true, DjVuPort * port=0);
-   
+
       /** Returns \Ref{DjVuFile} corresponding to the specified page.
 	  Normally it translates the page number to the URL using
 	  \Ref{page_to_url}() and then creates \Ref{DjVuFile} initializing
@@ -679,7 +675,7 @@ public:
       /** Waits until the document initialization process finishes.
 	  It can finish either successfully or not. Use \Ref{is_init_ok}()
 	  and \Ref{is_init_failed}() to learn the result code.
-	  
+
 	  As described in \Ref{start_init}(), for multi-threaded applications the
 	  initialization is carried out in parallel with the main thread.
 	  This function blocks the calling thread until the initializing
@@ -692,7 +688,7 @@ public:
 
           /** Wait until we known the number of pages and return. */
    int wait_get_pages_num(void) const;
-   
+
       /// Returns cache being used.
    DjVuFileCache * get_cache(void) const;
 
@@ -734,7 +730,7 @@ public:
 	  {\bf Plugin Warning}. This function will read contents of the whole
 	  document. Thus, if you call it from the main thread (the thread,
 	  which transfers data from Netscape), the plugin will block.
-	  
+
 	  @param codebase - Name of the directory which the document should
 	         be expanded into.
 	  @param idx_name - Name of the top-level file containing the document
@@ -825,7 +821,7 @@ protected:
    bool can_compress_flag;
    bool needs_rename_flag;
 
-   
+
 
    bool			has_url_names;
    GCriticalSection	url_names_lock;
@@ -851,7 +847,7 @@ protected:
       // AFTER IT'S NO LONGER NEEDED. If you don't zero it, ~DjVuDocument()
       // will kill it, which is a BAD thing if the file's already in cache.
    GP<DjVuFile>		ndir_file;
-   
+
    GPList<UnnamedFile>	ufiles_list;
    GCriticalSection	ufiles_lock;
 
@@ -872,7 +868,7 @@ protected:
 
    void			process_threqs(void);
    GP<ThumbReq>		add_thumb_req(const GP<ThumbReq> & thumb_req);
-      
+
    void			add_to_cache(const GP<DjVuFile> & f);
    void			check_unnamed_files(void);
    GUTF8String		get_int_prefix(void) const;

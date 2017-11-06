@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "GIFFManager.h"
@@ -77,7 +74,7 @@ GIFFChunk::~GIFFChunk(void) {}
 
 GIFFManager::~GIFFManager(void) {}
 
-GP<GIFFManager> 
+GP<GIFFManager>
 GIFFManager::create(void)
 {
   GIFFManager *iff=new GIFFManager();
@@ -86,7 +83,7 @@ GIFFManager::create(void)
   return retval;
 }
 
-GP<GIFFManager> 
+GP<GIFFManager>
 GIFFManager::create(const GUTF8String &name)
 {
   GIFFManager *iff=new GIFFManager();
@@ -199,12 +196,12 @@ GIFFChunk::add_chunk(const GP<GIFFChunk> & chunk, int position)
   }
 }
 
-GUTF8String 
+GUTF8String
 GIFFChunk::decode_name(const GUTF8String &name, int &number)
 {
   DEBUG_MSG("GIFFChunk::decode_name(): Checking brackets in name '" << name << "'\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   if (name.search('.')>=0)
     G_THROW( ERR_MSG("GIFFManager.no_dots") );
 
@@ -219,7 +216,7 @@ GIFFChunk::decode_name(const GUTF8String &name, int &number)
     if (name.length() > (unsigned int)(cbracket+1))
       G_THROW( ERR_MSG("GIFFManager.garbage") );
 //    number =atoi((const char *)name.substr(obracket+1,cbracket-obracket-1));
-    number= name.substr(obracket+1,cbracket-obracket-1).toInt(); 
+    number= name.substr(obracket+1,cbracket-obracket-1).toInt();
     short_name=name.substr(0,obracket);
   }else
   {
@@ -232,10 +229,10 @@ GIFFChunk::decode_name(const GUTF8String &name, int &number)
 
   for(int i=short_name.length();i<4;i++)
     short_name.setat(i, ' ');
-   
+
   DEBUG_MSG("short_name='" << short_name << "'\n");
   DEBUG_MSG("number=" << number << "\n");
-   
+
   return short_name;
 }
 
@@ -311,10 +308,10 @@ GIFFChunk::get_chunks_number(const GUTF8String &name)
 
   if (name.contains("[]")>=0)
     G_THROW( ERR_MSG("GIFFManager.no_brackets") );
-  
-  int number; 
+
+  int number;
   GUTF8String short_name=decode_name(name,number);
-   
+
   int num=0;
   for(GPosition pos=chunks;pos;++pos)
      num+=(chunks[pos]->get_name()==short_name);
@@ -333,7 +330,7 @@ GIFFManager::add_chunk(GUTF8String parent_name, const GP<GIFFChunk> & chunk,
 {
   DEBUG_MSG("GIFFManager::add_chunk(): Adding chunk to name='" << parent_name << "'\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   if (!top_level->get_name().length())
   {
     if ((!parent_name.length())||(parent_name[0]!='.'))
@@ -360,7 +357,7 @@ GIFFManager::add_chunk(GUTF8String parent_name, const GP<GIFFChunk> & chunk,
   }
 
   DEBUG_MSG("top level chunk name='" << top_level->get_name() << "'\n");
-   
+
   if (parent_name.length() && parent_name[0] == '.')
   {
     int next_dot=parent_name.search('.',1);
@@ -453,7 +450,7 @@ GIFFManager::del_chunk(void)
 {
   DEBUG_MSG("GIFFManager::del_chunk(): Deleting chunk\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   G_THROW( ERR_MSG("GIFFManager.del_empty") );
 }
 
@@ -464,7 +461,7 @@ GIFFManager::del_chunk(GUTF8String name)
 {
   DEBUG_MSG("GIFFManager::del_chunk(): Deleting chunk '" << name << "'\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   if (!name.length())
     G_THROW( ERR_MSG("GIFFManager.del_empty") );
 
@@ -486,7 +483,7 @@ GIFFManager::del_chunk(GUTF8String name)
       G_THROW( ERR_MSG("GIFFManager.wrong_name2") "\t"+top_name);
     name=name.substr(next_dot+1,(unsigned int)-1);
   }
-   
+
   GP<GIFFChunk> cur_sec=top_level;
   const char * start, * end=(const char *)name-1;
   do
@@ -498,12 +495,12 @@ GIFFManager::del_chunk(GUTF8String name)
     if (!cur_sec)
       G_THROW( ERR_MSG("GIFFManager.cant_find") "\t"+GUTF8String(name));
   } while(*end);
-   
+
   if (!start[0])
   {
     G_THROW(GUTF8String( ERR_MSG("GIFFManager.malformed") "\t")+name);
   }
-   
+
   cur_sec->del_chunk(start);
 }
 
@@ -514,7 +511,7 @@ GIFFManager::get_chunk(GUTF8String name, int * pos_num)
 {
   DEBUG_MSG("GIFFManager::get_chunk(): Returning chunk '" << name << "'\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   if (!name.length())
     G_THROW( ERR_MSG("GIFFManager.get_empty") );
 
@@ -535,7 +532,7 @@ GIFFManager::get_chunk(GUTF8String name, int * pos_num)
       G_THROW( ERR_MSG("GIFFManager.wrong_name2") "\t"+top_name);
     name=name.substr(next_dot+1,(unsigned int)-1);
   }
-   
+
   GP<GIFFChunk> cur_sec=top_level;
   const char * start, * end=(const char *) name-1;
   do
@@ -547,7 +544,7 @@ GIFFManager::get_chunk(GUTF8String name, int * pos_num)
     if (!cur_sec)
       break;
   } while(*end);
-   
+
   return cur_sec;
 }
 
@@ -590,7 +587,7 @@ GIFFManager::load_chunk(IFFByteStream & istr, GP<GIFFChunk> chunk)
   DEBUG_MSG("GIFFManager::load_chunk(): loading contents of chunk '" <<
     chunk->get_name() << "'\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   int chunk_size;
   GUTF8String chunk_id;
   while ((chunk_size=istr.get_chunk(chunk_id)))
@@ -623,7 +620,7 @@ GIFFManager::load_file(GP<ByteStream> str)
 {
   DEBUG_MSG("GIFFManager::load_file(): Loading IFF file.\n");
   DEBUG_MAKE_INDENT(3);
-   
+
   GP<IFFByteStream> gistr=IFFByteStream::create(str);
   IFFByteStream &istr=*gistr;
   GUTF8String chunk_id;

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include <stddef.h>
@@ -79,7 +76,7 @@ namespace DJVU {
 
 // - Author: Leon Bottou, 05/1997
 
-GException::GException() 
+GException::GException()
   : cause(0), file(0), func(0), line(0), source(GException::GINTERNAL)
 {
 }
@@ -87,10 +84,10 @@ GException::GException()
 const char * const
 GException::outofmemory = ERR_MSG("GException.outofmemory");
 
-GException::GException(const GException & exc) 
+GException::GException(const GException & exc)
   : file(exc.file), func(exc.func), line(exc.line), source(exc.source)
 {
-  if (exc.cause && exc.cause!=outofmemory) 
+  if (exc.cause && exc.cause!=outofmemory)
     {
       char *s = new char[strlen(exc.cause)+1];
       strcpy(s, exc.cause);
@@ -106,12 +103,12 @@ GException::GException (const char *xcause, const char *file, int line,
    const char *func, const source_type xsource)
   : file(file), func(func), line(line), source(xsource)
 {
-  // good place to set a breakpoint and DEBUG message too. 
+  // good place to set a breakpoint and DEBUG message too.
   // It'd hard to track exceptions which seem to go from nowhere
 #ifdef DEBUG_MSG
   DEBUG_MSG("GException::GException(): cause=" << (xcause ? xcause : "unknown") << "\n");
 #endif
-  if (xcause && xcause!=outofmemory) 
+  if (xcause && xcause!=outofmemory)
     {
       char *s = new char[strlen(xcause)+1];
       strcpy(s, xcause);
@@ -125,22 +122,22 @@ GException::GException (const char *xcause, const char *file, int line,
 
 GException::~GException(void)
 {
-  if (cause && cause!=outofmemory ) 
-    delete [] const_cast<char*>(cause); 
+  if (cause && cause!=outofmemory )
+    delete [] const_cast<char*>(cause);
   cause=file=func=0;
 }
 
-GException & 
+GException &
 GException::operator=(const GException & exc)
 {
-  if (cause && cause!=outofmemory) 
+  if (cause && cause!=outofmemory)
     delete [] const_cast<char*>(cause);
   cause = 0;
   file = exc.file;
   func = exc.func;
   line = exc.line;
   source=exc.source;
-  if (exc.cause && exc.cause!=outofmemory) 
+  if (exc.cause && exc.cause!=outofmemory)
     {
       char *s = new char[strlen(exc.cause)+1];
       strcpy(s, exc.cause);
@@ -160,15 +157,15 @@ GException::perror(void) const
   DjVuPrintErrorUTF8("*** ");
   DjVuMessageLite::perror(get_cause());
   if (file && line>0)
-    DjVuPrintErrorUTF8("*** (%s:%d)\n", file, line);    
+    DjVuPrintErrorUTF8("*** (%s:%d)\n", file, line);
   else if (file)
     DjVuPrintErrorUTF8("*** (%s)\n", file);
   if (func)
-    DjVuPrintErrorUTF8("*** '%s'\n", func);    
+    DjVuPrintErrorUTF8("*** '%s'\n", func);
   DjVuPrintErrorUTF8("\n");
 }
 
-const char* 
+const char*
 GException::get_cause(void) const
 {
   if (! cause)
@@ -213,7 +210,7 @@ GException::cmp_cause(const char s2[]) const
 static void throw_memory_error() { G_THROW(GException::outofmemory); }
 # if defined(_WIN32) || defined(__CYGWIN32__) || defined(OS2)
 static void (*old_handler)() = std::set_new_handler(throw_memory_error);
-# else 
+# else
 #   ifdef HAVE_STDINCLUDES
 static void (*old_handler)() = std::set_new_handler(throw_memory_error);
 #   else

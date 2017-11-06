@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // From: Leon Bottou, 1/31/2002
@@ -211,7 +208,7 @@ lt_XMLTags::init(XMLByteStream &xmlbs)
         {
           GUTF8String cont(xmlbs.gets(0,'>',true));
           if(!cont.length())
-          { 
+          {
             G_THROW( (ERR_MSG("XMLTags.bad_PI") "\t")+tag);
           }
           len=((tag+=cont).length());
@@ -245,7 +242,7 @@ lt_XMLTags::init(XMLByteStream &xmlbs)
           {
             GUTF8String cont(xmlbs.gets(0,'>',true));
             if(!cont.length())
-            { 
+            {
               GUTF8String mesg;
               mesg.format( ERR_MSG("XMLTags.bad_comment") "\t%s",(const char *)tag);
               G_THROW(mesg);
@@ -289,7 +286,7 @@ lt_XMLTags::init(XMLByteStream &xmlbs)
         }else if(tag[len-2] != '/')
         {
           char const *n;
-          GUTF8String xtag = tag.substr(1,-1); 
+          GUTF8String xtag = tag.substr(1,-1);
           name=tagtoname(xtag, n);
           ParseValues(n,args);
           t=this;
@@ -303,7 +300,7 @@ lt_XMLTags::init(XMLByteStream &xmlbs)
       }
     }
     if((raw=xmlbs.gets(0,'<',false))[0])
-    { 
+    {
       linesread=xmlbs.get_lines_read();
       GPosition last=level.lastpos();
       if(last)
@@ -369,7 +366,7 @@ lt_XMLTags::write(ByteStream &bs,bool const top) const
       tag+=GUTF8String(' ')+args.key(pos)+GUTF8String("=\42")+args[pos].toEscaped()+GUTF8String("\42");
     }
     GPosition tags=content;
-    if(tags||raw.length()) 
+    if(tags||raw.length())
     {
       tag+=">";
       bs.writall((const char *)tag,tag.length());
@@ -404,7 +401,7 @@ lt_XMLContents::write(ByteStream &bs) const
   if(raw.length())
   {
     bs.writestring(raw);
-  } 
+  }
 }
 
 

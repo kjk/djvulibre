@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 // From: Leon Bottou, 1/31/2002
@@ -120,7 +117,7 @@ protected:
   int get_diff(const int x_diff,NumContext &rel_loc);
   void code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cbm,
     const int xd2c, const int dw, int dy, int cy,
-    unsigned char *up1, unsigned char *up0, unsigned char *xup1, 
+    unsigned char *up1, unsigned char *up0, unsigned char *xup1,
     unsigned char *xup0, unsigned char *xdn1 );
 
 private:
@@ -132,7 +129,7 @@ private:
 //// CLASS JB2DICT: IMPLEMENTATION
 ////////////////////////////////////////
 
-void 
+void
 JB2Dict::encode(const GP<ByteStream> &gbs) const
 {
   JB2Codec::Encode codec;
@@ -144,7 +141,7 @@ JB2Dict::encode(const GP<ByteStream> &gbs) const
 //// CLASS JB2IMAGE: IMPLEMENTATION
 ////////////////////////////////////////
 
-void 
+void
 JB2Image::encode(const GP<ByteStream> &gbs) const
 {
   JB2Codec::Encode codec;
@@ -203,13 +200,13 @@ JB2Dict::JB2Codec::Encode::CodeNum(int num, int low, int high, NumContext &ctx)
 
 // CODE COMMENTS
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_comment(GUTF8String &comment)
 {
   // Encode size
       int size=comment.length();
       CodeNum(size, 0, BIGPOSITIVE, dist_comment_length);
-      for (int i=0; i<size; i++) 
+      for (int i=0; i<size; i++)
         {
           CodeNum(comment[i], 0, 255, dist_comment_byte);
         }
@@ -217,13 +214,13 @@ JB2Dict::JB2Codec::Encode::code_comment(GUTF8String &comment)
 
 // CODE SIMPLE VALUES
 
-inline void 
+inline void
 JB2Dict::JB2Codec::Encode::code_record_type(int &rectype)
 {
   CodeNum(rectype, START_OF_DATA, END_OF_DATA, dist_record_type);
 }
 
-int 
+int
 JB2Dict::JB2Codec::Encode::code_match_index(int &index, JB2Dict &jim)
 {
     int match=shape2lib[index];
@@ -240,7 +237,7 @@ JB2Dict::JB2Codec::Encode::code_inherited_shape_count(JB2Dict &jim)
     0, BIGPOSITIVE, inherited_shape_count_dist);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_image_size(JB2Dict &jim)
 {
   CodeNum(0, 0, BIGPOSITIVE, image_size_dist);
@@ -248,7 +245,7 @@ JB2Dict::JB2Codec::Encode::code_image_size(JB2Dict &jim)
   JB2Codec::code_image_size(jim);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_image_size(JB2Image &jim)
 {
   image_columns = jim.get_width();
@@ -265,7 +262,7 @@ JB2Dict::JB2Codec::Encode::get_diff(int x_diff,NumContext &rel_loc)
    return x_diff;
 }
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_absolute_location(JB2Blit *jblt, int rows, int columns)
 {
   // Check start record
@@ -276,14 +273,14 @@ JB2Dict::JB2Codec::Encode::code_absolute_location(JB2Blit *jblt, int rows, int c
   CodeNum(jblt->bottom+rows-1+1, 1, image_rows, abs_loc_y);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_absolute_mark_size(GBitmap &bm, int border)
 {
   CodeNum(bm.columns(), 0, BIGPOSITIVE, abs_size_x);
   CodeNum(bm.rows(), 0, BIGPOSITIVE, abs_size_y);
 }
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_relative_mark_size(GBitmap &bm, int cw, int ch, int border)
 {
   CodeNum(bm.columns()-cw, BIGNEGATIVE, BIGPOSITIVE, rel_size_x);
@@ -292,7 +289,7 @@ JB2Dict::JB2Codec::Encode::code_relative_mark_size(GBitmap &bm, int cw, int ch, 
 
 // CODE BITMAP DIRECTLY
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_bitmap_directly(
   GBitmap &bm,const int dw, int dy,
   unsigned char *up2, unsigned char *up1, unsigned char *up0 )
@@ -318,10 +315,10 @@ JB2Dict::JB2Codec::Encode::code_bitmap_directly(
 
 // CODE BITMAP BY CROSS CODING
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cbm,
   const int xd2c, const int dw, int dy, int cy,
-  unsigned char *up1, unsigned char *up0, unsigned char *xup1, 
+  unsigned char *up1, unsigned char *up0, unsigned char *xup1,
   unsigned char *xup0, unsigned char *xdn1 )
 {
       ZPCodec &zp=*gzp;
@@ -333,7 +330,7 @@ JB2Dict::JB2Codec::Encode::code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cb
             {
               const int n = up0[dx++];
               zp.encoder(n, cbitdist[context]);
-              context=shift_cross_context(context, n,  
+              context=shift_cross_context(context, n,
                                   up1, up0, xup1, xup0, xdn1, dx);
             }
           // next row
@@ -347,7 +344,7 @@ JB2Dict::JB2Codec::Encode::code_bitmap_by_cross_coding (GBitmap &bm, GBitmap &cb
 
 // CODE JB2DICT
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code(const GP<JB2Dict> &gjim)
 {
   if(!gjim)
@@ -384,21 +381,21 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Dict> &gjim)
           code_record(rectype, gjim, &jshp);
           add_library(shapeno, jshp);
 	  // Check numcoder status
-	  if (cur_ncell > CELLCHUNK) 
+	  if (cur_ncell > CELLCHUNK)
 	    {
 	      rectype = REQUIRED_DICT_OR_RESET;
-	      code_record(rectype, 0, 0);	      
+	      code_record(rectype, 0, 0);
 	    }
         }
       // Code end of data record
       rectype = END_OF_DATA;
-      code_record(rectype, gjim, 0); 
+      code_record(rectype, gjim, 0);
       gzp=0;
 }
 
 // CODE JB2IMAGE
 
-void 
+void
 JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
 {
   if(!gjim)
@@ -414,7 +411,7 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
       int firstshape = jim.get_inherited_shape_count();
       int nshape = jim.get_shape_count();
       int nblit = jim.get_blit_count();
-      // Initialize shape2lib 
+      // Initialize shape2lib
       shape2lib.resize(0,nshape-1);
       for (i=firstshape; i<nshape; i++)
         shape2lib[i] = -1;
@@ -428,7 +425,7 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
           int shapeno = jblt->shapeno;
           if (shapeno < firstshape)
             continue;
-          if (shape2lib[shapeno] >= -2) 
+          if (shape2lib[shapeno] >= -2)
             shape2lib[shapeno] -= 1;
           shapeno = jim.get_shape(shapeno).parent;
           while (shapeno>=firstshape && shape2lib[shapeno]>=-3)
@@ -463,7 +460,7 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
               code_record(rectype, gjim, 0, jblt);
             }
           // Avoid coding null shapes/blits
-          else if (jshp.bits) 
+          else if (jshp.bits)
             {
               // Make sure all parents have been coded
               if (jshp.parent>=0 && shape2lib[jshp.parent]<0)
@@ -475,7 +472,7 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
               if (jshp.parent >= -1)
                 libraryp = 1;
 #endif
-#ifdef LIBRARY_CONTAINS_SHARED // worse             
+#ifdef LIBRARY_CONTAINS_SHARED // worse
               if (shape2lib[shapeno] <= -3)
                 libraryp = 1;
 #endif
@@ -493,17 +490,17 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
                   int rectype = (libraryp ? NEW_MARK : NEW_MARK_IMAGE_ONLY);
                   code_record(rectype, gjim, &jshp, jblt);
                 }
-              else 
+              else
                 {
                   int rectype = (libraryp ? MATCHED_REFINE : MATCHED_REFINE_IMAGE_ONLY);
                   code_record(rectype, gjim, &jshp, jblt);
                 }
               // Add shape to library
-              if (libraryp) 
+              if (libraryp)
                 add_library(shapeno, jshp);
             }
 	  // Check numcoder status
-	  if (cur_ncell > CELLCHUNK) 
+	  if (cur_ncell > CELLCHUNK)
 	    {
 	      rectype = REQUIRED_DICT_OR_RESET;
 	      code_record(rectype, 0, 0);
@@ -511,7 +508,7 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
         }
       // Code end of data record
       rectype = END_OF_DATA;
-      code_record(rectype, gjim, 0, 0); 
+      code_record(rectype, gjim, 0, 0);
       gzp=0;
 }
 
@@ -519,7 +516,7 @@ JB2Dict::JB2Codec::Encode::code(const GP<JB2Image> &gjim)
 //// HELPERS
 ////////////////////////////////////////
 
-void 
+void
 JB2Dict::JB2Codec::Encode::encode_libonly_shape(
   const GP<JB2Image> &gjim, int shapeno )
 {
@@ -538,11 +535,11 @@ JB2Dict::JB2Codec::Encode::encode_libonly_shape(
       // Code library entry
       int rectype=(jshp.parent >= 0)
             ?NEW_MARK_LIBRARY_ONLY:MATCHED_REFINE_LIBRARY_ONLY;
-      code_record(rectype, gjim, &jshp, 0);      
+      code_record(rectype, gjim, &jshp, 0);
       // Add shape to library
       add_library(shapeno, jshp);
       // Check numcoder status
-      if (cur_ncell > CELLCHUNK) 
+      if (cur_ncell > CELLCHUNK)
 	{
 	  rectype = REQUIRED_DICT_OR_RESET;
 	  code_record(rectype, 0, 0);

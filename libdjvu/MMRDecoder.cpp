@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "MMRDecoder.h"
@@ -79,7 +76,7 @@ namespace DJVU {
 
 static const char invalid_mmr_data[]= ERR_MSG("MMRDecoder.bad_data");
 
-struct VLCode 
+struct VLCode
 {
   unsigned short code;
   short codelen;
@@ -87,8 +84,8 @@ struct VLCode
 };
 
 enum MMRMode
-{ 
-  P=0, H=1, V0=2, VR1=3, VR2=4, VR3=5, VL1=6, VL2=7, VL3=8 
+{
+  P=0, H=1, V0=2, VR1=3, VR2=4, VR3=5, VL1=6, VL2=7, VL3=8
 };
 
 static const VLCode mrcodes[] =
@@ -107,7 +104,7 @@ static const VLCode mrcodes[] =
 };
 
 
-static const VLCode wcodes[] = {    
+static const VLCode wcodes[] = {
   // 13 bit codes
   { 0x06a0,  8,    0 }, // 00110101
   { 0x0380,  6,    1 }, // 000111
@@ -345,7 +342,7 @@ public:
 
   // Synchronize on the next stripe
   void nextstripe(void);
-  // Returns a 32 bits integer with at least the 
+  // Returns a 32 bits integer with at least the
   // next sixteen code bits in the high order bits.
   inline unsigned int peek(void);
   // Ensures that next #peek()# contains at least
@@ -365,7 +362,7 @@ private:
 };
 
 MMRDecoder::VLSource::VLSource(GP<ByteStream> &xinp)
-: ginp(xinp), inp(*ginp), codeword(0), 
+: ginp(xinp), inp(*ginp), codeword(0),
   lowbits(0), bufpos(0), bufmax(0),
   readmax(-1)
 {}
@@ -388,9 +385,9 @@ MMRDecoder::VLSource::create(GP<ByteStream> &inp, const bool striped)
   return retval;
 }
 
-void 
+void
 MMRDecoder::VLSource::shift(const int n)
-{ 
+{
   codeword<<=n;
   lowbits+=n;
   if (lowbits>=16)
@@ -410,7 +407,7 @@ MMRDecoder::VLSource::nextstripe(void)
   while (readmax>0)
     {
       int size = sizeof(buffer);
-      if (readmax < size) 
+      if (readmax < size)
         size = readmax;
       inp.readall(buffer, size);
       readmax -= size;
@@ -418,7 +415,7 @@ MMRDecoder::VLSource::nextstripe(void)
   bufpos = bufmax = 0;
   memset(buffer,0,sizeof(buffer));
   readmax = inp.read32();
-  codeword = 0; 
+  codeword = 0;
   lowbits = 32;
   preload();
 }
@@ -426,14 +423,14 @@ MMRDecoder::VLSource::nextstripe(void)
 void
 MMRDecoder::VLSource::preload(void)
 {
-  while (lowbits>=8) 
+  while (lowbits>=8)
     {
-      if (bufpos >= bufmax) 
+      if (bufpos >= bufmax)
 	{
           // Refill buffer
 	  bufpos = bufmax = 0;
           int size = sizeof(buffer);
-          if (readmax>=0 && readmax<size) 
+          if (readmax>=0 && readmax<size)
             size = readmax;
           if (size>0)
             bufmax = inp.read((void*)buffer, size);
@@ -481,11 +478,11 @@ MMRDecoder::VLTable::create(VLCode const * const codes, const int nbits)
 }
 
 inline int
-MMRDecoder::VLTable::decode(MMRDecoder::VLSource *src)    
-{ 
+MMRDecoder::VLTable::decode(MMRDecoder::VLSource *src)
+{
   const VLCode &c = code[ index[ src->peek() >> codewordshift ] ];
-  src->shift(c.codelen); 
-  return c.value; 
+  src->shift(c.codelen);
+  return c.value;
 }
 
 MMRDecoder::VLTable::VLTable(const VLCode *codes)
@@ -535,7 +532,7 @@ MMRDecoder::VLTable::init(const int nbits)
 MMRDecoder::~MMRDecoder() {}
 
 MMRDecoder::MMRDecoder( const int xwidth, const int xheight )
-: width(xwidth), height(xheight), lineno(0), 
+: width(xwidth), height(xheight), lineno(0),
   striplineno(0), rowsperstrip(0), gline(line,width+8),
   glineruns(lineruns,width+4), gprevruns(prevruns,width+4)
 {
@@ -556,7 +553,7 @@ MMRDecoder::init(GP<ByteStream> gbs, const bool striped)
   wtable = VLTable::create(wcodes, 13);
 }
 
-GP<MMRDecoder> 
+GP<MMRDecoder>
 MMRDecoder::create( GP<ByteStream> gbs, const int width,
   const int height, const bool striped )
 {
@@ -594,8 +591,8 @@ MMRDecoder::scanruns(const unsigned short **endptr)
       switch ( c )
       {
           /* Pass Mode */
-        case P: 
-          { 
+        case P:
+          {
             b1 += *pr++;
             rle += b1 - a0;
             a0 = b1;
@@ -603,8 +600,8 @@ MMRDecoder::scanruns(const unsigned short **endptr)
             break;
           }
           /* Horizontal Mode */
-        case H: 
-          { 
+        case H:
+          {
             // First run
             VLTable &table1 = *(a0color ? btable : wtable);
             int inc;
@@ -665,7 +662,7 @@ MMRDecoder::scanruns(const unsigned short **endptr)
           break;
         }
           /* Uncommon modes */
-        default: 
+        default:
           {
             src->preload();
             unsigned int m = src->peek();
@@ -701,8 +698,8 @@ MMRDecoder::scanruns(const unsigned short **endptr)
                         rle += 5;
                         a0 += 5;
                       }
-                    else                       // 000010 to 111111 
-                      { 
+                    else                       // 000010 to 111111
+                      {
                         src->shift(1);
                         if (a0color == !(m & 0x80000000))
                         {
@@ -718,7 +715,7 @@ MMRDecoder::scanruns(const unsigned short **endptr)
                       G_THROW(invalid_mmr_data);
                   }
                 // Analyze uncompressed termination code.
-                m = src->peek() & 0xff000000;  
+                m = src->peek() & 0xff000000;
                 src->shift(8);
                 if ( (m & 0xfe000000) != 0x02000000 )
                   G_THROW(invalid_mmr_data);
@@ -728,7 +725,7 @@ MMRDecoder::scanruns(const unsigned short **endptr)
                   xr++;
                   rle = 0;
                   a0color = !a0color;
-                }                  
+                }
                 if (a0color == !(m & 0x01000000))
                 {
                   *xr = rle;
@@ -766,7 +763,7 @@ MMRDecoder::scanruns(const unsigned short **endptr)
   // At this point we should have A0 equal to WIDTH
   // But there are buggy files around (Kofax!)
   // and we are not the CCITT police.
-  if (a0 > width) 
+  if (a0 > width)
     {
       while (a0 > width && xr > lineruns)
         a0 -= *--xr;
@@ -777,7 +774,7 @@ MMRDecoder::scanruns(const unsigned short **endptr)
       }
     }
   /* Increment and return */
-  if (endptr) 
+  if (endptr)
     *endptr = xr;
   xr[0] = 0;
   xr[1] = 0;
@@ -798,7 +795,7 @@ MMRDecoder::scanrle(const bool invert, const unsigned char **endptr)
   // Process inversion
   if (invert)
     {
-      if (! *xr) 
+      if (! *xr)
       {
         xr++;
       }else
@@ -856,7 +853,7 @@ MMRDecoder::decode_header(
 {
   unsigned long int magic = inp.read32();
   if((magic&0xfffffffc) != 0x4d4d5200)
-    G_THROW( ERR_MSG("MMRDecoder.unrecog_header") ); 
+    G_THROW( ERR_MSG("MMRDecoder.unrecog_header") );
   invert = ((magic & 0x1) ? 1 : 0);
   const bool strip =  ((magic & 0x2) ? 1 : 0);
   width = inp.read16();
@@ -925,7 +922,7 @@ MMRDecoder::decode(GP<ByteStream> gbs)
                   b ++;
                 }
               x = xend;
-              c = !c; 
+              c = !c;
             }
 	}
       }
@@ -934,7 +931,7 @@ MMRDecoder::decode(GP<ByteStream> gbs)
 	{
 	  JB2Shape shape;
 	  shape.bits = blocks[b];
-	  if (shape.bits) 
+	  if (shape.bits)
 	    {
 	      shape.parent = -1;
 	      shape.bits->compress();

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuGlobal.h"
@@ -85,7 +82,7 @@
 
 
 // Keep informations for pattern matching
-struct MatchData 
+struct MatchData
 {
   GP<GBitmap> bits;    // bitmap pointer
   int area;            // number of black pixels
@@ -94,7 +91,7 @@ struct MatchData
 
 
 // Compute the number of black pixels.
-static int 
+static int
 compute_area(GBitmap *bits)
 {
   GBitmap &bitmap = *bits;
@@ -167,14 +164,14 @@ compute_matchdata_lossless(JB2Image *jimg, MatchData *lib)
 
 
 // Interface with Ilya's data structures.
-static mdjvu_pattern_t 
+static mdjvu_pattern_t
 compute_comparable_image(GBitmap *bits)
 {
   int w = bits->columns();
   int h = bits->rows();
   GTArray<unsigned char*> p(h);
   for (int i=0; i<h; i++) p[h-i-1] = (*bits)[i];
-  return mdjvu_pattern_create_from_array(p, w, h);  
+  return mdjvu_pattern_create_from_array(p, w, h);
 }
 
 
@@ -201,7 +198,7 @@ compute_matchdata_lossy(JB2Image *jimg, MatchData *lib,
       handles[i] = compute_comparable_image(jshp.bits);
     }
   // Run Ilya's pattern matcher.
-  GTArray<int> tags(nshapes);  
+  GTArray<int> tags(nshapes);
   int maxtag = mdjvu_classify_patterns(handles, tags, nshapes, dpi, options);
   // Extract substitutions
   GTArray<int> reps(maxtag);
@@ -212,7 +209,7 @@ compute_matchdata_lossy(JB2Image *jimg, MatchData *lib,
       {
         int r = reps[tags[i]];
         lib[i].match = r;
-        if (r < 0) 
+        if (r < 0)
           reps[tags[i]] = i;
       }
   // Free Ilya's data structures.
@@ -226,7 +223,7 @@ compute_matchdata_lossy(JB2Image *jimg, MatchData *lib,
 // Also locate cross-coding buddys.
 // Flag lossy is not strictly necessary
 // but speeds up things when it is false.
-static void 
+static void
 tune_jb2image(JB2Image *jimg, MatchData *lib, bool lossy)
 {
   int nshapes = jimg->get_shape_count();
@@ -257,21 +254,21 @@ tune_jb2image(JB2Image *jimg, MatchData *lib, bool lossy)
       int closest = -1;
       // Search cross-coding buddy
       bitmap.minborder(2);
-      if (best_score < 2) 
+      if (best_score < 2)
         best_score = 2;
-      for (int candidate = 0; candidate < current; candidate++) 
+      for (int candidate = 0; candidate < current; candidate++)
         {
           int row, column;
           // Access candidate bitmap
-          if (! lib[candidate].bits) 
+          if (! lib[candidate].bits)
             continue;
           GBitmap &cross_bitmap = *lib[candidate].bits;
           int cross_cols = cross_bitmap.columns();
           int cross_rows = cross_bitmap.rows();
           // Prune
-          if (abs (lib[candidate].area - black_pixels) > best_score) 
+          if (abs (lib[candidate].area - black_pixels) > best_score)
             continue;
-          if (abs (cross_rows - rows) > 2) 
+          if (abs (cross_rows - rows) > 2)
             continue;
           if (abs (cross_cols - cols) > 2)
             continue;
@@ -285,18 +282,18 @@ tune_jb2image(JB2Image *jimg, MatchData *lib, bool lossy)
           int score = 0;
           unsigned char *p_row;
           unsigned char *p_cross_row;
-          for (row = -1; row <= rows; row++) 
+          for (row = -1; row <= rows; row++)
             {
               p_row = bitmap[row];
               p_cross_row = cross_bitmap[row+cross_row_adjust];
               p_cross_row += cross_col_adjust;
-              for (column = -1; column <= cols; column++) 
+              for (column = -1; column <= cols; column++)
                 if (p_row[column] != p_cross_row[column])
                   score ++;
               if (score >= best_score)  // prune
                 break;
             }
-          if (score < best_score) 
+          if (score < best_score)
             {
               best_score = score;
               closest = candidate;
@@ -320,7 +317,7 @@ tune_jb2image(JB2Image *jimg, MatchData *lib, bool lossy)
           // substitution...
         }
     }
-  
+
   // Process shape substitutions
   for (int blitno=0; blitno<jimg->get_blit_count(); blitno++)
     {
@@ -342,7 +339,7 @@ tune_jb2image(JB2Image *jimg, MatchData *lib, bool lossy)
            // Refine vertical adjustment
           if (lossy)
             {
-              int adjust = compute_baseline(lib[parent].bits) 
+              int adjust = compute_baseline(lib[parent].bits)
                          - compute_baseline(jshp.bits);
               if (adjust < 0)
                 adjust = - (2 - adjust) / 4;
@@ -368,7 +365,7 @@ tune_jb2image(JB2Image *jimg, MatchData *lib, bool lossy)
 // LOSSLESS COMPRESSION
 
 
-void 
+void
 tune_jb2image_lossless(JB2Image *jimg)
 {
   int nshapes = jimg->get_shape_count();
@@ -382,7 +379,7 @@ tune_jb2image_lossless(JB2Image *jimg)
 // LOSSY COMPRESSION
 // Thanks to Ilya Mezhirov.
 
-void 
+void
 tune_jb2image_lossy(JB2Image *jimg, int dpi, int aggression)
 {
   int nshapes = jimg->get_shape_count();

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _ARRAYS_H_
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 #include "GException.h"
@@ -105,21 +102,21 @@ namespace DJVU {
     Also, please note that now there is no separate class, which does fast
     sorting. Both \Ref{TArray} (dynamic array for trivial types) and
     \Ref{DArray} (dynamic array for arbitrary types) can sort their elements.
-    
+
     {\bf Historical comments} --- Leon chose to implement his own arrays because
     the STL classes were not universally available and the compilers were
     rarely able to deal with such a template galore. Later it became clear
     that there is no really good reason why arrays should be derived from
     containers. It was also suggested to create separate arrays implementation
     for simple classes and do the copy-on-demand strategy, which would allow
-    to assign array objects without immediate copying of their elements. 
+    to assign array objects without immediate copying of their elements.
 
     At this point \Ref{DArray} and \Ref{TArray} should only be used when
     it is critical to have the copy-on-demand feature.  The \Ref{GArray}
     implementation is a lot more efficient.
-    
+
     @memo Template array classes.
-    @author 
+    @author
     Andrei Erofeev <eaf@geocities.com> -- Copy-on-demand implementation.
 */
 //@{
@@ -204,9 +201,9 @@ public:
 	    void (* xinsert)(void *, int, int, const void *, int),
 	    int lobound, int hibound);
    ArrayRep(const ArrayRep & rep);
-   
+
    virtual ~ArrayRep();
-   
+
       // Following is the standard interface to DArray. DArray will call these
       // functions to access data.
    int		size() const;
@@ -299,7 +296,7 @@ ArrayRep::touch(int n)
     elements. It's not supposed to be constructed by hands. Use \Ref{DArray}
     and \Ref{TArray} instead.
     */
-    
+
 class DJVUAPI ArrayBase : protected _ArrayBase
 {
 protected:
@@ -314,7 +311,7 @@ public:
    int		lbound() const;
    /** Returns the upper bound of the valid subscript range. */
    int		hbound() const;
-   /** Erases the array contents. All elements in the array are destroyed.  
+   /** Erases the array contents. All elements in the array are destroyed.
        The valid subscript range is set to the empty range. */
    void empty();
    /** Extends the subscript range so that is contains #n#.
@@ -326,27 +323,27 @@ public:
        \begin{verbatim}
        int lineno=1;
        DArray<GString> a;
-       while (! end_of_file()) { 
-       a.touch[lineno]; 
-       a[lineno++] = read_a_line(); 
+       while (! end_of_file()) {
+       a.touch[lineno];
+       a[lineno++] = read_a_line();
        }
-       \end{verbatim} 
+       \end{verbatim}
    */
    void touch(int n);
    /** Resets the valid subscript range to #0#---#hibound#.
        This function may destroy some array elements and may construct
        new array elements with the null constructor. Setting #hibound# to
        #-1# resets the valid subscript range to the empty range.
-       @param hibound upper bound of the new subscript range. */      
+       @param hibound upper bound of the new subscript range. */
    void resize(int hibound);
-   /** Resets the valid subscript range to #lobound#---#hibound#. 
+   /** Resets the valid subscript range to #lobound#---#hibound#.
        This function may destroy some array elements and may construct
        new array elements with the null constructor. Setting #lobound# to #0# and
        #hibound# to #-1# resets the valid subscript range to the empty range.
        @param lobound lower bound of the new subscript range.
        @param hibound upper bound of the new subscript range. */
    void resize(int lobound, int hibound);
-   /** Shifts the valid subscript range. Argument #disp# is added to both 
+   /** Shifts the valid subscript range. Argument #disp# is added to both
        bounds of the valid subscript range. Array elements previously
        located at subscript #x# will now be located at subscript #x+disp#. */
    void shift(int disp);
@@ -354,7 +351,7 @@ public:
        subscripts #n#...#n+howmany-1# are destroyed. All array elements
        previously located at subscripts greater or equal to #n+howmany#
        are moved to subscripts starting with #n#. The new subscript upper
-       bound is reduced in order to account for this shift. 
+       bound is reduced in order to account for this shift.
        @param n subscript of the first element to delete.
        @param howmany number of elements to delete. */
    void del(int n, unsigned int howmany=1);
@@ -431,7 +428,7 @@ inline void
 ArrayBase::del(int n, unsigned int howmany)
 {
    check();
-   
+
    ((ArrayRep *) get())->del(n, howmany);
 }
 
@@ -448,7 +445,7 @@ class ArrayBaseT : public ArrayBase
 {
 public:
    virtual ~ArrayBaseT(void) {};
-   
+
    /** Returns a reference to the array element for subscript #n#.  This
        reference can be used for both reading (as "#a[n]#") and writing (as
        "#a[n]=v#") an array element.  This operation will not extend the valid
@@ -462,7 +459,7 @@ public:
        subscript range.  This variant of #operator[]# is necessary when dealing
        with a #const DArray<TYPE>#. */
    const TYPE& operator[](int n) const;
-   
+
    /** Returns a pointer for reading or writing the array elements.  This
        pointer can be used to access the array elements with the same
        subscripts and the usual bracket syntax.  This pointer remains valid as
@@ -477,11 +474,11 @@ public:
        subscript range, you must stop using the pointers returned by prior
        invocation of this conversion operator. */
    operator const TYPE* () const;
-   
+
    /** Insert new elements into an array. This function inserts
        #howmany# elements at position #n# into the array. The initial value #val#
        is copied into the new elements. All array elements previously located at subscripts
-       #n# and higher are moved to subscripts #n+howmany# and higher. The upper bound of the 
+       #n# and higher are moved to subscripts #n+howmany# and higher. The upper bound of the
        valid subscript range is increased in order to account for this shift.
        @param n subscript of the first inserted element.
        @param val initial value of the new elements.
@@ -497,8 +494,8 @@ public:
        The other elements of the array are left untouched.  An exception is
        thrown if arguments #lo# and #hi# are not in the valid subscript range.
        Array elements are compared using the less-or-equal comparison operator
-       for type #TYPE#.  
-       @param lo low bound for the subscripts of the elements to sort.  
+       for type #TYPE#.
+       @param lo low bound for the subscripts of the elements to sort.
        @param hi high bound for the subscripts of the elements to sort. */
    void sort(int lo, int hi);
 protected:
@@ -519,7 +516,7 @@ template <class TYPE> inline
 ArrayBaseT<TYPE>::operator TYPE* ()
 {
    check();
-   
+
    ArrayRep * rep=(ArrayRep *) get();
    return &((TYPE *) rep->data)[-rep->minlo];
 }
@@ -531,7 +528,7 @@ ArrayBaseT<TYPE>::operator const TYPE* () const
    return &((const TYPE *) rep->data)[-rep->minlo];
 }
 
-template <class TYPE> inline TYPE& 
+template <class TYPE> inline TYPE&
 ArrayBaseT<TYPE>::operator[](int n)
 {
    check();
@@ -542,7 +539,7 @@ ArrayBaseT<TYPE>::operator[](int n)
    return ((TYPE *) rep->data)[n - rep->minlo];
 }
 
-template <class TYPE> inline const TYPE& 
+template <class TYPE> inline const TYPE&
 ArrayBaseT<TYPE>::operator[](int n) const
 {
    const ArrayRep * rep=(const ArrayRep *) get();
@@ -555,7 +552,7 @@ template <class TYPE> inline void
 ArrayBaseT<TYPE>::ins(int n, const TYPE &val, unsigned int howmany)
 {
    check();
-   
+
    ((ArrayRep *) get())->ins(n, &val, howmany);
 }
 
@@ -613,7 +610,7 @@ ArrayBaseT<TYPE>::sort(int lo, int hi)
    sort(l, hi);
 }
 
-/** Dynamic array for simple types.  
+/** Dynamic array for simple types.
     Template class #TArray<TYPE># implements an array of
     elements of {\em simple} type #TYPE#. {\em Simple} means that the type
     may be #char#, #int#, #float# etc. The limitation is imposed by the
@@ -621,7 +618,7 @@ ArrayBaseT<TYPE>::sort(int lo, int hi)
     to execute elements' constructors, destructors or copy operators. It's
     just doing bitwise copy. Except for this it's pretty much the same as
     \Ref{DArray}.
-    
+
     Please note that most of the methods are implemented in the base classes
     \Ref{ArrayBase} and \Ref{ArrayBaseT}.
 */
@@ -633,18 +630,18 @@ public:
        empty. Member function #touch# and #resize# provide convenient ways
        to enlarge the subscript range. */
    TArray();
-   /** Constructs an array with subscripts in range 0 to #hibound#. 
+   /** Constructs an array with subscripts in range 0 to #hibound#.
        The subscript range can be subsequently modified with member functions
        #touch# and #resize#.
        @param hibound upper bound of the initial subscript range. */
    TArray(int hibound);
-   /** Constructs an array with subscripts in range #lobound# to #hibound#.  
+   /** Constructs an array with subscripts in range #lobound# to #hibound#.
        The subscript range can be subsequently modified with member functions
        #touch# and #resize#.
        @param lobound lower bound of the initial subscript range.
        @param hibound upper bound of the initial subscript range. */
    TArray(int lobound, int hibound);
-   
+
    virtual ~TArray() {};
 private:
       // Callbacks called from ArrayRep
@@ -691,21 +688,21 @@ TArray<TYPE>::insert(void * data, int els, int where,
       ((TYPE *) data)[where+i]=*(TYPE *) what;
 }
 
-template <class TYPE> 
+template <class TYPE>
 TArray<TYPE>::TArray ()
 {
    this->assign(new ArrayRep(sizeof(TYPE), destroy, init1,
 		       init2, init2, insert));
 }
 
-template <class TYPE> 
+template <class TYPE>
 TArray<TYPE>::TArray(int hi)
 {
    this->assign(new ArrayRep(sizeof(TYPE), destroy, init1,
 		       init2, init2, insert, hi));
 }
 
-template <class TYPE> 
+template <class TYPE>
 TArray<TYPE>::TArray(int lo, int hi)
 {
    this->assign(new ArrayRep(sizeof(TYPE), destroy, init1,
@@ -724,18 +721,18 @@ TArray<TYPE>::TArray(int lo, int hi)
 
     This template class must be able to access
     \begin{itemize}
-    \item a null constructor #TYPE::TYPE()#, 
+    \item a null constructor #TYPE::TYPE()#,
     \item a copy constructor #TYPE::TYPE(const TYPE &)#,
     \item and a copy operator #TYPE & operator=(const TYPE &)#.
     \end{itemize}
-    
+
     The class offers "copy-on-demand" policy, which means that when you
     copy the array object, array elements will stay intact as long as you
     don't try to modify them. As soon as you make an attempt to change
     array contents, the copying is done automatically and transparently
     for you - the procedure that we call "copy-on-demand". This is the main
     difference between this class and \Ref{GArray} (now obsolete)
-        
+
     Please note that most of the methods are implemented in the base classes
     \Ref{ArrayBase} and \Ref{ArrayBaseT}.
 */
@@ -747,18 +744,18 @@ public:
        empty. Member function #touch# and #resize# provide convenient ways
        to enlarge the subscript range. */
    DArray(void);
-   /** Constructs an array with subscripts in range 0 to #hibound#. 
+   /** Constructs an array with subscripts in range 0 to #hibound#.
        The subscript range can be subsequently modified with member functions
        #touch# and #resize#.
        @param hibound upper bound of the initial subscript range. */
    DArray(const int hibound);
-   /** Constructs an array with subscripts in range #lobound# to #hibound#.  
+   /** Constructs an array with subscripts in range #lobound# to #hibound#.
        The subscript range can be subsequently modified with member functions
        #touch# and #resize#.
        @param lobound lower bound of the initial subscript range.
        @param hibound upper bound of the initial subscript range. */
    DArray(const int lobound, const int hibound);
-   
+
    virtual ~DArray() {};
 private:
       // Callbacks called from ArrayRep
@@ -818,7 +815,7 @@ DArray<TYPE>::insert(void * data, int els, int where,
 {
       // Now do the insertion
    TYPE * d=(TYPE *) data;
-   
+
    int i;
    for (i=els+howmany-1; i>=els; i--)
    {
@@ -827,7 +824,7 @@ DArray<TYPE>::insert(void * data, int els, int where,
       else
 	 new ((void*) &d[i]) TYPE (*(TYPE *) what);
    }
-   
+
    for (i=els-1; i>=where; i--)
    {
       if (i-where >= (int)howmany)
@@ -837,21 +834,21 @@ DArray<TYPE>::insert(void * data, int els, int where,
    }
 }
 
-template <class TYPE> inline 
+template <class TYPE> inline
 DArray<TYPE>::DArray ()
 {
    this->assign(new ArrayRep(sizeof(TYPE), destroy, init1,
 		       init2, copy, insert));
 }
 
-template <class TYPE> inline 
+template <class TYPE> inline
 DArray<TYPE>::DArray(const int hi)
 {
    this->assign(new ArrayRep(sizeof(TYPE), destroy, init1,
 		       init2, copy, insert, hi));
 }
 
-template <class TYPE> inline 
+template <class TYPE> inline
 DArray<TYPE>::DArray(const int lo, const int hi)
 {
    this->assign(new ArrayRep(sizeof(TYPE), destroy, init1,
@@ -890,11 +887,11 @@ public:
   const GP<TYPE>& operator[](int n) const;
   // -- CONVERSION
   operator GP<TYPE>* ();
-  
+
 #ifndef __MWERKS__ //MCW can't compile
   operator const GP<TYPE>* ();
-#endif 
- 
+#endif
+
   operator const GP<TYPE>* () const;
   // -- ALTERATION
   void ins(int n, const GP<TYPE> &val, unsigned int howmany=1);

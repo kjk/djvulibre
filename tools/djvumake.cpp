@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 /** @name djvumake
@@ -108,7 +105,7 @@
       Creates a JPEG-2000 foreground chunk.\\
       {#INCL=<fileid>#} &
       Creates an include chunk pointing to <fileid>.
-      The resulting file should then be included into a 
+      The resulting file should then be included into a
       multipage document.\\
       {#PPM=<ppmfile>#} (psuedo-chunk) &
       Create IW44 foreground and background chunks
@@ -159,7 +156,7 @@ int flag_contains_stencil = 0;
 int flag_contains_incl    = 0;
 int flag_fg_needs_palette = 0;
 
-struct DJVUMAKEGlobal 
+struct DJVUMAKEGlobal
 {
   // Globals that need static initialization
   // are grouped here to work around broken compilers.
@@ -184,7 +181,7 @@ int blit_count = -1;
 
 // -- Display brief usage information
 
-void 
+void
 usage()
 {
   DjVuPrintErrorUTF8(
@@ -274,7 +271,7 @@ analyze_mmr_chunk(const GURL &url)
 
 // -- Obtain shape dictionary
 
-void 
+void
 analyze_djbz_chunk(GP<ByteStream> gbs)
 {
   if (g().dictionary)
@@ -283,7 +280,7 @@ analyze_djbz_chunk(GP<ByteStream> gbs)
   g().dictionary->decode(gbs);
 }
 
-void 
+void
 analyze_djbz_chunk(const GURL &url)
 {
   GP<ByteStream> gbs = ByteStream::create(url, "rb");
@@ -293,13 +290,13 @@ analyze_djbz_chunk(const GURL &url)
 
 // -- Obtain image size and blit count from jb2 chunk
 
-GP<JB2Dict> 
+GP<JB2Dict>
 provide_shared_dict( void* )
 {
   return(g().dictionary);
 }
 
-void 
+void
 analyze_jb2_chunk(const GURL &url)
 {
   if (!g().jb2stencil || !g().jb2stencil->size())
@@ -340,11 +337,11 @@ analyze_jb2_chunk(const GURL &url)
       g().stencil->decode(g().jb2stencil,&provide_shared_dict,NULL);
       int jw = g().stencil->get_width();
       int jh = g().stencil->get_height();
-      if (w < 0) 
+      if (w < 0)
         w = jw;
-      if (h < 0) 
+      if (h < 0)
         h = jh;
-      if (blit_count < 0) 
+      if (blit_count < 0)
         blit_count = g().stencil->get_blit_count();
       if (jw!=w || jh!=h)
         DjVuPrintErrorUTF8("djvumake: mask size (%s) does not match info size\n", (const char *)url);
@@ -372,7 +369,7 @@ analyze_incl_chunk(const GURL &url)
   GUTF8String chkid;
   giff->get_chunk(chkid); // FORM:DJVI
   for(; giff->get_chunk(chkid); giff->close_chunk())
-    if (chkid=="Djbz") 
+    if (chkid=="Djbz")
       analyze_djbz_chunk(giff->get_bytestream());
 }
 
@@ -408,13 +405,13 @@ create_info_chunk(IFFByteStream &iff, GArray<GUTF8String> &argv)
                 int x = strtol((char *)ptr, (char **)&ptr, 10);
                 switch(narg)
                   {
-                  case 0: 
+                  case 0:
                     w = x; break;
-                  case 1: 
+                  case 1:
                     h = x; break;
-                  case 2: 
+                  case 2:
                     dpi = x; break;
-                  default:  
+                  default:
                     G_THROW("djvumake: incorrect 'INFO' chunk specification\n");
                   }
               }
@@ -445,7 +442,7 @@ create_info_chunk(IFFByteStream &iff, GArray<GUTF8String> &argv)
             break;
           }
     }
-  
+
   // Check that we have everything
   if (w<0 || h<0)
     G_THROW("djvumake: cannot determine image size\n");
@@ -463,7 +460,7 @@ create_info_chunk(IFFByteStream &iff, GArray<GUTF8String> &argv)
 
 // -- Create MMR mask chunk
 
-void 
+void
 create_mmr_chunk(IFFByteStream &iff, const char *chkid, const GURL &url)
 {
   analyze_mmr_chunk(url);
@@ -476,7 +473,7 @@ create_mmr_chunk(IFFByteStream &iff, const char *chkid, const GURL &url)
 
 // -- Create FGbz palette chunk
 
-void 
+void
 create_fgbz_chunk(IFFByteStream &iff)
 {
   int nzones = g().colorzones.size();
@@ -508,7 +505,7 @@ create_fgbz_chunk(IFFByteStream &iff)
 
 // -- Create JB2 mask chunk
 
-void 
+void
 create_jb2_chunk(IFFByteStream &iff, const char *chkid, const GURL &url)
 {
   analyze_jb2_chunk(url);
@@ -521,7 +518,7 @@ create_jb2_chunk(IFFByteStream &iff, const char *chkid, const GURL &url)
 
 // -- Create inclusion chunk
 
-void 
+void
 create_incl_chunk(IFFByteStream &iff, const char *chkid, const char *fileid)
 {
   iff.put_chunk("INCL");
@@ -532,7 +529,7 @@ create_incl_chunk(IFFByteStream &iff, const char *chkid, const char *fileid)
 
 // -- Create chunk by copying file contents
 
-void 
+void
 create_raw_chunk(IFFByteStream &iff, const GUTF8String &chkid, const GURL &url)
 {
   iff.put_chunk(chkid);
@@ -558,7 +555,7 @@ struct SecondaryHeader {
 
 // -- Create and check FG44 chunk
 
-void 
+void
 create_fg44_chunk(IFFByteStream &iff, const char *ckid, const GURL &url)
 {
   GP<ByteStream> gbs=ByteStream::create(url,"rb");
@@ -574,17 +571,17 @@ create_fg44_chunk(IFFByteStream &iff, const char *ckid, const GURL &url)
   GP<ByteStream> gmbs=ByteStream::create();
   ByteStream &mbs=*gmbs;
   mbs.copy(*bsi.get_bytestream());
-  bsi.close_chunk();  
+  bsi.close_chunk();
   if (bsi.get_chunk(chkid))
     DjVuPrintErrorUTF8("%s","djvumake: FG44 file contains more than one chunk\n");
-  bsi.close_chunk();  
+  bsi.close_chunk();
   mbs.seek(0);
   if (mbs.readall((void*)&primary, sizeof(primary)) != sizeof(primary))
-    G_THROW("djvumake: FG44 file is corrupted (cannot read primary header)");    
+    G_THROW("djvumake: FG44 file is corrupted (cannot read primary header)");
   if (primary.serial != 0)
     G_THROW("djvumake: FG44 file is corrupted (wrong serial number)");
   if (mbs.readall((void*)&secondary, sizeof(secondary)) != sizeof(secondary))
-    G_THROW("djvumake: FG44 file is corrupted (cannot read secondary header)");    
+    G_THROW("djvumake: FG44 file is corrupted (cannot read secondary header)");
   int iw = (secondary.xhi<<8) + secondary.xlo;
   int ih = (secondary.yhi<<8) + secondary.ylo;
   int red;
@@ -604,7 +601,7 @@ create_fg44_chunk(IFFByteStream &iff, const char *ckid, const GURL &url)
 
 // -- Create and check BG44 chunk
 
-void 
+void
 create_bg44_chunk(IFFByteStream &iff, const char *ckid, GUTF8String filespec)
 {
   static GP<IFFByteStream> bg44iff;
@@ -629,10 +626,10 @@ create_bg44_chunk(IFFByteStream &iff, const char *ckid, GUTF8String filespec)
       GUTF8String chkid;
       bg44iff->get_chunk(chkid);
       if (chkid != "FORM:PM44" && chkid != "FORM:BM44")
-        G_THROW("djvumake: BG44 file has incorrect format (wrong IFF header)");        
+        G_THROW("djvumake: BG44 file has incorrect format (wrong IFF header)");
       if (i>=0)
         filespec = i+1+(const char *)filespec;
-      else 
+      else
         filespec = "99";
     }
   else
@@ -644,10 +641,10 @@ create_bg44_chunk(IFFByteStream &iff, const char *ckid, GUTF8String filespec)
   const char *s=filespec;
   int nchunks = strtol((char *)s, (char **)&s, 10);
   if (nchunks<1 || nchunks>99)
-    G_THROW("djvumake: invalid number of chunks in BG44 specification");    
+    G_THROW("djvumake: invalid number of chunks in BG44 specification");
   if (*s)
     G_THROW("djvumake: invalid BG44 specification (syntax error)");
-  
+
   int flag = (nchunks>=99);
   GUTF8String chkid;
   while (nchunks-->0 && bg44iff->get_chunk(chkid))
@@ -662,14 +659,14 @@ create_bg44_chunk(IFFByteStream &iff, const char *ckid, GUTF8String filespec)
       GP<ByteStream> gmbs=ByteStream::create();
       ByteStream &mbs=*gmbs;
       mbs.copy(*(bg44iff->get_bytestream()));
-      bg44iff->close_chunk();  
+      bg44iff->close_chunk();
       mbs.seek(0);
       if (mbs.readall((void*)&primary, sizeof(primary)) != sizeof(primary))
-        G_THROW("djvumake: BG44 file is corrupted (cannot read primary header)\n");    
+        G_THROW("djvumake: BG44 file is corrupted (cannot read primary header)\n");
       if (primary.serial == 0)
         {
           if (mbs.readall((void*)&secondary, sizeof(secondary)) != sizeof(secondary))
-            G_THROW("djvumake: BG44 file is corrupted (cannot read secondary header)\n");    
+            G_THROW("djvumake: BG44 file is corrupted (cannot read secondary header)\n");
           int iw = (secondary.xhi<<8) + secondary.xlo;
           int ih = (secondary.yhi<<8) + secondary.ylo;
           int red;
@@ -702,7 +699,7 @@ void processBackground(const GPixmap* image, const JB2Image *mask,
 
 // -- Create both foreground and background by masking and subsampling
 
-void 
+void
 create_masksub_chunks(IFFByteStream &iff, const GURL &url)
 {
   // Check and load pixmap file
@@ -729,7 +726,7 @@ create_masksub_chunks(IFFByteStream &iff, const GURL &url)
     fg_pm->encode_chunk(iff.get_bytestream(), parms[0]);
     iff.close_chunk();
   }
-  // Encode backgound 
+  // Encode backgound
   {
     GP<GPixmap> gbg_img=GPixmap::create();
     GPixmap &bg_img=*gbg_img;
@@ -762,10 +759,10 @@ create_masksub_chunks(IFFByteStream &iff, const GURL &url)
 const char *
 parse_color_name(const char *s, char *rgb)
 {
-  static struct { 
-    const char *name; 
-    unsigned char r, g, b; 
-  } stdcols[] = { 
+  static struct {
+    const char *name;
+    unsigned char r, g, b;
+  } stdcols[] = {
     {"aqua",    0x00, 0xFF, 0xFF},
     {"black",   0x00, 0x00, 0x00},
     {"blue",    0x00, 0x00, 0xFF},
@@ -873,7 +870,7 @@ main(int argc, char **argv)
         usage();
       // Open djvu file
       remove(dargv[1]);
-      GP<IFFByteStream> giff = 
+      GP<IFFByteStream> giff =
         IFFByteStream::create(ByteStream::create(GURL::Filename::UTF8(dargv[1]),"wb"));
       IFFByteStream &iff=*giff;
       // Create header
@@ -902,7 +899,7 @@ main(int argc, char **argv)
             }
           else if (!dargv[i].cmp("Smmr=",5))
             {
-              create_mmr_chunk(iff, "Smmr", 
+              create_mmr_chunk(iff, "Smmr",
 			       GURL::Filename::UTF8(5+(const char *)dargv[i]));
               if (flag_contains_stencil)
                 DjVuPrintErrorUTF8("%s","djvumake: duplicate stencil chunk\n");
@@ -931,7 +928,7 @@ main(int argc, char **argv)
             {
               if (flag_contains_fg)
                 DjVuPrintErrorUTF8("%s","djvumake: duplicate 'FGxx' chunk\n");
-              create_fg44_chunk(iff, "FG44", 
+              create_fg44_chunk(iff, "FG44",
 				GURL::Filename::UTF8(5+(const char *)dargv[i]));
             }
           else if (!dargv[i].cmp("BG44=",5))
@@ -971,16 +968,16 @@ main(int argc, char **argv)
           else if (dargv[i].length() > 4 && dargv[i][4] == '=')
             {
               GNativeString chkid = dargv[i].substr(0,4);
-              if (chkid != "TXTz" && chkid != "TXTa" 
+              if (chkid != "TXTz" && chkid != "TXTa"
                   && chkid != "ANTz" && chkid != "ANTa"
                   && chkid != "Djbz" )
                 DjVuPrintErrorUTF8("djvumake: creating chunk of unknown type ``%s''.\n",
                                    (const char*)chkid);
               create_raw_chunk(iff, chkid, GURL::Filename::UTF8(5+(const char *)dargv[i]));
             }
-          else 
+          else
             {
-              DjVuPrintErrorUTF8("djvumake: illegal argument : ``%s'' (ignored)\n", 
+              DjVuPrintErrorUTF8("djvumake: illegal argument : ``%s'' (ignored)\n",
                                  (const char *)dargv[i]);
             }
         }
@@ -988,7 +985,7 @@ main(int argc, char **argv)
       if (flag_contains_stencil)
         {
           if (flag_contains_bg && ! flag_contains_fg)
-            {  
+            {
               DjVuPrintErrorUTF8("%s","djvumake: generating black FGbz chunk\n");
               g().colorzones.empty();
               g().colorpalette = ByteStream::create();
@@ -1026,11 +1023,11 @@ main(int argc, char **argv)
         {
           // Photo DjVu Image
           if (flag_contains_bg!=1)
-            DjVuPrintErrorUTF8("%s","djvumake: photo djvu image has subsampled BGxx chunk\n"); 
+            DjVuPrintErrorUTF8("%s","djvumake: photo djvu image has subsampled BGxx chunk\n");
           if (flag_fg_needs_palette)
             DjVuPrintErrorUTF8("%s","djvumake: could not generate FGbz chunk, as stencil is not available\n");
           else if (flag_contains_fg)
-            DjVuPrintErrorUTF8("%s","djvumake: photo djvu file contains FGxx chunk\n");            
+            DjVuPrintErrorUTF8("%s","djvumake: photo djvu file contains FGxx chunk\n");
         }
       else
         DjVuPrintErrorUTF8("%s","djvumake: djvu file contains neither Sxxx nor BGxx chunks\n");
@@ -1053,7 +1050,7 @@ main(int argc, char **argv)
 
 // -- Returns a dilated version of a bitmap with the same size
 
-static GP<GBitmap> 
+static GP<GBitmap>
 dilate8(const GBitmap *p_bm)
 {
   const GBitmap& bm = *p_bm;
@@ -1069,7 +1066,7 @@ dilate8(const GBitmap *p_bm)
       unsigned char *nbmnrow = (y+1<nrows) ? newbm[y+1] : 0;
       for(int x=0; x<ncols; x++)
         {
-          if(bmrow[x]) 
+          if(bmrow[x])
             {
               // Set all the 8-neighborhood to black
               if (nbmprow)
@@ -1095,15 +1092,15 @@ dilate8(const GBitmap *p_bm)
 
 // -- Returns a smaller eroded version of a bitmap
 
-static GP<GBitmap> 
+static GP<GBitmap>
 erode8(const GBitmap *p_bm)
 {
   const GBitmap& bm = *p_bm;
   int newnrows = bm.rows()-2;
   int newncolumns = bm.columns()-2;
-  if(newnrows<=0 || newncolumns<=0) // then return an empty GBitmap 
+  if(newnrows<=0 || newncolumns<=0) // then return an empty GBitmap
     return GBitmap::create();
-  GP<GBitmap> p_newbm = GBitmap::create(newnrows,newncolumns); 
+  GP<GBitmap> p_newbm = GBitmap::create(newnrows,newncolumns);
   GBitmap& newbm = *p_newbm;
   for(int y=0; y<newnrows; y++)
     {
@@ -1124,7 +1121,7 @@ erode8(const GBitmap *p_bm)
 
 // -- Returns a smaller eroded version of a jb2image
 
-GP<JB2Image> 
+GP<JB2Image>
 erode8(const JB2Image *im)
 {
   int i;
@@ -1135,7 +1132,7 @@ erode8(const JB2Image *im)
       const JB2Shape &shape = im->get_shape(i);
       JB2Shape newshape;
       newshape.parent = shape.parent;
-      if (shape.bits) 
+      if (shape.bits)
         newshape.bits = erode8(shape.bits);
       else
         newshape.bits = 0;
@@ -1163,14 +1160,14 @@ erode8(const JB2Image *im)
 // give the value of the corresponding <subsampled_image> pixel, and the
 // <subsampled_mask> is cleared at this position.  If <inverted_mask> is true,
 // then pixels are considered to be masked when mask==0
- 
+
 
 static void
 maskedSubsample(const GPixmap* img,
                 const GBitmap *p_mask,
                 GPixmap& subsampled_image,
                 GBitmap& subsampled_mask,
-                int gridwidth, int inverted_mask, 
+                int gridwidth, int inverted_mask,
                 int minpixels=1
                 )
 {
@@ -1198,7 +1195,7 @@ maskedSubsample(const GPixmap* img,
       posyend = posy+gridwidth;
       if(posyend>imageheight)
         posyend = imageheight;
-      for(col=0, posx=0; col<subwidth; col++, posx+=gridwidth) 
+      for(col=0, posx=0; col<subwidth; col++, posx+=gridwidth)
         {
           posxend = posx+gridwidth;
           if(posxend>imagewidth)
@@ -1225,7 +1222,7 @@ maskedSubsample(const GPixmap* img,
             }
           /* minpixels pixels are enough to give the color */
           /* so set it, and do not mask this point */
-          if(count >= minpixels)   
+          if(count >= minpixels)
             {
               GPixel p;
               p.r = r/count;
@@ -1233,8 +1230,8 @@ maskedSubsample(const GPixmap* img,
               p.b = b/count;
               subsampled_image_row[col] = p;
               subsampled_mask_row[col] = 0;
-            } 
-          else /* make it bright red and masked */ 
+            }
+          else /* make it bright red and masked */
             {
               subsampled_image_row[col] = GPixel::RED;
               subsampled_mask_row[col] = 1;
@@ -1246,20 +1243,20 @@ maskedSubsample(const GPixmap* img,
 
 // -- Computes foreground image and mask
 
-void 
+void
 processForeground(const GPixmap* image, const JB2Image *mask,
                   GPixmap& subsampled_image, GBitmap& subsampled_mask)
 {
   GP<JB2Image> eroded_mask = erode8(mask);
-  maskedSubsample(image, eroded_mask->get_bitmap(), 
-                  subsampled_image, subsampled_mask, 
+  maskedSubsample(image, eroded_mask->get_bitmap(),
+                  subsampled_image, subsampled_mask,
                   6, 1);   // foreground subsample is 6 (300dpi->50dpi)
 }
 
 
 // -- Computes background image and mask
 
-void 
+void
 processBackground(const GPixmap* image, const JB2Image *mask,
                   GPixmap& subsampled_image, GBitmap& subsampled_mask)
 {

@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuDocEditor.h"
@@ -186,7 +183,7 @@ DjVuDocEditor::init(const GURL &url)
      // Suxx. I need to convert it now.
      GP<ByteStream> gstr = ByteStream::create();  // Convert in memory.
      tmp_doc->write(gstr, true);  // Force DJVM format
-     gstr->seek(0);                     
+     gstr->seek(0);
      doc_pool=DataPool::create(gstr);
    }
 
@@ -605,11 +602,11 @@ DjVuDocEditor::insert_file(const GP<DataPool> &file_pool,
           GPList<DjVmDir::File> list(dir->get_files_list());
           for(GPosition pos=list;pos;++pos)
           {
-            DEBUG_MSG("include " << list[pos]->is_include() 
-                      << " size=" << list[pos]->size << " length=" 
+            DEBUG_MSG("include " << list[pos]->is_include()
+                      << " size=" << list[pos]->size << " length="
                       << file_pool->get_length() << "\n");
-            if(list[pos]->is_include() 
-               && (!list[pos]->size 
+            if(list[pos]->is_include()
+               && (!list[pos]->size
                    || (list[pos]->size == file_pool->get_length())))
             {
               id=list[pos]->get_load_name();
@@ -629,7 +626,7 @@ DjVuDocEditor::insert_file(const GP<DataPool> &file_pool,
                 name2id[name]=id;
                 return true;
               }
-            } 
+            }
           }
         }
         // Otherwise create a new unique ID and remember the translation
@@ -894,7 +891,7 @@ DjVuDocEditor::insert_page(GP<DataPool> & _file_pool,
       // Strip any INCL chunks (we do not allow to insert hierarchies
       // using this function)
    const GP<DataPool> file_pool(strip_incl_chunks(_file_pool));
-   
+
       // Now obtain ID for the new file
    const GUTF8String id(find_unique_id(file_url.fname()));
 
@@ -1116,7 +1113,7 @@ DjVuDocEditor::move_file(const GUTF8String &id, int & file_pos,
          if (file_pos>=0)
          {
             file_pos++;
-        
+
                // We care to move included files only if we do not append
                // This is because the only reason why we move included
                // files is to made them available sooner than they would
@@ -1369,7 +1366,7 @@ DjVuDocEditor::simplify_anno(void (* progress_cb)(float progress, void *),
          GMonitorLock lock(&file_flags);
          while(file_flags & DjVuFile::DECODING)
             file_flags.wait();
-        
+
             // Merge all chunks in one by decoding and encoding DjVuAnno
          const GP<DjVuAnno> dec_anno(DjVuAnno::create());
          dec_anno->decode(anno);
@@ -1461,7 +1458,7 @@ DjVuDocEditor::create_shared_anno_file(void (* progress_cb)(float progress, void
    }
 }
 
-void 
+void
 DjVuDocEditor::set_djvm_nav(GP<DjVmNav> n)
 {
   if (n && ! n->isValidBookmark())
@@ -1539,7 +1536,7 @@ DjVuDocEditor::get_thumbnails_size(void) const
        const GP<ByteStream> gstr(thumb_map[pos]->get_stream());
        GP<IW44Image> iwpix=IW44Image::create_decode(IW44Image::COLOR);
        iwpix->decode_chunk(gstr);
-      
+
        int width=iwpix->get_width();
        int height=iwpix->get_height();
        return width<height ? width : height;
@@ -1690,13 +1687,13 @@ DjVuDocEditor::generate_thumbnails(int thumb_size, int page_num)
       if (!thumb_map.contains(id))
         {
           const GP<DjVuImage> dimg(get_page(page_num, true));
-         
+
           GRect rect(0, 0, thumb_size, dimg->get_height()*thumb_size/dimg->get_width());
           GP<GPixmap> pm=dimg->get_pixmap(rect, rect, get_thumbnails_gamma());
           if (!pm)
             {
               const GP<GBitmap> bm(dimg->get_bitmap(rect, rect, sizeof(int)));
-              if (bm) 
+              if (bm)
                 pm = GPixmap::create(*bm);
               else
                 pm = GPixmap::create(rect.height(), rect.width(), &GPixel::WHITE);
@@ -1869,7 +1866,7 @@ DjVuDocEditor::write(const GP<ByteStream> &gbs, bool force_djvm)
   {
     file_thumbnails();
   }else
-  { 
+  {
     remove_thumbnails();
   }
   clean_files_map();
@@ -1886,7 +1883,7 @@ DjVuDocEditor::write(
   {
     file_thumbnails();
   }else
-  { 
+  {
     remove_thumbnails();
   }
   clean_files_map();
@@ -1910,7 +1907,7 @@ DjVuDocEditor::save_as(const GURL &where, bool bundled)
    {
      file_thumbnails();
    }else
-   { 
+   {
      remove_thumbnails();
    }
 
@@ -2133,7 +2130,7 @@ DjVuDocEditor::save_as(const GURL &where, bool bundled)
    }
 }
 
-GP<DjVuDocEditor> 
+GP<DjVuDocEditor>
 DjVuDocEditor::create_wait(void)
 {
   DjVuDocEditor *doc=new DjVuDocEditor();
@@ -2142,7 +2139,7 @@ DjVuDocEditor::create_wait(void)
   return retval;
 }
 
-GP<DjVuDocEditor> 
+GP<DjVuDocEditor>
 DjVuDocEditor::create_wait(const GURL &url)
 {
   DjVuDocEditor *doc=new DjVuDocEditor();

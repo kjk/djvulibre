@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuNavDir.h"
@@ -88,9 +85,9 @@ DjVuNavDir::DjVuNavDir(const GURL &dirURL)
 DjVuNavDir::DjVuNavDir(ByteStream & str, const GURL &dirURL)
 {
    if (!dirURL) G_THROW( ERR_MSG("DjVuNavDir.zero_dir") );
-   
+
    baseURL=GURL(dirURL).base();
-   
+
    decode(str);
 }
 
@@ -98,7 +95,7 @@ void
 DjVuNavDir::decode(ByteStream & str)
 {
    GCriticalSectionLock lk(&lock);
-   
+
    GList<GUTF8String> tmp_page2name;
    int eof=0;
    while(!eof)
@@ -123,7 +120,7 @@ DjVuNavDir::decode(ByteStream & str)
    GPosition pos;
    for(pos=tmp_page2name, cnt=0;pos;++pos, cnt++)
       page2name[cnt]=tmp_page2name[pos];
-   
+
    // Now creating reverse mapping (strings => numbers)
    for(cnt=0;cnt<pages;cnt++)
    {
@@ -151,7 +148,7 @@ int
 DjVuNavDir::get_pages_num(void) const
 {
    GCriticalSectionLock lk((GCriticalSection *)&lock);
-   
+
    return page2name.size();
 }
 
@@ -177,8 +174,8 @@ GUTF8String
 DjVuNavDir::page_to_name(int page) const
 {
    GCriticalSectionLock lk((GCriticalSection *)&lock);
-   
-   if (page<0) 
+
+   if (page<0)
       G_THROW( ERR_MSG("DjVuNavDir.neg_page") );
    if (page>=page2name.size())
       G_THROW( ERR_MSG("DjVuNavDir.large_page") );
@@ -189,7 +186,7 @@ GURL
 DjVuNavDir::page_to_url(int page) const
 {
    GCriticalSectionLock lk((GCriticalSection *)&lock);
-   
+
    return GURL::UTF8(page_to_name(page),baseURL);
 }
 
@@ -200,7 +197,7 @@ DjVuNavDir::insert_page(int where, const char * name)
 
    int pages=page2name.size();
    if (where<0) where=pages;
-   
+
    page2name.resize(pages);
    for(int i=pages;i>where;i--)
       page2name[i]=page2name[i-1];
@@ -216,7 +213,7 @@ DjVuNavDir::delete_page(int page_num)
    GCriticalSectionLock lk((GCriticalSection *)&lock);
 
    int pages=page2name.size();
-   
+
    if (page_num<0 || page_num>=pages)
       G_THROW( ERR_MSG("DjVuNavDir.bad_page") );
 

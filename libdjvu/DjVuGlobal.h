@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _DJVUGLOBAL_H
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 #if defined(HAVE_STDINCLUDES)
@@ -84,16 +81,16 @@
 #endif
 
 
-/** @name DjVuGlobal.h 
+/** @name DjVuGlobal.h
 
     This file is included by all include files in the DjVu reference library.
-    
-	If compilation symbols #NEED_DJVU_MEMORY#, #NEED_DJVU_PROGRESS# 
-	or #NEED_DJVU_NAMES# are defined, this file enables 
+
+	If compilation symbols #NEED_DJVU_MEMORY#, #NEED_DJVU_PROGRESS#
+	or #NEED_DJVU_NAMES# are defined, this file enables
 	features which are useful for certain applications of the
     DjVu Reference Library.  These features are still experimental and
     therefore poorly documented.
-    
+
     @memo
     Global definitions.
     @author
@@ -102,7 +99,7 @@
 //@{
 
 
-/** @name DjVu Memory 
+/** @name DjVu Memory
 
     This section is enabled when compilation symbol #NEED_DJVU_MEMORY# is
     defined.  Function #_djvu_memory_callback# can be used to redefine the C++
@@ -208,18 +205,18 @@ operator delete [] (void *addr) delete_throw_spec
 
 #endif /* NEED_DJVU_MEMORY */
 
-/** @name DjVu Progress  
+/** @name DjVu Progress
 
     This section is enabled when compilation symbol #NEED_DJVU_PROGRESS# is
     defined.  This macro setups callback function that may be used to
     implement a progress indicator for the encoding routines.  The decoding
     routines do not need such a facility because it is sufficient to monitor
     the calls to function \Ref{ByteStream::read} in class \Ref{ByteStream}.
-    
+
     {\bf Code tracing macros} ---
     Monitoring the progress of such complex algorithms requires significant
     code support.  This is achieved by inserting {\em code tracing macros}
-    in strategic regions of the code.  
+    in strategic regions of the code.
     \begin{description}
     \item[DJVU_PROGRESS_TASK(name,task,nsteps)]  indicates that the current
          scope performs a task roughly divided in #nsteps# equal steps, with
@@ -230,7 +227,7 @@ operator delete [] (void *addr) delete_throw_spec
          again with an argument greater than #tostep#.  The execution of
          this operation of course can be described by one subtask and so on.
     \end{description}
- 
+
     {\bf Progress callback} --- Before defining the outermost task, you can
     store a callback function pointer into the static member variable
     #DjVuProgressTask::callback#.  This callback function is called
@@ -329,19 +326,19 @@ DJVUEXTERNCAPI(void DjVuWriteMessage( const char *message ));
   (i.e., msg_buffer[0] == '\0').
 */
 DJVUEXTERNCAPI(void DjVuMessageLookUpUTF8(
-  char *msg_buffer, const unsigned int buffer_size, 
+  char *msg_buffer, const unsigned int buffer_size,
   const char *message ));
 DJVUEXTERNCAPI(void DjVuMessageLookUpNative(
-  char *msg_buffer, const unsigned int buffer_size, 
+  char *msg_buffer, const unsigned int buffer_size,
   const char *message ));
 
-/** This function sets the program name used when 
+/** This function sets the program name used when
     searching for language files.
 */
 DJVUEXTERNCAPI(const char *djvu_programname(const char *programname));
 
 
-/** @name DjVu Names  
+/** @name DjVu Names
 
     This section is enabled when compilation symbol #NEED_DJVU_NAMES# is
     defined.  This section redefines class names in order to unclutter the
@@ -380,7 +377,7 @@ DJVUEXTERNCAPI(const char *djvu_programname(const char *programname));
 // This hack allows for the coexistence of internationalized
 // and non-internationalized code.  All internationalized error
 // message names are prefixed with a ctrl-c.  Only these will
-// be looked for in the message files.  Messages that do no 
+// be looked for in the message files.  Messages that do no
 // start with a ctrl-c will remain untranslated.
 #  define ERR_MSG(x) "\003" x
 # else

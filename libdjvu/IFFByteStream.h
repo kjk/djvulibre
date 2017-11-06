@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,10 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
-
 
 /** @name IFFByteStream.h
 
@@ -75,7 +71,7 @@
     conventions effectively provides IFF files with a convenient hierarchical
     structure.  Composite chunks are further identified by a secondary chunk
     identifier.
-    
+
     We found convenient to define a {\em extended chunk identifier}.  In the
     case of a regular chunk, the extended chunk identifier is simply the
     chunk identifier, as in #"PM44"#. In the case of a composite chunk, the
@@ -94,7 +90,7 @@
     chunk is accessed.  It is possible to code chunk data with the ZP-Coder
     without worrying about the final file position. See class \Ref{ZPCodec}
     for more details.
-    
+
     {\bf DjVu IFF Files} --- We had initially planned to exactly follow the
     IFF specifications.  Then we realized that certain versions of MSIE
     recognize any IFF file as a Microsoft AIFF sound file and pop a message
@@ -110,13 +106,13 @@
     \URL{http://www.cica.indiana.edu/graphics/image_specs/ilbm.format.txt} or
     \URL{http://www.tnt.uni-hannover.de/soft/compgraph/fileformats/docs/iff.pre}
 
-    @memo 
+    @memo
     IFF file parser.
     @author
     L\'eon Bottou <leonb@research.att.com>
 
 // From: Leon Bottou, 1/31/2002
-// This has been changed by Lizardtech to fit better 
+// This has been changed by Lizardtech to fit better
 // with their re-implementation of ByteStreams.
 
 */
@@ -140,11 +136,11 @@ namespace DJVU {
 #endif
 #endif
 
-/** ByteStream interface for an IFF file. 
+/** ByteStream interface for an IFF file.
 
     Class #IFFByteStream# augments the #ByteStream# interface with
     functions for navigating from chunk to chunk.  It works in relation
-    with a ByteStream specified at construction time. 
+    with a ByteStream specified at construction time.
 
     {\bf Reading an IFF file} --- You can read an IFF file by constructing an
     #IFFByteStream# object attached to the ByteStream containing the IFF file.
@@ -159,7 +155,7 @@ namespace DJVU {
     accessing a composite chunk.  You can instead make nested calls to
     functions #get_chunk# and #close_chunk# in order to access the chunks
     located inside the composite chunk.
-    
+
     {\bf Writing an IFF file} --- You can write an IFF file by constructing an
     #IFFByteStream# object attached to the seekable ByteStream object that
     will contain the IFF file.  Calling function \Ref{put_chunk} creates a
@@ -179,7 +175,7 @@ namespace DJVU {
 
 class DJVUAPI IFFByteStream : protected ByteStream::Wrapper
 {
-protected: 
+protected:
   IFFByteStream(const GP<ByteStream> &bs, const int pos);
 public:
   /** Constructs an IFFByteStream object attached to ByteStream #bs#.
@@ -273,10 +269,10 @@ public:
       the stream is not valid for use after comparing, regardless of the
       result. */
   bool compare(IFFByteStream &iff);
-  /** #has_magic_att# is true if the stream has 
+  /** #has_magic_att# is true if the stream has
       the DjVu magic 'AT&T' marker. */
   bool has_magic_att;
-  /** #has_magic_sdjv# is true if the stream has 
+  /** #has_magic_sdjv# is true if the stream has
       the Celartem magic 'SDJV' marker. */
   bool has_magic_sdjv;
 private:

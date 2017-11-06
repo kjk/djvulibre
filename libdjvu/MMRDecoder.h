@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -57,9 +57,6 @@
 #define _MMRDECODER_H_
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
 #endif
 
 
@@ -76,8 +73,8 @@ class ByteStream;
 class JB2Image;
 
 /** @name MMRDecoder.h
-    Files #"MMRDecoder.h"# and #"MMRDecoder.cpp"# implement a 
-    CCITT-G4/MMR decoder suitable for use in DjVu.  The main 
+    Files #"MMRDecoder.h"# and #"MMRDecoder.cpp"# implement a
+    CCITT-G4/MMR decoder suitable for use in DjVu.  The main
     entry point is function \Ref{MMRDecoder::decode}.
 
     The foreground mask layer of a DjVu file is usually encoded with a
@@ -159,7 +156,7 @@ public:
   static GP<JB2Image> decode(GP<ByteStream> gbs);
 
   /// Only decode the header.
-  static bool decode_header(ByteStream &inp, 
+  static bool decode_header(ByteStream &inp,
                             int &width, int &height, int &invert);
 
 public:
@@ -168,7 +165,7 @@ public:
   /** Create a MMRDecoder object for decoding an image
       of size #width# by #height#. Flag $striped# must be set
       if the image is composed of multiple stripes. */
-  static GP<MMRDecoder> create(GP<ByteStream> gbs, 
+  static GP<MMRDecoder> create(GP<ByteStream> gbs,
                                const int width, const int height,
                                const bool striped=false );
 
@@ -187,11 +184,11 @@ public:
       stored in the pointer specified by the optional argument #endptr#.  The
       buffer data should be processed before calling this function again. This
       is implemented by calling \Ref{MMRDecoder::scanruns}. */
-  const unsigned char  *scanrle(const bool invert, 
+  const unsigned char  *scanrle(const bool invert,
                                 const unsigned char **endptr=0);
 #if 0
   /** Decodes a scanline and returns a pointer to an array of #0# or #1# bytes.
-      Returns a pointer to the scanline buffer containing one byte per pixel. 
+      Returns a pointer to the scanline buffer containing one byte per pixel.
       The buffer data should be processed before calling this function again.
       This is implemented by calling \Ref{MMRDecoder::scanruns}. */
   const unsigned char *scanline();

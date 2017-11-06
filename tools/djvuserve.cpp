@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "DjVuDocument.h"
@@ -81,7 +78,7 @@ static bool cgi = false;
 static bool head = false;
 
 
-struct DJVUSERVEGlobal 
+struct DJVUSERVEGlobal
 {
   // Globals that need static initialization
   // are grouped here to work around broken compilers.
@@ -119,23 +116,23 @@ usage(void)
    exit(10);
 }
 
-static const char * 
+static const char *
 day_name(int d)
 {
    static const char *n[] = {
-     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" 
+     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
    };
    if (d>=0 && d<7)
      return n[d];
    return "???";
 }
 
-static const char* 
+static const char*
 month_name(int d)
 {
    static const char *n[] = {
      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" 
+     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
    };
    if (d>=0 && d<12)
      return n[d];
@@ -195,14 +192,14 @@ is_djvu_file_bundled(GURL &pathurl)
   return false;
 }
 
-void 
+void
 djvuserver_file(GURL pathurl, bool bundled, bool download)
 {
   GNativeString fname = pathurl.NativeFilename();
   struct stat statbuf;
   if (stat((const char *)fname, &statbuf) < 0)
     G_THROW(strerror(errno));
-  
+
   // Is this a bundled file?
   if (is_djvu_file_bundled(pathurl) && !bundled)
     {
@@ -219,7 +216,7 @@ djvuserver_file(GURL pathurl, bool bundled, bool download)
     headers(&statbuf, pathurl.fname());
   else
     headers(&statbuf);
-  if (head) 
+  if (head)
     return;
   fprintf(stdout,"\n");
   fflush(stdout);
@@ -228,7 +225,7 @@ djvuserver_file(GURL pathurl, bool bundled, bool download)
   out->copy(*in);
 }
 
-void 
+void
 djvuserver_directory(GURL pathurl)
 {
   GNativeString fname = pathurl.NativeFilename();
@@ -268,7 +265,7 @@ djvuserver_directory(GURL pathurl)
   // HTTP output
   statbuf.st_size = bsdir->tell();
   headers(&statbuf);
-  if (head) 
+  if (head)
     return;
   bsdir->seek(0);
   fprintf(stdout,"\n");
@@ -277,7 +274,7 @@ djvuserver_directory(GURL pathurl)
   out->copy(*bsdir);
 }
 
-void 
+void
 djvuserver_component(GURL pathurl, GUTF8String id)
 {
   GNativeString fname = pathurl.NativeFilename();
@@ -313,7 +310,7 @@ djvuserver_component(GURL pathurl, GUTF8String id)
   // HTTP output
   statbuf.st_size = frec->size + 4;
   headers(&statbuf);
-  if (head) 
+  if (head)
     return;
   fprintf(stdout,"\n");
   fflush(stdout);
@@ -349,7 +346,7 @@ int
 main(int argc, char ** argv)
 {
   DJVU_LOCALE;
-  G_TRY 
+  G_TRY
     {
       // Obtain path
       bool bundled = false;

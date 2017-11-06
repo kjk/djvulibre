@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -56,14 +56,11 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
-#endif
 
 // From: Leon Bottou, 1/31/2002
 // This has been heavily changed by Lizardtech.
 // They decided to use URLs for everyting, including
-// the most basic file access.  The URL class now is a unholy 
+// the most basic file access.  The URL class now is a unholy
 // mixture of code for syntactically parsing the urls (which it was)
 // and file status code (only for local file: urls).
 
@@ -134,7 +131,7 @@
 #    include <ndir.h>
 #   endif
 #  endif
-# else /* !AUTOCONF */ 
+# else /* !AUTOCONF */
 #  include <sys/time.h>
 #  if defined(XENIX)
 #   define USE_DIRECT
@@ -149,7 +146,7 @@
 #  else
 #   include <dirent.h>
 #   define NAMLEN(dirent) strlen((dirent)->d_name)
-#  endif 
+#  endif
 # endif /* !AUTOCONF */
 #endif /* UNIX */
 
@@ -183,10 +180,10 @@ static const char localhostspec2[] = "///";
   static const char root[] = "/";
 #elif defined(_WIN32) || defined(OS2)
   static const char root[] = "\\";
-  static const char backslash='\\';  
+  static const char backslash='\\';
 #elif defined(macintosh)
   static const char nillchar=0;
-  static char const * const root = &nillchar; 
+  static char const * const root = &nillchar;
 #else
 #error "Define something here for your operating system"
 #endif
@@ -199,7 +196,7 @@ pathname_start(const GUTF8String &url, const int protolength);
 // -- Returns the hexvalue of a character.
 //    Returns -1 if illegal;
 
-static int 
+static int
 hexval(char c)
 {
   return ((c>='0' && c<='9')
@@ -258,12 +255,12 @@ GURL::beautify_path(GUTF8String xurl)
 {
 
   const int protocol_length=GURL::protocol(xurl).length();
-   
+
   // Eats parts like ./ or ../ or ///
   char * buffer;
   GPBuffer<char> gbuffer(buffer,xurl.length()+1);
   strcpy(buffer, (const char *)xurl);
-   
+
   // Find start point
   char * start=buffer+pathname_start(xurl,protocol_length);
 
@@ -292,7 +289,7 @@ GURL::beautify_path(GUTF8String xurl)
   if(!xurl.cmp(filespec,sizeof(filespec)-1))
   {
 	int offset=1;
-	if(start&&(start[0] == '/')&& 
+	if(start&&(start[0] == '/')&&
            !xurl.cmp("file:////",sizeof("file:////")-1))
 	{
 	  collapse(start, 1);
@@ -366,7 +363,7 @@ GURL::init(const bool nothrow)
 {
    GCriticalSectionLock lock(&class_lock);
    validurl=true;
-   
+
    if (url.length())
    {
       GUTF8String proto=protocol();
@@ -421,12 +418,12 @@ GURL::init(const bool nothrow)
    }
 }
 
-GURL::GURL(void) 
-  : validurl(false) 
+GURL::GURL(void)
+  : validurl(false)
 {
 }
 
-GURL::GURL(const char * url_in) 
+GURL::GURL(const char * url_in)
   : url(url_in ? url_in : ""), validurl(false)
 {
 }
@@ -593,7 +590,7 @@ GURL::parse_cgi_args(void)
          {
            name=arg;
          }
-            
+
          int args=cgi_name_arr.size();
          cgi_name_arr.resize(args);
          cgi_value_arr.resize(args);
@@ -616,9 +613,9 @@ GURL::store_cgi_args(void)
    const char * ptr;
    for(ptr=url_ptr;*ptr&&(*ptr!='?');ptr++)
    		EMPTY_LOOP;
-   
+
    GUTF8String new_url(url_ptr, ptr-url_ptr);
-   
+
    for(int i=0;i<cgi_name_arr.size();i++)
    {
       GUTF8String name=GURL::encode_reserved(cgi_name_arr[i]);
@@ -654,7 +651,7 @@ GURL::djvu_cgi_arguments(void) const
          args=cgi_name_arr.size()-(i+1);
          break;
       }
-   } 
+   }
    return args;
 }
 
@@ -807,7 +804,7 @@ GURL::clear_hash_argument(void)
       }
 
       if (!found)
-      { 
+      {
         if (*start=='#')
           found=true;
         else
@@ -922,7 +919,7 @@ GUTF8String
 GURL::pathname(void) const
 {
   return (is_local_file_url())
-    ?GURL::encode_reserved(UTF8Filename()) 
+    ?GURL::encode_reserved(UTF8Filename())
     :url.substr(pathname_start(url,protocol().length()),(unsigned int)(-1));
 }
 
@@ -970,7 +967,7 @@ GURL::operator==(const GURL & gurl2) const
   if (n1 == n2+1 && s1[n2]=='/')
     return !strcmp(s1+n1,s2+n2) && !strncmp(s1,s2,n2);
   if (n2 == n1+1 && s2[n1]=='/')
-    return !strcmp(s1+n1,s2+n2) && !strncmp(s1,s2,n1);    
+    return !strcmp(s1+n1,s2+n2) && !strncmp(s1,s2,n1);
   return false;
 }
 
@@ -1019,7 +1016,7 @@ GURL::extension(void) const
          retval=(const char*)xfilename+i+1;
          break;
       }
-   } 
+   }
    return retval;
 }
 
@@ -1064,7 +1061,7 @@ GURL::encode_reserved(const GUTF8String &gs)
   const char *s=(const char *)gs;
   // Potentially unsafe characters (cf. RFC1738 and RFC1808)
   static const char hex[] = "0123456789ABCDEF";
-  
+
   unsigned char *retval;
   GPBuffer<unsigned char> gd(retval,strlen(s)*3+1);
   unsigned char *d=retval;
@@ -1081,11 +1078,11 @@ GURL::encode_reserved(const GUTF8String &gs)
     if (*s == slash )
 #else
 #error "Define something here for your operating system"
-#endif  
+#endif
 #endif
 #endif
     {
-      *d = slash; 
+      *d = slash;
       continue;
     }
     unsigned char const ss=(unsigned char const)(*s);
@@ -1099,7 +1096,7 @@ GURL::encode_reserved(const GUTF8String &gs)
     if ( (ss>='a' && ss<='z') ||
          (ss>='A' && ss<='Z') ||
          (ss>='0' && ss<='9') ||
-         (strchr("$-_.+!*'(),~:=", ss)) ) 
+         (strchr("$-_.+!*'(),~:=", ss)) )
     {
       *d = ss;
       continue;
@@ -1124,10 +1121,10 @@ url_from_UTF8filename(const GUTF8String &gfilename)
   if(GURL::UTF8(gfilename).is_valid())
   {
     DEBUG_MSG("Debug: URL as Filename: " << gfilename << "\n");
-  } 
+  }
   const char *filename=gfilename;
   if(filename && (unsigned char)filename[0] == (unsigned char)0xEF
-     && (unsigned char)filename[1] == (unsigned char)0xBB 
+     && (unsigned char)filename[1] == (unsigned char)0xBB
      && (unsigned char)filename[2] == (unsigned char)0xBF)
   {
     filename+=3;
@@ -1137,7 +1134,7 @@ url_from_UTF8filename(const GUTF8String &gfilename)
   if(!filename || !filename[0])
   {
     return GUTF8String();
-  } 
+  }
 
   // Normalize file name to url slash-and-escape syntax
   GUTF8String oname=GURL::expand_name(filename);
@@ -1163,7 +1160,7 @@ url_from_UTF8filename(const GUTF8String &gfilename)
   return url;
 }
 
-GUTF8String 
+GUTF8String
 GURL::get_string(const bool nothrow) const
 {
   if(!validurl)
@@ -1174,7 +1171,7 @@ GURL::get_string(const bool nothrow) const
 // -- Returns a url for accessing a given file.
 //    If useragent is not provided, standard url will be created,
 //    but will not be understood by some versions if IE.
-GUTF8String 
+GUTF8String
 GURL::get_string(const GUTF8String &useragent) const
 {
   if(!validurl)
@@ -1278,16 +1275,16 @@ GURL::Filename::UTF8::UTF8(const GUTF8String &gfilename)
 : GURL::Filename(gfilename) {}
 
 // filename --
-// -- Applies heuristic rules to convert a url into a valid file name.  
+// -- Applies heuristic rules to convert a url into a valid file name.
 //    Returns a simple basename in case of failure.
-GUTF8String 
+GUTF8String
 GURL::UTF8Filename(void) const
 {
   GUTF8String retval;
   if(! is_empty())
   {
     const char *url_ptr=url;
-  
+
     // WARNING: Whenever you modify this conversion code,
     // make sure, that the following functions are in sync:
     //   encode_reserved()
@@ -1302,7 +1299,7 @@ GURL::UTF8Filename(void) const
     if (GStringRep::cmp(filespec, url_ptr, sizeof(filespec)-1))  //if not
       return GOS::basename(url_ptr);
     url_ptr += sizeof(filespec)-1;
-  
+
 #if defined(macintosh)
     //remove all leading slashes
     for(;*url_ptr==slash;url_ptr++)
@@ -1348,14 +1345,14 @@ GURL::UTF8Filename(void) const
       *r=0;
       retval = expand_name(l_url,root);
     }
-#else  
+#else
     retval = expand_name(url_ptr,root);
 #endif
-    
+
 #if defined(_WIN32) || defined(OS2)
     if (url_ptr[0] && url_ptr[1]=='|' && url_ptr[2]== slash)
     {
-      if ((url_ptr[0]>='a' && url_ptr[0]<='z') 
+      if ((url_ptr[0]>='a' && url_ptr[0]<='z')
           || (url_ptr[0]>='A' && url_ptr[0]<='Z'))
       {
 	GUTF8String drive;
@@ -1369,7 +1366,7 @@ GURL::UTF8Filename(void) const
   return retval;
 }
 
-GNativeString 
+GNativeString
 GURL::NativeFilename(void) const
 {
   return UTF8Filename().getUTF82Native();
@@ -1456,7 +1453,7 @@ GURL::is_local_path(void) const
 
 // is_dir(url) --
 // -- returns true if url denotes a directory.
-bool 
+bool
 GURL::is_dir(void) const
 {
   bool retval=false;
@@ -1495,7 +1492,7 @@ GURL::is_dir(void) const
 }
 
 // Follows symbolic links.
-GURL 
+GURL
 GURL::follow_symlinks(void) const
 {
   GURL ret = *this;
@@ -1531,12 +1528,12 @@ GURL::mkdir() const
 #if defined(UNIX)
       if (is_dir())
         retval = 0;
-      else 
+      else
         retval = ::mkdir(NativeFilename(), 0755);
 #elif defined(_WIN32)
       if (is_dir())
         retval = 0;
-      else 
+      else
         retval = CreateDirectoryA(NativeFilename(), NULL);
 #else
 # error "Define something here for your operating system"
@@ -1547,7 +1544,7 @@ GURL::mkdir() const
 
 // deletefile
 // -- deletes a file or directory
-  
+
 int
 GURL::deletefile(void) const
 {
@@ -1654,7 +1651,7 @@ GURL::renameto(const GURL &newurl) const
 // -- returns the full path name of filename interpreted
 //    relative to fromdirname.  Use current working dir when
 //    fromdirname is null.
-GUTF8String 
+GUTF8String
 GURL::expand_name(const GUTF8String &xfname, const char *from)
 {
   const char *fname=xfname;
@@ -1668,7 +1665,7 @@ GURL::expand_name(const GUTF8String &xfname, const char *from)
   if (fname && fname[0]==tilde)
   {
     int n;
-    for(n=1;fname[n] && fname[n]!= slash;n++) 
+    for(n=1;fname[n] && fname[n]!= slash;n++)
       EMPTY_LOOP;
     struct passwd *pw=0;
     if (n!=1)
@@ -1844,7 +1841,7 @@ GURL::expand_name(const GUTF8String &xfname, const char *from)
         }
       }
       char* s2=s;//MBCS DBCS
-      for(;*s;s++) 
+      for(;*s;s++)
         EMPTY_LOOP;
 	  if (s > string_buffer && s[-1] != slash && s[-1] != backslash)
         *s++ = backslash;
@@ -1859,7 +1856,7 @@ GURL::expand_name(const GUTF8String &xfname, const char *from)
   }
 #else
 # error "Define something here for your operating system"
-#endif  
+#endif
   return retval;
 }
 

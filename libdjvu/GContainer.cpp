@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -55,9 +55,6 @@
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
-#endif
-#if NEED_GNUG_PRAGMAS
-# pragma implementation
 #endif
 
 #include "GContainer.h"
@@ -84,7 +81,7 @@ GArrayBase::GArrayBase(const GArrayBase &ref)
   if (maxhi >= minlo)
     data = ::operator new(traits.size * (maxhi - minlo + 1));
   if (hibound >= lobound)
-    traits.copy(traits.lea(data, lobound-minlo), 
+    traits.copy(traits.lea(data, lobound-minlo),
                 traits.lea(ref.data, lobound-minlo),
                 hibound - lobound + 1, 0);
 }
@@ -148,14 +145,14 @@ GArrayBase::steal(GArrayBase &ga)
 }
 
 
-void 
+void
 GArrayBase::empty()
 {
   resize(0, -1);
 }
 
 
-void 
+void
 GArrayBase::touch(int n)
 {
   int nlo = (n<lobound ? n : lobound);
@@ -166,7 +163,7 @@ GArrayBase::touch(int n)
 }
 
 
-void 
+void
 GArrayBase::resize(int lo, int hi)
 {
   // Validation
@@ -195,7 +192,7 @@ GArrayBase::resize(int lo, int hi)
       if (hi > hibound)
         traits.init( traits.lea(data,hibound-minlo+1), hi-hibound );
       else if (hibound > hi)
-        traits.fini( traits.lea(data,hi-minlo+1), hibound-hi );        
+        traits.fini( traits.lea(data,hi-minlo+1), hibound-hi );
       lobound = lo;
       hibound = hi;
       return;
@@ -232,7 +229,7 @@ GArrayBase::resize(int lo, int hi)
       else if (hi < hibound)
         { traits.fini( traits.lea(data, hi-minlo+1), hibound-hi ); }
       if (end >= beg)
-        { traits.copy( traits.lea(ndata, beg-nminlo), 
+        { traits.copy( traits.lea(ndata, beg-nminlo),
                        traits.lea(data, beg-minlo),
                        end-beg+1, 1 ); }
     }
@@ -244,7 +241,7 @@ GArrayBase::resize(int lo, int hi)
     }
   G_ENDCATCH;
   // free and replace
-  if (data) 
+  if (data)
     ::operator delete(data);
   data = ndata;
   minlo = nminlo;
@@ -254,7 +251,7 @@ GArrayBase::resize(int lo, int hi)
 }
 
 
-void 
+void
 GArrayBase::shift(int disp)
 {
   lobound += disp;
@@ -264,7 +261,7 @@ GArrayBase::shift(int disp)
 }
 
 
-void 
+void
 GArrayBase::del(int n, int howmany)
 {
   if (howmany < 0)
@@ -292,11 +289,11 @@ nextptr(void *p, int elsize)
 static inline void *
 prevptr(void *p, int elsize)
 {
-  return (void*)(((char*)p) - elsize);  
+  return (void*)(((char*)p) - elsize);
 }
 
 
-void 
+void
 GArrayBase::ins(int n, const void *src, int howmany)
 {
   if (howmany < 0)
@@ -370,14 +367,14 @@ GArrayBase::ins(int n, const void *src, int howmany)
 
 
 
-void 
+void
 GPosition::throw_invalid(void *c) const
 {
   if (c != cont)
     G_THROW( ERR_MSG("GContainer.bad_pos_cont") );
   else if (! ptr)
     G_THROW( ERR_MSG("GContainer.bad_pos_null") );
-  else 
+  else
     G_THROW( ERR_MSG("GContainer.bad_pos") );
 }
 
@@ -417,7 +414,7 @@ GListBase::~GListBase()
 }
 
 
-void 
+void
 GListBase::append(Node *n)
 {
   // Link
@@ -433,7 +430,7 @@ GListBase::append(Node *n)
 }
 
 
-void 
+void
 GListBase::prepend(Node *n)
 {
   // Link
@@ -449,7 +446,7 @@ GListBase::prepend(Node *n)
 }
 
 
-void 
+void
 GListBase::insert_after(GPosition pos, Node *n)
 {
   // Prepare
@@ -480,7 +477,7 @@ GListBase::insert_after(GPosition pos, Node *n)
 }
 
 
-void 
+void
 GListBase::insert_before(GPosition pos, Node *n)
 {
   // Prepare
@@ -558,7 +555,7 @@ GListBase::insert_before(GPosition pos, GListBase &fromlist, GPosition &frompos)
 }
 
 
-void 
+void
 GListBase::del(GPosition &pos)
 {
   // Check
@@ -581,7 +578,7 @@ GListBase::del(GPosition &pos)
 }
 
 
-GPosition 
+GPosition
 GListBase::nth(unsigned int n) const
 {
   Node *p = 0;
@@ -593,7 +590,7 @@ GListBase::nth(unsigned int n) const
 }
 
 
-void 
+void
 GListBase::empty()
 {
   Node *n=head.next;
@@ -609,7 +606,7 @@ GListBase::empty()
 }
 
 
-GListBase & 
+GListBase &
 GListBase::operator= (const GListBase & ref)
 {
   if (this == &ref)
@@ -636,7 +633,7 @@ GListBase::operator= (const GListBase & ref)
 
 
 GSetBase::GSetBase(const Traits &traits)
-  : traits(traits), nelems(0), nbuckets(0), 
+  : traits(traits), nelems(0), nbuckets(0),
     gtable(table), first(0)
 {
   rehash(17);
@@ -644,7 +641,7 @@ GSetBase::GSetBase(const Traits &traits)
 
 
 GSetBase::GSetBase(const GSetBase &ref)
-  : traits(ref.traits), 
+  : traits(ref.traits),
     nelems(0), nbuckets(0), gtable(table), first(0)
 {
   GSetBase::operator= (ref);
@@ -676,12 +673,12 @@ GSetBase::installnode(HNode *n)
   return n;
 }
 
-void 
+void
 GSetBase::insertnode(HNode *n)
 {
   int bucket = n->hashcode % nbuckets;
   n->prev = n->hprev = table[bucket];
-  if (n->prev) 
+  if (n->prev)
     {
       // bucket was not empty
       n->next = n->prev->next;
@@ -703,10 +700,10 @@ GSetBase::insertnode(HNode *n)
 }
 
 
-void   
+void
 GSetBase::deletenode(GCONT HNode *n)
 {
-  if (n == 0) 
+  if (n == 0)
     return;
   int bucket = n->hashcode % nbuckets;
   // Regular links
@@ -728,7 +725,7 @@ GSetBase::deletenode(GCONT HNode *n)
 }
 
 
-void   
+void
 GSetBase::rehash(int newbuckets)
 {
   // Save chain of nodes
@@ -751,10 +748,10 @@ GSetBase::rehash(int newbuckets)
 }
 
 
-GSetBase& 
+GSetBase&
 GSetBase::operator=(const GSetBase &ref)
 {
-  if (this == &ref) 
+  if (this == &ref)
     return *this;
   empty();
   rehash(ref.nbuckets);
@@ -768,14 +765,14 @@ GSetBase::operator=(const GSetBase &ref)
 }
 
 
-GPosition 
+GPosition
 GSetBase::firstpos() const
 {
   return GPosition(first, (void*)this);
 }
 
 
-void 
+void
 GSetBase::del(GPosition &pos)
 {
   if (pos.ptr && pos.cont==(void*)this)
@@ -785,7 +782,7 @@ GSetBase::del(GPosition &pos)
     }
 }
 
-void 
+void
 GSetBase::empty()
 {
   HNode *n = first;

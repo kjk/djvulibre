@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,9 +58,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#if NEED_GNUG_PRAGMAS
-# pragma interface
-#endif
 
 /** @name GSmartPointer.h
 
@@ -73,9 +70,9 @@
     between smart-pointers and regular pointers.  Objects referenced by
     smart-pointers must be derived from class \Ref{GPEnabled}.
 
-    @memo 
+    @memo
     Thread-Safe reference counting smart-pointers.
-    @author 
+    @author
     L\'eon Bottou <leonb@research.att.com> -- initial implementation\\
     Andrei Erofeev <eaf@geocities.com> -- bug fix.
 
@@ -89,7 +86,7 @@
 //@{
 
 #if defined(_MSC_VER)
-// Language lawyer say MSVC6 is wrong on that one. 
+// Language lawyer say MSVC6 is wrong on that one.
 // Cf section 5.4.7 in november 1997 draft.
 #pragma warning( disable : 4243 )
 #endif
@@ -108,10 +105,10 @@ namespace DJVU {
 
 
 
-/** Base class for reference counted objects.  
+/** Base class for reference counted objects.
     This is the base class for all reference counted objects.
-    Any instance of a subclass of #GPEnabled# can be used with 
-    smart-pointers (see \Ref{GP}).  
+    Any instance of a subclass of #GPEnabled# can be used with
+    smart-pointers (see \Ref{GP}).
  */
 class DJVUAPI GPEnabled
 {
@@ -151,7 +148,7 @@ public:
   /** Null Constructor. */
   GPBase();
   /** Copy Constructor.
-      Increments the reference count. 
+      Increments the reference count.
       @param sptr reference to a #GPBase# object. */
   GPBase(const GPBase &sptr);
   /** Construct a GPBase from a pointer.
@@ -162,11 +159,11 @@ public:
   ~GPBase();
   /** Accesses the actual pointer. */
   GPEnabled* get() const;
-  /** Assignment from smartpointer. 
+  /** Assignment from smartpointer.
       Increments the counter of the new value of the pointer.
       Decrements the counter of the previous value of the pointer. */
   GPBase& assign(const GPBase &sptr);
-  /** Assignment from pointer. 
+  /** Assignment from pointer.
       Checks that the object is not being destroyed.
       Increments the counter of the new value of the pointer.
       Decrements the counter of the previous value of the pointer. */
@@ -202,16 +199,16 @@ protected:
     The first time you use a smart-pointer to access #GPEnabled# object, the
     reference counter is incremented to one. Object destruction will then
     happen automatically when the reference counter is decremented back to
-    zero (i.e. when the last smart-pointer referencing 
+    zero (i.e. when the last smart-pointer referencing
     this object stops doing so).
-    This will happen regardless of how many regular pointers 
+    This will happen regardless of how many regular pointers
     reference this object.
     In other words, if you start using smart-pointers with a #GPEnabled#
     object, you engage automatic mode for this object.  You should only do
     this with objects dynamically allocated with operator #new#.  You should
     never destroy the object yourself, but let the smart-pointers control the
     life of the object.
-    
+
     {\bf Performance considerations} --- Thread safe reference counting incurs
     a significant overhead. Smart-pointer are best used with sizeable objects
     for which the cost of maintaining the counters represent a small fraction
@@ -250,10 +247,10 @@ public:
   /** Constructs a smart-pointer from a regular pointer.
       The pointed object must be dynamically allocated (with operator #new#).
       You should no longer explicitly destroy the object referenced by #sptr#
-      since the object life is now controlled by smart-pointers.  
+      since the object life is now controlled by smart-pointers.
       @param nptr regular pointer to a {\em dynamically allocated object}. */
   GP(TYPE *nptr);
-  /** Converts a smart-pointer into a regular pointer.  
+  /** Converts a smart-pointer into a regular pointer.
       This is useful for caching the value of a smart-pointer for performances
       purposes.  The cached pointer will remain valid until the smart-pointer
       is destroyed or until the smart-pointer value is changed. */
@@ -261,7 +258,7 @@ public:
   /** Assigns a regular pointer to a smart-pointer lvalue.
       The pointed object must be dynamically allocated (with operator #new#).
       You should no longer explicitly destroy the object referenced by #sptr#
-      since the object life is now controlled by smart-pointers.  
+      since the object life is now controlled by smart-pointers.
       @param nptr regular pointer to a {\em dynamically allocated object}. */
   GP<TYPE>& operator= (TYPE *nptr);
   /** Assigns a smart-pointer to a smart-pointer lvalue.
@@ -273,24 +270,24 @@ public:
       exactly as with regular pointers. */
   TYPE* operator->() const;
   /** Dereferencement operator.
-      This operator provides a convenient access to the smart-pointed object. 
+      This operator provides a convenient access to the smart-pointed object.
       Operator #*# works with smart-pointers exactly as with regular pointers. */
   TYPE& operator*() const;
-  /** Comparison operator. 
+  /** Comparison operator.
       Returns true if both this smart-pointer and pointer #nptr# point to the
       same object.  The automatic conversion from smart-pointers to regular
-      pointers allows you to compare two smart-pointers as well.  
+      pointers allows you to compare two smart-pointers as well.
       @param nptr pointer to compare with. */
   int operator== (TYPE *nptr) const;
-  /** Comparison operator.  
+  /** Comparison operator.
       Returns true if this smart-pointer and pointer #nptr# point to different
       objects. The automatic conversion from smart-pointers to regular
-      pointers allows you to compare two smart-pointers as well.  
+      pointers allows you to compare two smart-pointers as well.
       @param nptr pointer to compare with. */
   int operator!= (TYPE *nptr) const;
   /** Test operator.
-      Returns true if the smart-pointer is null.  The automatic conversion 
-      from smart-pointers to regular pointers allows you to test whether 
+      Returns true if the smart-pointer is null.  The automatic conversion
+      from smart-pointers to regular pointers allows you to test whether
       a smart-pointer is non-null.  You can use both following constructs:
       \begin{verbatim}
       if (gp) { ... }
@@ -310,8 +307,8 @@ GPEnabled::GPEnabled()
 }
 
 inline
-GPEnabled::GPEnabled(const GPEnabled & obj) 
-  : count(0) 
+GPEnabled::GPEnabled(const GPEnabled & obj)
+  : count(0)
 {
 
 }
@@ -322,16 +319,16 @@ GPEnabled::get_count(void) const
    return count;
 }
 
-inline GPEnabled & 
+inline GPEnabled &
 GPEnabled::operator=(const GPEnabled & obj)
-{ 
+{
   /* The copy operator should do nothing because the count should not be
      changed.  Subclasses of GPEnabled will call this version of the copy
      operator as part of the default 'memberwise copy' strategy. */
-  return *this; 
+  return *this;
 }
 
-inline void 
+inline void
 GPEnabled::ref()
 {
 #if PARANOID_DEBUG
@@ -340,7 +337,7 @@ GPEnabled::ref()
   atomicIncrement(&count);
 }
 
-inline void 
+inline void
 GPEnabled::unref()
 {
 #if PARANOID_DEBUG
@@ -382,7 +379,7 @@ GPBase::~GPBase()
     old->unref();
 }
 
-inline GPEnabled* 
+inline GPEnabled*
 GPBase::get() const
 {
 #if PARANOID_DEBUG
@@ -398,7 +395,7 @@ GPBase::operator=(const GPBase & obj)
   return assign(obj);
 }
 
-inline int 
+inline int
 GPBase::operator==(const GPBase & g2) const
 {
   return ptr == g2.ptr;
@@ -452,13 +449,13 @@ GP<TYPE>::operator*() const
   return *(TYPE*) ptr;
 }
 
-template <class TYPE> inline GP<TYPE>& 
+template <class TYPE> inline GP<TYPE>&
 GP<TYPE>::operator= (TYPE *nptr)
 {
   return (GP<TYPE>&)( assign(nptr) );
 }
 
-template <class TYPE> inline GP<TYPE>& 
+template <class TYPE> inline GP<TYPE>&
 GP<TYPE>::operator= (const GP<TYPE> &sptr)
 {
   return (GP<TYPE>&)( assign((const GPBase&)sptr) );
@@ -484,8 +481,8 @@ GP<TYPE>::operator! () const
 
 /* GPBUFFER */
 
-/* What is this LT innovation ? 
-   What does it do that a GArray does not do ? 
+/* What is this LT innovation ?
+   What does it do that a GArray does not do ?
    What about the objects construction and destruction ? */
 
 class DJVUAPI GPBufferBase
@@ -507,7 +504,7 @@ template<class TYPE>
 class GPBuffer : public GPBufferBase
 {
 public:
-  GPBuffer(TYPE *&xptr,const size_t n=0) 
+  GPBuffer(TYPE *&xptr,const size_t n=0)
     : GPBufferBase((void *&)xptr,n,sizeof(TYPE)) {}
   inline void resize(const size_t n) {GPBufferBase::resize(n,sizeof(TYPE));}
   inline void clear(void) {GPBufferBase::set(sizeof(TYPE),0);}
