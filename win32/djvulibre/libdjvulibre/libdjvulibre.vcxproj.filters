@@ -18,9 +18,6 @@
     <ClCompile Include="..\..\..\libdjvu\Arrays.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\libdjvu\atomic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\libdjvu\BSByteStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -189,9 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\libdjvu\Arrays.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\libdjvu\atomic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\libdjvu\BSByteStream.h">

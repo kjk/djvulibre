@@ -76,7 +76,6 @@ set(LIBDJVU_SOURCES
     libdjvu/XMLParser.cpp
     libdjvu/XMLTags.cpp
     libdjvu/ZPCodec.cpp
-    libdjvu/atomic.cpp
     libdjvu/ddjvuapi.cpp
     libdjvu/debug.cpp
     libdjvu/miniexp.cpp

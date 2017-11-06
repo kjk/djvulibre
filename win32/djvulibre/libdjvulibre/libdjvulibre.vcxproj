@@ -90,7 +90,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\libdjvu\Arrays.cpp" />
-    <ClCompile Include="..\..\..\libdjvu\atomic.cpp" />
     <ClCompile Include="..\..\..\libdjvu\BSByteStream.cpp" />
     <ClCompile Include="..\..\..\libdjvu\BSEncodeByteStream.cpp" />
     <ClCompile Include="..\..\..\libdjvu\ByteStream.cpp" />
@@ -149,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\libdjvu\Arrays.h" />
-    <ClInclude Include="..\..\..\libdjvu\atomic.h" />
     <ClInclude Include="..\..\..\libdjvu\BSByteStream.h" />
     <ClInclude Include="..\..\..\libdjvu\ByteStream.h" />
     <ClInclude Include="..\..\..\libdjvu\DataPool.h" />

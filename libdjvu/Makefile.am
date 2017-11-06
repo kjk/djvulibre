@@ -15,7 +15,7 @@ libdjvulibre_la_SOURCES = Arrays.cpp BSByteStream.cpp			\
  GThreads.cpp GURL.cpp GUnicode.cpp IFFByteStream.cpp			\
  IW44EncodeCodec.cpp IW44Image.cpp JB2EncodeCodec.cpp JB2Image.cpp	\
  JPEGDecoder.cpp MMRDecoder.cpp MMX.cpp UnicodeByteStream.cpp		\
- XMLParser.cpp XMLTags.cpp ZPCodec.cpp atomic.cpp ddjvuapi.cpp		\
+ XMLParser.cpp XMLTags.cpp ZPCodec.cpp ddjvuapi.cpp		\
  debug.cpp miniexp.cpp Arrays.h BSByteStream.h ByteStream.h		\
  DataPool.h DjVmDir.h DjVmDir0.h DjVmDoc.h DjVmNav.h DjVuAnno.h		\
  DjVuDocEditor.h DjVuDocument.h DjVuDumpHelper.h DjVuErrorList.h	\
@@ -25,7 +25,7 @@ libdjvulibre_la_SOURCES = Arrays.cpp BSByteStream.cpp			\
  GIFFManager.h GMapAreas.h GOS.h GPixmap.h GRect.h GScaler.h		\
  GSmartPointer.h GString.h GThreads.h GURL.h IFFByteStream.h		\
  IW44Image.h JB2Image.h JPEGDecoder.h MMRDecoder.h MMX.h	\
- UnicodeByteStream.h XMLParser.h XMLTags.h ZPCodec.h atomic.h debug.h
+ UnicodeByteStream.h XMLParser.h XMLTags.h ZPCodec.h debug.h
 
 libdjvulibre_la_CPPFLAGS = -DDIR_DATADIR=\"$(datadir)\"
 libdjvulibre_la_CXXFLAGS = $(JPEG_CFLAGS) $(PTHREAD_CFLAGS)

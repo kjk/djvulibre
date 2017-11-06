@@ -92,7 +92,6 @@
 #endif
 
 #include "DjVuGlobal.h"
-#include "atomic.h"
 
 #include <atomic>
 #include <stddef.h>

@@ -108,7 +108,9 @@ GPBase::assign (const GPBase &sptr)
   GPEnabled *nptr = sptr.ptr;
   if (nptr && nptr->count++ <= 0)
     nptr = 0;
-  GPEnabled *optr = (GPEnabled*)atomicExchangePointer((void**)&ptr, (void*)nptr);
+
+  std::atomic<GPEnabled*> ptra(ptr);
+  GPEnabled *optr = std::atomic_exchange<GPEnabled*>(&ptra, nptr);
   if (optr)
     optr->unref();
   return *this;
@@ -119,7 +121,9 @@ GPBase::assign (GPEnabled *nptr)
 {
   if (nptr && nptr->count++ <= 0)
     nptr = 0;
-  GPEnabled *optr = (GPEnabled*)atomicExchangePointer((void**)&ptr, (void*)nptr);
+
+  std::atomic<GPEnabled*> ptra(ptr);
+  GPEnabled *optr = std::atomic_exchange<GPEnabled*>(&ptra, nptr);
   if (optr)
     optr->unref();
   return *this;
