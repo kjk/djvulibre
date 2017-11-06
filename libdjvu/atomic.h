@@ -34,9 +34,6 @@
 /* This file defines macros or functions performing
 // the following atomic operations with a full memory barrier.
 //
-//   int atomicExchange(int volatile *var, int val);
-//   { int tmp = *var; *var = val; return tmp; }
-//
 //   void* atomicExchangePointer(void* volatile *var, int val);
 //   { void* tmp = *var; *var = val; return tmp; }
 */
@@ -48,8 +45,6 @@ extern "C" {
 #if !defined(ATOMIC_MACROS) && defined(_WIN64)
 # define ATOMIC_MACROS "WIN64"
 # include <windows.h>
-# define atomicExchange(var,nv) \
-  (int)(InterlockedExchange((LONG volatile*)(var),(LONG)(nv)))
 # define atomicExchangePointer(var,nv) \
   (void*)(InterlockedExchangePointer((PVOID volatile*)(var),(PVOID)(nv)))
 #endif
@@ -57,8 +52,6 @@ extern "C" {
 #if !defined(ATOMIC_MACROS) && defined(_WIN32)
 # define ATOMIC_MACROS "WIN32"
 # include <windows.h>
-# define atomicExchange(var,nv) \
-  (int)(InterlockedExchange((LONG volatile*)(var),(LONG)(nv)))
 # define atomicExchangePointer(var,nv) \
   (void*)(InterlockedExchange((LONG volatile*)(var),(LONG)(nv)))
 #endif
@@ -66,16 +59,9 @@ extern "C" {
 #if !defined(ATOMIC_MACROS) && defined(HAVE_INTEL_ATOMIC_BUILTINS)
 # define ATOMIC_MACROS "INTEL"
 # if defined(__i386__) || defined(__x86_64__) || defined(__amd64__)
-#  define atomicExchange(var,nv) \
-   (__sync_lock_test_and_set((int volatile*)(var),(int)(nv)))
 #  define atomicExchangePointer(var,nv) \
    (__sync_lock_test_and_set((void* volatile*)(var),(void*)(nv)))
 # else
-  static inline int atomicExchange(int volatile *var, int nv) {
-    int ov; do { ov = *var;  /* overkill */
-    } while (! __sync_bool_compare_and_swap(var, ov, nv));
-    return ov;
-  }
   static inline void* atomicExchangePointer(void* volatile *var, void* nv) {
     void *ov; do { ov = *var;  /* overkill */
     } while (! __sync_bool_compare_and_swap(var, ov, nv));
@@ -87,11 +73,6 @@ extern "C" {
 #if !defined(ATOMIC_MACROS) && defined(__GNUC__)
 # if defined(__i386__) || defined(__amd64__) || defined(__x86_64__)
 #  define ATOMIC_MACROS "GNU86"
-  static inline int atomicExchange(int volatile *var, int nv) {
-    int ov; __asm__ __volatile__ ("xchgl %0, %1"
-        : "=r" (ov), "=m" (*var) : "0" (nv), "m" (*var));
-    return ov;
-  }
   static inline void *atomicExchangePointer(void * volatile *var, void *nv) {
     void *ov;  __asm__ __volatile__ (
 #  if defined(__x86_64__) || defined(__amd64__)
@@ -108,7 +89,6 @@ extern "C" {
 
 #ifndef ATOMIC_MACROS
   /* emulation */
-  extern int atomicExchange(int volatile *var, int nv);
   extern void* atomicExchangePointer(void* volatile *var, void* nv);
 #endif
 

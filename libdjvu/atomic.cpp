@@ -73,17 +73,6 @@ static QMutex qtm;
 
 /* atomic primitive emulation */
 
-int
-atomicExchange(int volatile *var, int newval)
-{
-  int ret;
-  MUTEX_ENTER;
-  ret = *var;
-  *var = newval;
-  MUTEX_LEAVE;
-  return ret;
-}
-
 void*
 atomicExchangePointer(void* volatile *var, void* newval)
 {
