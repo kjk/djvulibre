@@ -89,6 +89,7 @@ add_definitions(-DHAVE_PTHREAD)
 add_definitions(-DHAS_WCHAR=1)
 add_definitions(-DHAS_WCTYPE=1)
 add_definitions(-DHAS_MBSTATE=1)
+add_definitions(-DHAVE_NAMESPACES)
 
 add_library(djvu STATIC ${LIBDJVU_SOURCES})
 
