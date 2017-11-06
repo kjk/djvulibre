@@ -1,4 +1,4 @@
-/* 
+/*
 //C- -------------------------------------------------------------------
 //C- DjVuLibre-3.5
 //C- Copyright (c) 2002  Leon Bottou and Yann Le Cun.
@@ -14,7 +14,7 @@
 //C- but WITHOUT ANY WARRANTY; without even the implied warranty of
 //C- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //C- GNU General Public License for more details.
-//C- 
+//C-
 //C- DjVuLibre-3.5 is derived from the DjVu(r) Reference Library from
 //C- Lizardtech Software.  Lizardtech Software has authorized us to
 //C- replace the original DjVu(r) Reference Library notice by the following
@@ -35,16 +35,16 @@
 //C- | The computer code originally released by LizardTech under this
 //C- | license and unmodified by other parties is deemed "the LIZARDTECH
 //C- | ORIGINAL CODE."  Subject to any third party intellectual property
-//C- | claims, LizardTech grants recipient a worldwide, royalty-free, 
-//C- | non-exclusive license to make, use, sell, or otherwise dispose of 
-//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the 
-//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU 
-//C- | General Public License.   This grant only confers the right to 
-//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to 
-//C- | the extent such infringement is reasonably necessary to enable 
-//C- | recipient to make, have made, practice, sell, or otherwise dispose 
-//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to 
-//C- | any greater extent that may be necessary to utilize further 
+//C- | claims, LizardTech grants recipient a worldwide, royalty-free,
+//C- | non-exclusive license to make, use, sell, or otherwise dispose of
+//C- | the LIZARDTECH ORIGINAL CODE or of programs derived from the
+//C- | LIZARDTECH ORIGINAL CODE in compliance with the terms of the GNU
+//C- | General Public License.   This grant only confers the right to
+//C- | infringe patent claims underlying the LIZARDTECH ORIGINAL CODE to
+//C- | the extent such infringement is reasonably necessary to enable
+//C- | recipient to make, have made, practice, sell, or otherwise dispose
+//C- | of the LIZARDTECH ORIGINAL CODE (or portions thereof) and not to
+//C- | any greater extent that may be necessary to utilize further
 //C- | modifications or combinations.
 //C- |
 //C- | The LIZARDTECH ORIGINAL CODE is provided "AS IS" WITHOUT WARRANTY
@@ -58,10 +58,7 @@
 #define DDJVUAPI_H
 
 #ifdef __cplusplus
-extern "C" { 
-#endif
-#if 0
-}
+extern "C" {
 #endif
 
 #include <stddef.h>
@@ -106,7 +103,7 @@ extern "C" {
    complexity with a familiar event model.
 */
 
-/* Compiler symbol DDJVUAPI_VERSION tracks 
+/* Compiler symbol DDJVUAPI_VERSION tracks
    backward compatible additions to the DDJVU API.
 
    Version   Change
@@ -131,7 +128,7 @@ extern "C" {
      18    Added:
               ddjvu_document_get_{anno,pagedump,filedump}()
            Modifed (binary compatible):
-              ddjvu_document_get_{fileinfo,pageinfo}()   
+              ddjvu_document_get_{fileinfo,pageinfo}()
               ddjvu_document_save() [--pages, --indirect=]
            Deprecated:
               ddjvu_document_search_pageno()
@@ -174,25 +171,25 @@ typedef struct ddjvu_rectmapper_s ddjvu_rectmapper_t;
      #include <libdjvu/ddjvuapi.h>
      #include <libdjvu/miniexp.h>
 
-   This file does not declare functions ddjvu_get_DjVuImage() 
-   and djvu_get_DjVuDocument() unless you include files 
+   This file does not declare functions ddjvu_get_DjVuImage()
+   and djvu_get_DjVuDocument() unless you include files
    "DjVuImage.h" and "DjVuDocument.h" before this file.
 
    PREREQUISITES:
    - Please read the djvu man page: <"tools/djvu.1">.
-   - Please browse the file format specifications 
+   - Please browse the file format specifications
      <"doc/djvu3changes.txt"> and <"doc/djvu3spec.djvu">.
 */
 
-  
+
 
 /* -------------------------------------------------- */
 /* DDJVU_CONTEXT_T                                    */
 /* -------------------------------------------------- */
 
-/* There is usually only one <ddjvu_context_t> object.  
-   This object holds global data structures such as the 
-   cache of decoded pages, or the list of pending 
+/* There is usually only one <ddjvu_context_t> object.
+   This object holds global data structures such as the
+   cache of decoded pages, or the list of pending
    event messages.
  */
 
@@ -219,7 +216,7 @@ ddjvu_context_create(const char *programname);
    The object itself will be destroyed as soon as no other object
    or thread needs it. */
 
-DDJVUAPI void 
+DDJVUAPI void
 ddjvu_context_release(ddjvu_context_t *context);
 
 
@@ -257,7 +254,7 @@ ddjvu_cache_clear(ddjvu_context_t *context);
 /* Messages produced by the ddjvu api accumulate into
    the message queue. Processing messages is not optional!
    A typical message handling routine looks like this:
-   
+
    void handle_ddjvu_messages(ddjvu_context_t *ctx, int wait)
    {
      const ddjvu_message_t *msg;
@@ -266,7 +263,7 @@ ddjvu_cache_clear(ddjvu_context_t *context);
      while ((msg = ddjvu_message_peek(ctx)))
      {
        switch(msg->m_any.tag)
-       { 
+       {
        case DDJVU_ERROR:      .... ; break;
        case DDJVU_INFO:       .... ; break;
        case DDJVU_NEWSTREAM:  .... ; break;
@@ -300,8 +297,8 @@ ddjvu_message_wait(ddjvu_context_t *context);
 /* ddjvu_message_pop ---
    Removes one message from the queue.
    This function must be called after processing the message.
-   Pointers returned by previous calls to <ddjvu_message_peek> 
-   or <ddjvu_message_wait> are no longer valid after 
+   Pointers returned by previous calls to <ddjvu_message_peek>
+   or <ddjvu_message_wait> are no longer valid after
    calling <ddjvu_message_pop>. */
 
 DDJVUAPI void
@@ -318,12 +315,12 @@ ddjvu_message_pop(ddjvu_context_t *context);
    the main application event loop that new ddjvuapi messages
    are available.  Under WIN32, this is usually achieved
    by posting a user window message.  Under UNIX, this is
-   usually achieved using a pipe: the callback writes 
+   usually achieved using a pipe: the callback writes
    a single byte into the pipe; the main application loop
    monitors the reading end of the pipe and detects
    the presence of data. */
 
-typedef void 
+typedef void
 (*ddjvu_message_callback_t)(ddjvu_context_t *context, void *closure);
 
 DDJVUAPI void
@@ -338,9 +335,9 @@ ddjvu_message_set_callback(ddjvu_context_t *context,
 /* -------------------------------------------------- */
 
 
-/* Many essential ddjvuapi functions initiate asynchronous operations. 
+/* Many essential ddjvuapi functions initiate asynchronous operations.
    These "jobs" run in seperate threads and report their
-   progress by posting messages into the ddjvu context event queue. 
+   progress by posting messages into the ddjvu context event queue.
    Jobs are sometimes represented by a ddjvu_job_t object. */
 
 /* ddjvu_job_status ---
@@ -365,8 +362,8 @@ ddjvu_job_status(ddjvu_job_t *job);
 
 /* ddjvu_job_stop ---
    Attempts to cancel the specified job.
-   This is a best effort function. 
-   There no guarantee that the job will 
+   This is a best effort function.
+   There no guarantee that the job will
    actually stop.
  */
 
@@ -377,8 +374,8 @@ ddjvu_job_stop(ddjvu_job_t *job);
 /* ddjvu_job_set_user_data ---
    ddjvu_job_get_user_data ---
    Each job can store an arbitrary pointer
-   that callers can use for any purpose. These two 
-   functions provide for accessing or setting this pointer. 
+   that callers can use for any purpose. These two
+   functions provide for accessing or setting this pointer.
    This pointer is cleared when the job is released */
 
 DDJVUAPI void
@@ -389,11 +386,11 @@ ddjvu_job_get_user_data(ddjvu_job_t *job);
 
 
 /* ddjvu_job_release ---
-   Releases a reference to a job object and clears its user 
+   Releases a reference to a job object and clears its user
    data field.  This does not cause the job to stop executing.
    The calling program should no longer reference this object.
-   The object itself will be destroyed as soon as no 
-   other object or thread needs it. 
+   The object itself will be destroyed as soon as no
+   other object or thread needs it.
 */
 
 DDJVUAPI void
@@ -416,7 +413,7 @@ ddjvu_job_release(ddjvu_job_t *job);
 
 
 /* ddjvu_message_tag_t ---
-   This enumerated type identifies each kind of 
+   This enumerated type identifies each kind of
    message delivered by the DDJVU API.  */
 
 typedef enum {
@@ -437,13 +434,13 @@ typedef enum {
    This structure is a member of the union <djvu_message_t>.
    It represents the information common to all kinds of
    messages.  Member <tag> indicates the kind of message.
-   Members <context>, <document>, <page>, and <job> indicate 
+   Members <context>, <document>, <page>, and <job> indicate
    the origin of the message.  These fields contain null
    pointers when they are not relevant.
    These fields are also cleared when the corresponding
    object is released with <ddjvu_{job,page,document}_release>.
-   If the message has not yet been passed to the user 
-   with <ddjvu_message_{peek,wait}>, it is silently 
+   If the message has not yet been passed to the user
+   with <ddjvu_message_{peek,wait}>, it is silently
    removed from the message queue. */
 
 typedef struct ddjvu_message_any_s {
@@ -452,7 +449,7 @@ typedef struct ddjvu_message_any_s {
   ddjvu_document_t     *document;
   ddjvu_page_t         *page;
   ddjvu_job_t          *job;
-} ddjvu_message_any_t; 
+} ddjvu_message_any_t;
 
 
 /* ddjvu_message_t::m_error ---
@@ -469,7 +466,7 @@ struct ddjvu_message_error_s {  /* ddjvu_message_t::m_error */
   const char           *function;
   const char           *filename;
   int                   lineno;
-}; 
+};
 
 
 /* ddjvu_message_t::m_info ---
@@ -480,7 +477,7 @@ struct ddjvu_message_error_s {  /* ddjvu_message_t::m_error */
 struct ddjvu_message_info_s {   /* ddjvu_message_t::m_info */
   ddjvu_message_any_t  any;
   const char          *message;
-}; 
+};
 
 
 
@@ -496,8 +493,8 @@ struct ddjvu_message_info_s {   /* ddjvu_message_t::m_info */
    decoding job then generates messages to request the raw
    data and to indicate the state of the decoding process.
 
-   Argument <url> specifies an optional URL for the document.  
-   The URL follows the usual syntax (<"protocol://machine/path">). 
+   Argument <url> specifies an optional URL for the document.
+   The URL follows the usual syntax (<"protocol://machine/path">).
    It should not end with a slash. It only serves two purposes:
    - The URL is used as a key for the cache of decoded pages.
    - The URL is used to document <m_newstream> messages.
@@ -508,12 +505,12 @@ struct ddjvu_message_info_s {   /* ddjvu_message_t::m_info */
 
    It is important to understand that the URL is not used to
    access the data.  The document generates <m_newstream>
-   messages to indicate which data is needed.  The caller must 
-   then provide the raw data using <ddjvu_stream_write> 
+   messages to indicate which data is needed.  The caller must
+   then provide the raw data using <ddjvu_stream_write>
    and <ddjvu_stream_close>.
 
-   Localized characters in argument <url> should be in 
-   urlencoded UTF-8 (like "%2A"). What is happening for non 
+   Localized characters in argument <url> should be in
+   urlencoded UTF-8 (like "%2A"). What is happening for non
    ascii characters is unclear (probably UTF-8). */
 
 DDJVUAPI ddjvu_document_t *
@@ -524,9 +521,9 @@ ddjvu_document_create(ddjvu_context_t *context,
 
 /* ddjvu_document_create_by_filename ---
    Creates a document for a DjVu document stored in a file.
-   The document will directly access the specified DjVu file 
+   The document will directly access the specified DjVu file
    or related files without generating <m_newstream> messages.
-   The standard function expects the filename in locale encoding. 
+   The standard function expects the filename in locale encoding.
    The utf8 variant expects an utf8 encoded filename. */
 
 DDJVUAPI ddjvu_document_t *
@@ -540,7 +537,7 @@ ddjvu_document_create_by_filename_utf8(ddjvu_context_t *context,
                                        int cache);
 
 /* ddjvu_document_job ---
-   Access the job object in charge of decoding the document header. 
+   Access the job object in charge of decoding the document header.
    In fact <ddjvu_document_t> is a subclass of <ddjvu_job_t>
    and this function is a type cast. */
 
@@ -550,10 +547,10 @@ ddjvu_document_job(ddjvu_document_t *document);
 
 /* ddjvu_document_release ---
    Release a reference to a <ddjvu_document_t> object.
-   The calling program should no longer reference this object.  
+   The calling program should no longer reference this object.
    The object itself will be destroyed as soon as no other object
    or thread needs it. */
- 
+
 #define ddjvu_document_release(document) \
    ddjvu_job_release(ddjvu_document_job(document))
 
@@ -572,7 +569,7 @@ ddjvu_document_job(ddjvu_document_t *document);
 /* ddjvu_document_decoding_status ---
    ddjvu_document_decoding_done, ddjvu_document_decoding_error ---
    This function returns the status of the document header decoding job */
-   
+
 #define ddjvu_document_decoding_status(document) \
    ddjvu_job_status(ddjvu_document_job(document))
 #define ddjvu_document_decoding_done(document) \
@@ -584,14 +581,14 @@ ddjvu_document_job(ddjvu_document_t *document);
 /* ------- STREAMS ------- */
 
 
-/* ddjvu_message_t::m_newstream --- 
+/* ddjvu_message_t::m_newstream ---
    Newstream messages are generated whenever the decoder
    needs to access raw DjVu data.  The caller must then
-   provide the requested data using <ddjvu_stream_write> 
-   and <ddjvu_stream_close>. 
+   provide the requested data using <ddjvu_stream_write>
+   and <ddjvu_stream_close>.
 
-   In the case of indirect documents, a single decoder 
-   might simultaneously request several streams of data.  
+   In the case of indirect documents, a single decoder
+   might simultaneously request several streams of data.
    Each stream is identified by a small integer <streamid>.
 
    The first <m_newstream> message always has member
@@ -612,13 +609,13 @@ ddjvu_document_job(ddjvu_document_t *document);
    <ddjvu_document_create>.  Subsequent newstream messages
    contain the url of the auxiliary files for indirect or
    indexed DjVu documents. */
-   
+
 struct ddjvu_message_newstream_s { /* ddjvu_message_t::m_newstream */
   ddjvu_message_any_t  any;
   int                  streamid;
   const char          *name;
   const char          *url;
-}; 
+};
 
 
 /* ddjvu_stream_write ---
@@ -640,7 +637,7 @@ ddjvu_stream_write(ddjvu_document_t *document,
    set to <FALSE>. Setting argument <stop> to <TRUE>
    indicates that the user has interrupted the data transfer
    (for instance by pressing the stop button of a browser)
-   and that the decoding threads should be stopped as 
+   and that the decoding threads should be stopped as
    soon as feasible. */
 
 DDJVUAPI void
@@ -673,7 +670,7 @@ struct ddjvu_message_docinfo_s {
 typedef enum {
   DDJVU_DOCTYPE_UNKNOWN=0,
   DDJVU_DOCTYPE_SINGLEPAGE,
-  DDJVU_DOCTYPE_BUNDLED, 
+  DDJVU_DOCTYPE_BUNDLED,
   DDJVU_DOCTYPE_INDIRECT,
   DDJVU_DOCTYPE_OLD_BUNDLED, /* obsolete */
   DDJVU_DOCTYPE_OLD_INDEXED, /* obsolete */
@@ -685,9 +682,9 @@ ddjvu_document_get_type(ddjvu_document_t *document);
 
 /* ddjvu_document_get_pagenum ---
    Returns the number of pages in a DjVu document.
-   This function might return 1 when called 
+   This function might return 1 when called
    before receiving a <m_docinfo> message */
-   
+
 DDJVUAPI int
 ddjvu_document_get_pagenum(ddjvu_document_t *document);
 
@@ -700,7 +697,7 @@ ddjvu_document_get_pagenum(ddjvu_document_t *document);
    Returns the number of component files.
    This function might return 0 when called
    before receiving a <m_docinfo> message */
-   
+
 DDJVUAPI int
 ddjvu_document_get_filenum(ddjvu_document_t *document);
 
@@ -709,8 +706,8 @@ ddjvu_document_get_filenum(ddjvu_document_t *document);
    Returns information about component file <fileno>.
    This function might return <DDJVU_JOB_STARTED> when
    called before receiving a <m_docinfo> message.
-   String pointers in the returned data structure 
-   might be null. Strings are UTF8 encoded and remain 
+   String pointers in the returned data structure
+   might be null. Strings are UTF8 encoded and remain
    allocated as long as the ddjvu_document_t object exists.
 
    Changes for ddjvuapi=18
@@ -730,7 +727,7 @@ typedef struct ddjvu_fileinfo_s {
    ddjvu_document_get_fileinfo_imp(d,f,i,sizeof(ddjvu_fileinfo_t))
 
 DDJVUAPI ddjvu_status_t
-ddjvu_document_get_fileinfo_imp(ddjvu_document_t *document, int fileno, 
+ddjvu_document_get_fileinfo_imp(ddjvu_document_t *document, int fileno,
                                 ddjvu_fileinfo_t *info, unsigned int infosz);
 
 
@@ -741,23 +738,23 @@ DDJVUAPI int ddjvu_document_search_pageno(ddjvu_document_t*, const char*);
 
 /* ddjvu_document_check_pagedata ---
    Returns a non zero result if the data for page <pageno>
-   is already in memory. When this is the case, functions 
-   <ddjvu_document_get_pageinfo> and <ddjvu_document_get_pagetext> 
+   is already in memory. When this is the case, functions
+   <ddjvu_document_get_pageinfo> and <ddjvu_document_get_pagetext>
    return the information immediately.
-   This function causes the emission of <m_pageinfo> messages 
+   This function causes the emission of <m_pageinfo> messages
    with zero in the <m_any.page> field whenever a new file
    is completely downloaded. */
 
-DDJVUAPI int 
+DDJVUAPI int
 ddjvu_document_check_pagedata(ddjvu_document_t *document, int pageno);
 
 
 /* ddjvu_document_get_pageinfo ---
    Attempts to obtain information about page <pageno>
    without decoding the page. If the information is available,
-   the function returns <DDJVU_JOB_OK> and fills the <info> structure. 
-   Otherwise it starts fetching page data and returns <DDJVU_JOB_STARTED>. 
-   This function causes the emission of <m_pageinfo> messages 
+   the function returns <DDJVU_JOB_OK> and fills the <info> structure.
+   Otherwise it starts fetching page data and returns <DDJVU_JOB_STARTED>.
+   This function causes the emission of <m_pageinfo> messages
    with zero in the <m_any.page> field.
    Typical synchronous usage:
 
@@ -771,7 +768,7 @@ ddjvu_document_check_pagedata(ddjvu_document_t *document, int pageno);
    Changes for ddjvuapi=18
    - Redefined as a macro passing the structure size.
    - Added fields 'rotation' and 'version'.
-*/      
+*/
 
 typedef struct ddjvu_pageinfo_s {
   int width;                    /* page width (in pixels) */
@@ -785,33 +782,33 @@ typedef struct ddjvu_pageinfo_s {
    ddjvu_document_get_pageinfo_imp(d,p,i,sizeof(ddjvu_pageinfo_t))
 
 DDJVUAPI ddjvu_status_t
-ddjvu_document_get_pageinfo_imp(ddjvu_document_t *document, int pageno, 
+ddjvu_document_get_pageinfo_imp(ddjvu_document_t *document, int pageno,
                                 ddjvu_pageinfo_t *info, unsigned int infosz );
 
 
 
 
 /* ddjvu_document_get_pagedump --
-   This function returns a UTF8 encoded text describing the contents 
-   of page <pageno> using the same format as command <djvudump>. 
+   This function returns a UTF8 encoded text describing the contents
+   of page <pageno> using the same format as command <djvudump>.
    The returned string must be deallocated using <free()>.
-   It returns <0> when the information is not yet available. 
-   It may then cause then the emission of <m_pageinfo> 
+   It returns <0> when the information is not yet available.
+   It may then cause then the emission of <m_pageinfo>
    messages with null <m_any.page>.
-*/   
+*/
 
 DDJVUAPI char *
 ddjvu_document_get_pagedump(ddjvu_document_t *document, int pageno);
 
 
 /* ddjvu_document_get_filedump --
-   This function returns a UTF8 encoded text describing the contents 
-   of file <fileno> using the same format as command <djvudump>. 
+   This function returns a UTF8 encoded text describing the contents
+   of file <fileno> using the same format as command <djvudump>.
    The returned string must be deallocated using <free()>.
-   It returns <0> when the information is not yet available. 
-   It may then cause then the emission of <m_pageinfo> 
+   It returns <0> when the information is not yet available.
+   It may then cause then the emission of <m_pageinfo>
    messages with null <m_any.page>.
-*/   
+*/
 
 DDJVUAPI char *
 ddjvu_document_get_filedump(ddjvu_document_t *document, int fileno);
@@ -830,10 +827,10 @@ ddjvu_document_get_filedump(ddjvu_document_t *document, int fileno);
    <pageno> indicates the page number, starting with page
    <0> to <pagenum-1>. This function may return NULL
    when called before receiving the <m_docinfo> message.
-   Calling this function also initiates the data transfer 
-   and the decoding threads for the specified page.  
-   Various messages will document the progress of these 
-   operations. Error messages will be generated if 
+   Calling this function also initiates the data transfer
+   and the decoding threads for the specified page.
+   Various messages will document the progress of these
+   operations. Error messages will be generated if
    the page does not exists. */
 
 DDJVUAPI ddjvu_page_t *
@@ -851,7 +848,7 @@ ddjvu_page_create_by_pageid(ddjvu_document_t *document,
 
 
 /* ddjvu_page_job ---
-   Access the job object in charge of decoding the document header. 
+   Access the job object in charge of decoding the document header.
    In fact <ddjvu_page_t> is a subclass of <ddjvu_job_t>
    and this function is a type cast. */
 
@@ -884,7 +881,7 @@ ddjvu_page_job(ddjvu_page_t *page);
    ddjvu_page_decoding_done ---
    ddjvu_page_decoding_error ---
    These calls return the status of the page decoding job. */
-   
+
 #define ddjvu_page_decoding_status(page) \
    ddjvu_job_status(ddjvu_page_job(page))
 #define ddjvu_page_decoding_done(page) \
@@ -898,19 +895,19 @@ ddjvu_page_job(ddjvu_page_t *page);
 
 /* ddjvu_message_t::m_pageinfo ---
    The page decoding process generates this message
-   - when basic page information is available and 
+   - when basic page information is available and
      before any <m_relayout> or <m_redisplay> message,
    - when the page decoding thread terminates.
-   You can distinguish both cases using 
+   You can distinguish both cases using
    function ddjvu_page_decoding_status().
-   Messages <m_pageinfo> are also generated as a consequence of 
-   functions such as <ddjvu_document_get_pageinfo>. 
+   Messages <m_pageinfo> are also generated as a consequence of
+   functions such as <ddjvu_document_get_pageinfo>.
    The field <m_any.page> of such message is null.
 */
 
 struct ddjvu_message_pageinfo_s {  /* ddjvu_message_t::m_pageinfo */
   ddjvu_message_any_t  any;
-}; 
+};
 
 
 /* ddjvu_message_t::m_relayout ---
@@ -921,18 +918,18 @@ struct ddjvu_message_pageinfo_s {  /* ddjvu_message_t::m_pageinfo */
 
 struct ddjvu_message_relayout_s {  /* ddjvu_message_t::m_relayout */
   ddjvu_message_any_t  any;
-}; 
+};
 
 
 /* ddjvu_message_t::m_redisplay ---
    This message is generated when a DjVu viewer
    should call <ddjvu_page_render> and redisplay
-   the page. This happens, for instance, when newly 
+   the page. This happens, for instance, when newly
    decoded DjVu data provides a better image. */
 
 struct ddjvu_message_redisplay_s { /* ddjvu_message_t::m_redisplay */
   ddjvu_message_any_t  any;
-}; 
+};
 
 
 /* ddjvu_message_t::m_chunk ---
@@ -943,11 +940,11 @@ struct ddjvu_message_redisplay_s { /* ddjvu_message_t::m_redisplay */
 struct ddjvu_message_chunk_s {     /* ddjvu_message_t::m_chunk */
   ddjvu_message_any_t  any;
   const char *chunkid;
-}; 
+};
 
 /* About page messages --
    Both the <m_relayout> and <m_redisplay> messages are derived from the
-   <m_chunk> message.  They are intended for driving a djvu image viewer. 
+   <m_chunk> message.  They are intended for driving a djvu image viewer.
    When receiving <m_relayout>, the viewer should get the image size, decide
    zoom factors, and place the image area, scrollbars, toolbars, and other gui
    objects.  When receiving <m_redisplay>, the viewer should invalidate the
@@ -960,7 +957,7 @@ struct ddjvu_message_chunk_s {     /* ddjvu_message_t::m_chunk */
 /* ------- QUERIES ------- */
 
 /* ddjvu_page_get_width ---
-   Returns the page width in pixels. Calling this function 
+   Returns the page width in pixels. Calling this function
    before receiving a <m_pageinfo> message always yields <0>. */
 
 DDJVUAPI int
@@ -968,7 +965,7 @@ ddjvu_page_get_width(ddjvu_page_t *page);
 
 
 /* ddjvu_page_get_height---
-   Returns the page height in pixels. Calling this function 
+   Returns the page height in pixels. Calling this function
    before receiving a <m_pageinfo> message always yields <0>. */
 
 DDJVUAPI int
@@ -1002,7 +999,7 @@ ddjvu_page_get_version(ddjvu_page_t *page);
 
 /* ddjvu_code_get_version ---
    Returns the version of the djvu file format
-   implemented by this library. More or less graceful 
+   implemented by this library. More or less graceful
    degradation might arise if this is smaller than
    the number returned by <ddjvu_page_get_version>. */
 
@@ -1060,8 +1057,8 @@ ddjvu_page_get_rotation(ddjvu_page_t *page);
 
 
 /* ddjvu_page_get_initial_rotation ---
-   Returns the page rotation specified by the 
-   orientation flags in the DjVu file. 
+   Returns the page rotation specified by the
+   orientation flags in the DjVu file.
    [brain damage warning] This is useful because
    maparea coordinates in the annotation chunks
    are expressed relative to the rotated coordinates
@@ -1091,10 +1088,10 @@ typedef enum {
 
 /* ddjvu_rect_t ---
    This structure specifies the location of a rectangle.
-   Coordinates are usually expressed in pixels relative to 
+   Coordinates are usually expressed in pixels relative to
    the BOTTOM LEFT CORNER (but see ddjvu_format_set_y_direction).
-   Members <x> and <y> indicate the position of the bottom left 
-   corner of the rectangle Members <w> and <h> indicate the 
+   Members <x> and <y> indicate the position of the bottom left
+   corner of the rectangle Members <w> and <h> indicate the
    width and height of the rectangle. */
 
 struct ddjvu_rect_s {
@@ -1105,8 +1102,8 @@ struct ddjvu_rect_s {
 
 /* ddjvu_page_render --
    Renders a segment of a page with arbitrary scale.
-   Argument <mode> indicates what image layers 
-   should be rendered. 
+   Argument <mode> indicates what image layers
+   should be rendered.
 
    Conceptually this function renders the full page
    into a rectangle <pagerect> and copies the
@@ -1114,10 +1111,10 @@ struct ddjvu_rect_s {
    into the buffer starting at position <imagebuffer>.
    The actual code is much more efficient than that.
 
-   The final image is written into buffer <imagebuffer>.  
-   Argument <pixelformat> specifies the expected pixel format.  
-   Argument <rowsize> specifies the number of BYTES from 
-   one row to the next in the buffer. The buffer must be 
+   The final image is written into buffer <imagebuffer>.
+   Argument <pixelformat> specifies the expected pixel format.
+   Argument <rowsize> specifies the number of BYTES from
+   one row to the next in the buffer. The buffer must be
    large enough to accomodate the desired image.
 
    This function makes a best effort to compute an image
@@ -1143,10 +1140,10 @@ ddjvu_page_render(ddjvu_page_t *page,
 /* -------------------------------------------------- */
 
 /* ddjvu_rectmapper_create --
-   Creates a <ddjvu_rectmapper_t> data structure 
+   Creates a <ddjvu_rectmapper_t> data structure
    representing an affine coordinate transformation that
    maps points from rectangle <input> to rectangle <output>.
-   The transformation maintains the positions relative 
+   The transformation maintains the positions relative
    to the coordinates of the rectangle corners. */
 
 DDJVUAPI ddjvu_rectmapper_t *
@@ -1155,9 +1152,9 @@ ddjvu_rectmapper_create(ddjvu_rect_t *input, ddjvu_rect_t *output);
 
 /* ddjvu_rectmapper_modify ---
    Modifies the coordinate transform <mapper> by redefining
-   which corners of the output rectangle match those of the 
-   input rectangle. This function first applies a counter-clockwise 
-   rotation of <rotation> quarter-turns, and then reverses the X 
+   which corners of the output rectangle match those of the
+   input rectangle. This function first applies a counter-clockwise
+   rotation of <rotation> quarter-turns, and then reverses the X
    (resp. Y) coordinates when <mirrorx> (resp. <mirrory>) is non zero. */
 
 DDJVUAPI void
@@ -1169,28 +1166,28 @@ ddjvu_rectmapper_modify(ddjvu_rectmapper_t *mapper,
    Destroys the <ddjvu_rect_mapper_t> structure
    returned by <ddjvu_rect_mapper_create>. */
 
-DDJVUAPI void 
+DDJVUAPI void
 ddjvu_rectmapper_release(ddjvu_rectmapper_t *mapper);
 
 /* ddjvu_map_point, ddjvu_map_rect ---
-   Applies the coordinate transform 
+   Applies the coordinate transform
    to a point or a rectangle */
 
-DDJVUAPI void 
+DDJVUAPI void
 ddjvu_map_point(ddjvu_rectmapper_t *mapper, int *x, int *y);
 
-DDJVUAPI void 
+DDJVUAPI void
 ddjvu_map_rect(ddjvu_rectmapper_t *mapper, ddjvu_rect_t *rect);
 
 
 /* ddjvu_unmap_point, ddjvu_unmap_rect ---
-   Applies the inverse coordinate transform 
+   Applies the inverse coordinate transform
    to a point or a rectangle */
 
-DDJVUAPI void 
+DDJVUAPI void
 ddjvu_unmap_point(ddjvu_rectmapper_t *mapper, int *x, int *y);
 
-DDJVUAPI void 
+DDJVUAPI void
 ddjvu_unmap_rect(ddjvu_rectmapper_t *mapper, ddjvu_rect_t *rect);
 
 
@@ -1214,7 +1211,7 @@ typedef enum {
   DDJVU_FORMAT_MSBTOLSB,        /* packed bits, msb on the left */
   DDJVU_FORMAT_LSBTOMSB,        /* packed bits, lsb on the left */
 } ddjvu_format_style_t;
-   
+
 
 /* ddjvu_format_create ---
    Creates a <ddjvu_format_t> object describing a pixel format.
@@ -1222,7 +1219,7 @@ typedef enum {
    Argument <args> is an array of <nargs> unsigned ints
    providing additionnal information:
    - When style is <RGBMASK*>, argument <nargs> must be <3> or <4>.
-     The three first entries of array <args> are three contiguous 
+     The three first entries of array <args> are three contiguous
      bit masks for the red, green, and blue components of each pixel.
      The resulting color is then xored with the optional fourth entry.
    - When style is <PALETTE*>, argument <nargs> must be <216>
@@ -1231,7 +1228,7 @@ typedef enum {
    - Otherwise <nargs> must be <0>. */
 
 DDJVUAPI ddjvu_format_t *
-ddjvu_format_create(ddjvu_format_style_t style, 
+ddjvu_format_create(ddjvu_format_style_t style,
                     int nargs, unsigned int *args);
 
 
@@ -1246,8 +1243,8 @@ ddjvu_format_set_row_order(ddjvu_format_t *format, int top_to_bottom);
 
 
 /* ddjvu_format_set_y_direction ---
-   Sets a flag indicating whether the y coordinates in the drawing 
-   area are oriented from bottom to top, or from top to botttom.  
+   Sets a flag indicating whether the y coordinates in the drawing
+   area are oriented from bottom to top, or from top to botttom.
    The default is bottom to top, similar to PostScript.
    This is the opposite of the X11 convention. */
 
@@ -1281,7 +1278,7 @@ ddjvu_format_set_gamma(ddjvu_format_t *format, double gamma);
    correction.  The default value is 0xff,0xff,0xff. */
 
 DDJVUAPI void
-ddjvu_format_set_white(ddjvu_format_t *format, 
+ddjvu_format_set_white(ddjvu_format_t *format,
                        unsigned char b, unsigned char g, unsigned char r);
 
 /* ddjvu_format_release ---
@@ -1303,7 +1300,7 @@ ddjvu_format_release(ddjvu_format_t *format);
    Determine whether a thumbnail is available for page <pagenum>.
    Calling this function with non zero argument <start> initiates
    a thumbnail calculation job. Regardless of its success,
-   the completion of the job is signalled by a subsequent 
+   the completion of the job is signalled by a subsequent
    <m_thumbnail> message. */
 
 DDJVUAPI ddjvu_status_t
@@ -1316,22 +1313,22 @@ ddjvu_thumbnail_status(ddjvu_document_t *document, int pagenum, int start);
 struct ddjvu_message_thumbnail_s { /* ddjvu_message_t::m_thumbnail */
   ddjvu_message_any_t  any;
   int pagenum;
-}; 
+};
 
 
 /* ddjvu_thumbnail_render ---
    Renders a thumbnail for page <pagenum>.
    Argument <imagebuffer> must be large enough to contain
    an image of size <*wptr> by <*hptr> using pixel format
-   <pixelformat>. Argument <rowsize> specifies the number 
+   <pixelformat>. Argument <rowsize> specifies the number
    of BYTES from one row to the next in the buffer.
    This function returns <FALSE> when no thumbnail is available.
-   Otherwise it returns <TRUE>, adjusts <*wptr> and <*hptr> to 
+   Otherwise it returns <TRUE>, adjusts <*wptr> and <*hptr> to
    reflect the thumbnail size, and, if the pointer <imagebuffer>
    is non zero, writes the pixel data into the image buffer. */
 
 DDJVUAPI int
-ddjvu_thumbnail_render(ddjvu_document_t *document, int pagenum, 
+ddjvu_thumbnail_render(ddjvu_document_t *document, int pagenum,
                        int *wptr, int *hptr,
                        const ddjvu_format_t *pixelformat,
                        unsigned long rowsize,
@@ -1345,7 +1342,7 @@ ddjvu_thumbnail_render(ddjvu_document_t *document, int pagenum,
 
 
 /* ddjvu_message_t::m_progress ---
-   These messages are generated to indicate progress 
+   These messages are generated to indicate progress
    towards the completion of a print or save job. */
 
 struct ddjvu_message_progress_s {
@@ -1355,17 +1352,17 @@ struct ddjvu_message_progress_s {
 };
 
 /* ddjvu_document_print ---
-   Converts specified pages of a djvu document into postscript.  
+   Converts specified pages of a djvu document into postscript.
    This function works asynchronously in a separate thread.
    You can use the following idiom for synchronous operation:
 
      ddjvu_job_t *job = ddjvu_document_print(....);
      while (! ddjvu_job_done(job) )
        handle_ddjvu_messages(context, TRUE);
-       
+
    The postscript data is written to stdio file <output>.
    Arguments <optc> and <optv> specify printing options.
-   All options described on the <djvups> man page are 
+   All options described on the <djvups> man page are
    recognized, except <"-help"> and <"-verbose">.
 */
 
@@ -1382,13 +1379,13 @@ ddjvu_document_print(ddjvu_document_t *document, FILE *output,
      ddjvu_job_t *job = ddjvu_document_save(....);
      while (! ddjvu_job_done(job) )
        handle_ddjvu_messages(context, TRUE);
-     
+
    The bundled djvu data is written to file <output>
    which must be seekable. Arguments <optc> and <optv>
    can be used to pass the following options:
    * Option "-pages=<pagespec>" specify a subset of pages
      using the same syntax as program <ddjvu>.
-     Reordering or duplicating pages is prohibited. 
+     Reordering or duplicating pages is prohibited.
    * Option "-indirect=<filename>" causes the creation
      of an indirect document with index file <filename>
      and auxiliary files in the same directory.
@@ -1397,7 +1394,7 @@ ddjvu_document_print(ddjvu_document_t *document, FILE *output,
      is ignored and should be NULL.
 */
 DDJVUAPI ddjvu_job_t *
-ddjvu_document_save(ddjvu_document_t *document, FILE *output, 
+ddjvu_document_save(ddjvu_document_t *document, FILE *output,
                     int optc, const char * const * optv);
 
 
@@ -1416,24 +1413,24 @@ ddjvu_document_save(ddjvu_document_t *document, FILE *output,
    <"libdjvu/miniexp.h"> for the s-expression documentation
    and manipulation functions.  See the <djvused> man page
    for the specification of the s-expressions representing
-   outlines, hidden text and annotations. It often help 
+   outlines, hidden text and annotations. It often help
    to print s-expressions using function <miniexp_pprint>.
 
-   WARNING: All strings in s-expression are UTF-8 encoded.  
-   Strings returned by miniexp_to_str might have to be 
+   WARNING: All strings in s-expression are UTF-8 encoded.
+   Strings returned by miniexp_to_str might have to be
    converted to the locale encoding. */
 
 
 /* miniexp_t --
    Opaque type representing s-expressions.
-   The same definition also appears in 
+   The same definition also appears in
    file <"libdjvu/miniexp.h">. */
 
 #ifndef MINIEXP_H
 typedef struct miniexp_s* miniexp_t;
 #endif
 
-/* ddjvu_miniexp_release -- 
+/* ddjvu_miniexp_release --
    This function controls the allocation of the
    s-expressions returned by functions from the DDJVU
    API. It indicates that the s-expression <expr> is no
@@ -1445,18 +1442,18 @@ DDJVUAPI void
 ddjvu_miniexp_release(ddjvu_document_t *document, miniexp_t expr);
 
 
-/* ddjvu_document_get_outline -- 
-   This function tries to obtain the document outline.  
+/* ddjvu_document_get_outline --
+   This function tries to obtain the document outline.
    If this information is available, it returns a
    s-expression with the same syntax as function
-   <print-outline> of program <djvused>.  
-   Otherwise it returns <miniexp_dummy> until 
+   <print-outline> of program <djvused>.
+   Otherwise it returns <miniexp_dummy> until
    the document header gets fully decoded.
    Typical synchronous usage:
 
     miniexp_t r;
     while ((r=ddjvu_document_get_outline(doc))==miniexp_dummy)
-      handle_ddjvu_messages(ctx, TRUE); 
+      handle_ddjvu_messages(ctx, TRUE);
 
    This function returns the empty list <miniexp_nil> when
    the document contains no outline information. It can also
@@ -1471,11 +1468,11 @@ ddjvu_document_get_outline(ddjvu_document_t *document);
    This function returns the document-wide annotations.
    This corresponds to a proposed change in the djvu format.
    When no new-style document-wide annotations are available
-   and <compat> is true, this function searches a shared 
+   and <compat> is true, this function searches a shared
    annotation chunk and returns its contents.
 
    This function returns <miniexp_dummy> if the information
-   is not yet available. It may then cause the emission 
+   is not yet available. It may then cause the emission
    of <m_pageinfo> messages with null <m_any.page>.
 
    This function returns the empty list <miniexp_nil> when
@@ -1487,49 +1484,49 @@ DDJVUAPI miniexp_t
 ddjvu_document_get_anno(ddjvu_document_t *document, int compat);
 
 
-/* ddjvu_document_get_pagetext -- 
+/* ddjvu_document_get_pagetext --
    This function tries to obtain the text information for
    page <pageno>. If this information is available, it
    returns a s-expression with the same syntax as function
    <print-txt> of program <djvused>.  Otherwise it starts
    fetching the page data and returns <miniexp_dummy>.
-   This function causes the emission of <m_pageinfo> messages 
+   This function causes the emission of <m_pageinfo> messages
    with zero in the <m_any.page> field.
    Typical synchronous usage:
 
     miniexp_t r;
     while ((r=ddjvu_document_get_pagetext(doc,pageno,0))==miniexp_dummy)
-      handle_ddjvu_messages(ctx, TRUE); 
+      handle_ddjvu_messages(ctx, TRUE);
 
    This function returns the empty list <miniexp_nil> when
    the page contains no text information. It can also return
    symbols <failed> or <stopped> when an error occurs while
-   accessing the desired information. 
+   accessing the desired information.
 
    Argument <maxdetail> controls the level of detail in the
-   returned s-expression. Values "page", "column", "region", "para", 
+   returned s-expression. Values "page", "column", "region", "para",
    "line", and "word" restrict the output to the specified granularity.
    All other values produce a s-expression that represents
    the hidden text data as finely as possible. */
 
 DDJVUAPI miniexp_t
-ddjvu_document_get_pagetext(ddjvu_document_t *document, int pageno, 
+ddjvu_document_get_pagetext(ddjvu_document_t *document, int pageno,
                             const char *maxdetail);
 
 
-/* ddjvu_document_get_pageanno -- 
+/* ddjvu_document_get_pageanno --
    This function tries to obtain the annotations for
    page <pageno>. If this information is available, it
    returns a s-expression with the same syntax as function
    <print-ant> of program <djvused>.  Otherwise it starts
    fetching the page data and returns <miniexp_dummy>.
-   This function causes the emission of <m_pageinfo> messages 
+   This function causes the emission of <m_pageinfo> messages
    with zero in the <m_any.page> field.
    Typical synchronous usage:
 
      miniexp_t r;
      while ((r = ddjvu_document_get_pageanno(doc,pageno))==miniexp_dummy)
-       handle_ddjvu_messages(ctx, TRUE); 
+       handle_ddjvu_messages(ctx, TRUE);
 
    This function returns the empty list <miniexp_nil> when
    the page contains no annotations. It can also return
@@ -1543,8 +1540,8 @@ ddjvu_document_get_pageanno(ddjvu_document_t *document, int pageno);
 /* --- Helper functions to parse annotations --- */
 
 /* ddjvu_anno_get_bgcolor --
-   Parse the annotations and extracts the desired 
-   background color as a color string ("#FFFFFF"). 
+   Parse the annotations and extracts the desired
+   background color as a color string ("#FFFFFF").
    See <(background ...)> in the djvused man page.
    Returns zero if this information is not specified. */
 
@@ -1591,7 +1588,7 @@ ddjvu_anno_get_vertalign(miniexp_t annotations);
 
 
 /* ddjvu_anno_get_hyperlinks --
-   Parse the annotations and returns a zero terminated 
+   Parse the annotations and returns a zero terminated
    array of <(maparea ...)> s-expressions.
    The caller should free this array with function <free>.
    These s-expressions remain allocated as long
@@ -1603,7 +1600,7 @@ ddjvu_anno_get_hyperlinks(miniexp_t annotations);
 
 
 /* ddjvu_anno_get_metadata_keys --
-   Parse the annotations and returns a zero terminated 
+   Parse the annotations and returns a zero terminated
    array of key symbols for the page metadata.
    The caller should free this array with function <free>.
    See also <(metadata ...)> in the djvused man page. */
@@ -1615,7 +1612,7 @@ ddjvu_anno_get_metadata_keys(miniexp_t annotations);
 /* ddjvu_anno_get_metadata --
    Parse the annotations and returns the metadata string
    corresponding to the metadata key symbol <key>.
-   The string remains allocated as long as the 
+   The string remains allocated as long as the
    annotations s-expression remain allocated.
    Returns zero if no such key is present. */
 
@@ -1625,7 +1622,7 @@ ddjvu_anno_get_metadata(miniexp_t annotations, miniexp_t key);
 
 /* ddjvu_anno_get_xmp --
    Parse the annotations and returns the xmp metadata string.
-   The string remains allocated as long as the 
+   The string remains allocated as long as the
    annotations s-expression remain allocated.
    Returns zero if no such key is present. */
 
@@ -1665,15 +1662,16 @@ union ddjvu_message_s {
 
 /* ddjvu_get_DjVuImage ---
    ddjvu_get_DjVuDocument ---
-   These functions provide an access to the libdjvu objects 
+   These functions provide an access to the libdjvu objects
    associated with the ddjvuapi objects.  These backdoors can
-   be useful for advanced manipulations.  These two functions 
-   are declared in C++ when file <"ddjvuapi.h"> is included 
+   be useful for advanced manipulations.  These two functions
+   are declared in C++ when file <"ddjvuapi.h"> is included
    after the libdjvu header files <"DjVuImage.h"> and
    <"DjVuDocument.h">. */
 
 #ifdef __cplusplus
-# ifndef NOT_USING_DJVU_NAMESPACE
+using namespace DJVU;
+
 #  ifdef _DJVUIMAGE_H
 DDJVUAPI GP<DjVuImage>
 ddjvu_get_DjVuImage(ddjvu_page_t *page);
@@ -1682,7 +1680,6 @@ ddjvu_get_DjVuImage(ddjvu_page_t *page);
 DDJVUAPI GP<DjVuDocument>
 ddjvu_get_DjVuDocument(ddjvu_document_t *document);
 #  endif
-# endif
 #endif
 
 #endif /* DDJVUAPI_H */
