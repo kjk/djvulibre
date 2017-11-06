@@ -111,9 +111,6 @@ __inline int dup2(int _a, int _b ) { return _dup2(_a, _b);}
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
-# ifdef NOT_DEFINED // Just to fool emacs c++ mode
-}
-#endif
 #endif
 
 const char *ByteStream::EndOfFile=ERR_MSG("EOF");

@@ -63,9 +63,6 @@
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
-# ifdef NOT_DEFINED // Just to fool emacs c++ mode
-}
-#endif
 #endif
 
 ArrayRep::ArrayRep(int xelsize,
@@ -265,9 +262,6 @@ using namespace DJVU;
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
-# ifdef NOT_DEFINED // Just to fool emacs c++ mode
-}
-#endif
 #endif
 TArray<char>
 ByteStream::get_data(void)

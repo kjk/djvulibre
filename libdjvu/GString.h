@@ -140,9 +140,6 @@ typedef unsigned short uint16_t // verify
 
 #ifdef HAVE_NAMESPACES
 namespace DJVU {
-# ifdef NOT_DEFINED // Just to fool emacs c++ mode
-}
-#endif
 #endif
 
 #if !HAS_MBSTATE
