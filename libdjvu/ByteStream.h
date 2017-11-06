@@ -99,9 +99,7 @@
 #include "Arrays.h"
 #include <stdio.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class GURL;
 class GUTF8String;
@@ -391,8 +389,6 @@ public:
 
 // ------------ THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 

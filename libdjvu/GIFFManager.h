@@ -65,10 +65,7 @@
 #include "GSmartPointer.h"
 #include "GString.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /** @name GIFFManager.h
 
@@ -375,8 +372,5 @@ GIFFManager::init(const GUTF8String &name)
   top_level=GIFFChunk::create(name);
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

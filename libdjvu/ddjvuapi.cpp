@@ -64,7 +64,6 @@
 #include <ctype.h>
 #include <locale.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
   struct ddjvu_context_s;
   struct ddjvu_job_s;
@@ -79,9 +78,6 @@ namespace DJVU {
 }
 using namespace DJVU;
 # define DJVUNS DJVU::
-#else
-# define DJVUNS /**/
-#endif
 
 #include "GException.h"
 #include "GSmartPointer.h"

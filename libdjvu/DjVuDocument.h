@@ -61,9 +61,7 @@
 
 #include "DjVuPort.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class DjVmDoc;
 class DjVmDir;
@@ -1052,8 +1050,5 @@ DjVuDocument::set_verbose_eof(bool verbose)
 
 //@}
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

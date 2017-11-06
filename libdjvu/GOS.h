@@ -81,10 +81,7 @@
 #include "DjVuGlobal.h"
 #include "GString.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 class GURL;
 
@@ -143,7 +140,5 @@ class DJVUAPI GOS
 //@}
 // ------------
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

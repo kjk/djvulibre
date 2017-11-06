@@ -83,10 +83,7 @@
 
 #include "GMapAreas.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 class ByteStream;
 
@@ -262,9 +259,7 @@ DjVuText::get_memory_usage() const
 
 // ----- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 
 

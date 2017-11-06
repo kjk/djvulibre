@@ -66,10 +66,7 @@
 #include "debug.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // - Author: Leon Bottou, 05/1997
 
@@ -216,8 +213,4 @@ static void (*old_handler)() = set_new_handler(throw_memory_error);
 # endif // ! WIN32
 #endif // !NEED_DJVU_MEMORY
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

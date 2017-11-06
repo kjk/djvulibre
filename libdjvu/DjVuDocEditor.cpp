@@ -72,10 +72,7 @@
 
 #include <ctype.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 static const char octets[4]={0x41,0x54,0x26,0x54};
 
@@ -2186,8 +2183,4 @@ DjVuDocEditor::get_doc_url(void) const
    return doc_url.is_empty() ? init_url : doc_url;
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

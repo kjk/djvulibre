@@ -6,7 +6,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(DjVuLibreRoot);$(DjVuLibreRoot)\libdjvu;$(DjVuLibreRoot)\tools;$(TiffRoot);$(TiffDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>HAVE_NAMESPACES;HAVE_TIFF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_TIFF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
     <Link />

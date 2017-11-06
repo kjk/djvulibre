@@ -63,10 +63,7 @@
 #include "GString.h"
 #include "GThreads.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 class ByteStream;
 
@@ -129,8 +126,5 @@ public:
   GUTF8String url;	   // url, may be blank or relative.
 };
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

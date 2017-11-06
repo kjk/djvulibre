@@ -76,11 +76,7 @@
 
 #include "debug.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 #define STRINGIFY(x) STRINGIFY_(x)
 #define STRINGIFY_(x) #x
@@ -2816,7 +2812,4 @@ DjVuFile::change_meta(const GUTF8String &xmeta,const bool do_reset)
 }
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

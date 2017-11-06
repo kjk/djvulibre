@@ -65,9 +65,7 @@
 #include <iconv.h>
 #endif
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 static unsigned char nill=0;
 
@@ -788,7 +786,4 @@ GUTF8String::create( void const * const buf,
   return retval;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

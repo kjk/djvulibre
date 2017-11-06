@@ -72,9 +72,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 ////////////////////////////////////////////////////////////////
 // CODER SPECIFICATION
@@ -1279,7 +1277,4 @@ ZPCodec::state(float prob1)
   return (f1<f2) ? lo : lo+2;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

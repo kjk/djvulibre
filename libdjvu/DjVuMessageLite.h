@@ -67,9 +67,7 @@
 
 #include "GString.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class lt_XMLTags;
 class ByteStream;
@@ -210,8 +208,6 @@ protected:
 };
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif /* __DJVU_MESSAGE_LITE_H__ */
 

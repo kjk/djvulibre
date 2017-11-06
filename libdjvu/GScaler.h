@@ -67,10 +67,7 @@
 #include "GBitmap.h"
 #include "GPixmap.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /** @name GScaler.h
 
@@ -293,18 +290,9 @@ protected:
   int    l2;
 };
 
-
-
-
-
 //@}
-
-
-
 
 // -------- END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

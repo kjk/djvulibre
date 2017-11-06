@@ -77,10 +77,7 @@
 #endif
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 #ifndef UNIX
 #ifndef _WIN32
@@ -276,8 +273,5 @@ DjVuDebugIndent::~DjVuDebugIndent()
   dbg.unlock();
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

@@ -68,9 +68,7 @@
 
 #include "DjVuMessageLite.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class GURL;
 
@@ -116,10 +114,6 @@ public:
   static GList<GURL> GetProfilePaths(void);
 };
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif /* __DJVU_MESSAGE_H__ */
 

@@ -61,10 +61,7 @@
 
 #include "DjVuGlobal.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /** @name MMX.h
     Files #"MMX.h"# and #"MMX.cpp"# implement basic routines for
@@ -175,9 +172,5 @@ typedef struct{ char c[8]; } MMX_t;
 
 #endif
 
-// -----------
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

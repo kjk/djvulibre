@@ -87,11 +87,7 @@
 #include <string.h>
 #include <math.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 #define IWALLOCSIZE    4080
 #define IWCODEC_MAJOR     1
@@ -1922,7 +1918,4 @@ IW44Image::Transform::Decode::YCbCr_to_RGB(GPixel *p, int w, int h, int rowsize)
     }
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

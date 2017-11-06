@@ -66,11 +66,7 @@
 #include <ctype.h>
 
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 
 DjVuNavDir::DjVuNavDir(const GURL &dirURL)
@@ -221,7 +217,4 @@ DjVuNavDir::delete_page(int page_num)
 #endif
 
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

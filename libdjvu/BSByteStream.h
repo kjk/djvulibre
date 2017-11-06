@@ -146,9 +146,7 @@
 #include "ZPCodec.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 
 /** Performs bzz compression/decompression.
@@ -258,7 +256,5 @@ private:
 //@}
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

@@ -67,9 +67,7 @@
 
 #include "GSmartPointer.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 class GPixmap;
@@ -109,13 +107,7 @@ public:
 #endif // LIBJPEGNAME
 };
 
-
-//@}
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 
 #endif // NEED_JPEG_DECODER
 #endif // _JPEGDECODER_H_

@@ -75,9 +75,7 @@
 #include "GSmartPointer.h"
 #include "GRect.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 
@@ -171,7 +169,5 @@ public:
 
 // ----- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

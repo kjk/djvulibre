@@ -63,9 +63,7 @@
 #include <stdio.h>
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** @name debug.h
 
@@ -281,8 +279,6 @@ public:
 
 // ------------ THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 
 #endif // DEBUG_H

@@ -69,9 +69,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 lt_XMLContents::lt_XMLContents(void) {}
 
@@ -402,7 +400,4 @@ lt_XMLContents::write(ByteStream &bs) const
   }
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

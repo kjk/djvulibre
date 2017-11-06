@@ -65,10 +65,7 @@
 #include <ctype.h>
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 GP<DjVmDir::File>
 DjVmDir::File::create(const GUTF8String &load_name,
@@ -819,6 +816,4 @@ DjVmDir::resolve_duplicates(const bool save_as_bundled)
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif

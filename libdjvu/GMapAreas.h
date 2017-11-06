@@ -66,10 +66,7 @@
 #include "GRect.h"
 #include "GURL.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /** @name GMapAreas.h
 
@@ -547,8 +544,5 @@ GMapOval::get_shape_name(void) const { return OVAL_TAG; }
 
 //@}
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

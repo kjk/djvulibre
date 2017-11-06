@@ -128,10 +128,7 @@
 #include "GString.h"
 #include "ByteStream.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** ByteStream interface for an IFF file.
 
@@ -294,11 +291,5 @@ private:
   static GP<IFFByteStream> create(ByteStream *bs);
 };
 
-//@}
-
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

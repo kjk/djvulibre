@@ -120,12 +120,7 @@
 // ----------------------------------------
 // PORTABLE CLASSES
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
-
 
 /** Thread class.  A multithreaded process is composed of a main execution
     thread and of several secondary threads.  Each secondary thread is
@@ -458,11 +453,5 @@ public:
     { if (gsec) gsec->unlock(); };
 };
 
-
-// ----------------------------------------
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif //_GTHREADS_H_
-

@@ -61,11 +61,7 @@
 #include "GException.h"
 #include "debug.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 GIFFChunk::~GIFFChunk(void) {}
 
@@ -647,7 +643,4 @@ GIFFManager::save_file(GP<ByteStream> str)
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

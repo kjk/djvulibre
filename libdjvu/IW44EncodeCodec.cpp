@@ -89,10 +89,7 @@
 
 #ifndef NEED_DECODER_ONLY
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 #define IWALLOCSIZE    4080
 #define IWCODEC_MAJOR     1
@@ -1779,10 +1776,5 @@ IW44Image::Codec::Encode::code_slice(ZPCodec &zp)
   return finish_code_slice(zp);
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif // NEED_DECODER_ONLY
-

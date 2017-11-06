@@ -111,9 +111,7 @@ __inline int dup2(int _a, int _b ) { return _dup2(_a, _b);}
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 const char *ByteStream::EndOfFile=ERR_MSG("EOF");
 
@@ -1302,10 +1300,7 @@ ByteStream::getAsUTF8(void)
   return GUTF8String(buffer);
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 
 void
 DjVuPrintErrorUTF8(const char *fmt, ... )

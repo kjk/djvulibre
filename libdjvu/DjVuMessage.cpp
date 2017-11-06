@@ -87,9 +87,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 GUTF8String &
 DjVuMessage::programname(void)
@@ -581,11 +579,7 @@ DjVuMessageLookUpUTF8(
     strcpy( msg_buffer, converted );
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 
 void
 DjVuFormatErrorUTF8( const char *fmt, ... )

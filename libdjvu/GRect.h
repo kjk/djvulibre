@@ -75,10 +75,7 @@
 
 #include "DjVuGlobal.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /* Flag to indicate that this djvulibre version
    gets rid of all the crap about orientation bits.
@@ -339,7 +336,5 @@ operator!=(const GRect & r1, const GRect & r2)
 
 // ---- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

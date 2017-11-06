@@ -70,9 +70,7 @@
 #endif
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class BSByteStream::Decode : public BSByteStream
 {
@@ -410,7 +408,4 @@ BSByteStream::Decode::read(void *buffer, size_t sz)
   return copied;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

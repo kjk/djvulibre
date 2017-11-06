@@ -61,9 +61,7 @@
 
 #include "DjVuPort.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 
@@ -176,7 +174,5 @@ DjVuErrorList::HasStatus(void) const
 { return !Status.isempty(); }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

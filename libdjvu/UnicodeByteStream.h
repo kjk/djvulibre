@@ -87,11 +87,7 @@
 
 #include <stddef.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
-
 
 /** ByteStream interface for an Unicode file.
 
@@ -180,11 +176,5 @@ XMLByteStream::create(UnicodeByteStream &bs)
   return new XMLByteStream(bs);
 }
 
-//@}
-
-
-#ifdef HAVE_NAMESPACES
 }
 #endif
-#endif
-

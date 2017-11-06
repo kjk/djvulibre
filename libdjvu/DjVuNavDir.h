@@ -64,9 +64,7 @@
 #include "GThreads.h"
 #include "GURL.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 
@@ -174,8 +172,5 @@ public:
 
 //@}
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

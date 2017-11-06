@@ -68,11 +68,7 @@
 
 #include <ctype.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // GLParser.h and GLParser.cpp used to be separate files capable to decode
 // that weird ANTa chunk format into C++ structures and lists. But since
@@ -1531,7 +1527,4 @@ DjVuAnno::merge(const GP<DjVuAnno> & anno)
    }
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

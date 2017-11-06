@@ -65,9 +65,7 @@
 #include "GContainer.h"
 #include "GString.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class lt_XMLContents;
 class DjVuFile;
@@ -223,10 +221,5 @@ lt_XMLTags::operator [] (const GPosition &pos) const
   return allTags[pos];
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif /* _LT_XMLTAGS__ */
-
-

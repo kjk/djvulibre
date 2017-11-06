@@ -80,10 +80,7 @@
 
 #include "GSmartPointer.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 class GBitmap;
 class GRect;
@@ -518,9 +515,7 @@ GPixmap::get_memory_usage() const
 
 // ---------------------------------
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 
 

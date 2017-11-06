@@ -64,13 +64,9 @@
 
 #include "GContainer.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
-
-
 
 /** @name ZPCodec.h
 
@@ -727,9 +723,5 @@ ZPCodec::IWencoder(const bool bit)
 
 // ------------ THE END
 
-#ifdef HAVE_NAMESPACES
 }
 #endif
-#endif
-
-

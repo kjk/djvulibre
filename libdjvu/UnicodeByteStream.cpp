@@ -60,10 +60,7 @@
 #include "UnicodeByteStream.h"
 #include "ByteStream.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 UnicodeByteStream::UnicodeByteStream(const UnicodeByteStream &uni)
 : bs(uni.bs), buffer(uni.buffer), bufferpos(uni.bufferpos), linesread(0)
@@ -352,7 +349,4 @@ XMLByteStream::init(void)
 XMLByteStream::~XMLByteStream()
 {}
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

@@ -69,10 +69,7 @@
 
 // - Author: Leon Bottou, 05/1997
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 // ----- constructor and destructor
 
@@ -1672,8 +1669,4 @@ GBitmap::check_border() const
 }
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

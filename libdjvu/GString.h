@@ -138,9 +138,7 @@ typedef unsigned short uint16_t // verify
 # endif
 #endif
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 #if !HAS_MBSTATE
 # ifndef HAVE_MBSTATE_T
@@ -1678,9 +1676,5 @@ operator<=(const char    s1, const GBaseString &s2)
 
 // ------------------- The end
 
-
-#ifdef HAVE_NAMESPACES
 }
 #endif
-#endif
-

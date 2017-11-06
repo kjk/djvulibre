@@ -64,10 +64,7 @@
 #include "GScaler.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 ////////////////////////////////////////
 // CONSTANTS
@@ -689,9 +686,4 @@ GPixmapScaler::scale( const GRect &provided_input, const GPixmap &input,
   glbuffer.resize(0);
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

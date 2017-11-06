@@ -64,9 +64,7 @@
 #include "GString.h"
 #include "GURL.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 
@@ -612,7 +610,5 @@ DataPool::is_connected(void) const
 //@}
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

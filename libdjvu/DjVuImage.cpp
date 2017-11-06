@@ -74,12 +74,7 @@
 #include "debug.h"
 #include <stdarg.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
-
 
 //// DJVUIMAGE: CONSTRUCTION
 
@@ -1519,7 +1514,4 @@ DjVuImage::get_XML(void) const
   return get_XML(GURL());
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

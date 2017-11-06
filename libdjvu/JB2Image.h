@@ -168,10 +168,7 @@
 #include "GString.h"
 #include "ZPCodec.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class JB2Dict;
 class JB2Image;
@@ -787,10 +784,6 @@ JB2Dict::JB2Codec::shift_cross_context( const int context, const int n,
               (n << 7)             );
 }
 
-// ---------- THE END
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 

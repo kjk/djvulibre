@@ -76,9 +76,7 @@
 
 #include "GSmartPointer.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class DataPool;
 class ByteStream;
@@ -108,7 +106,5 @@ public:
 
 // ----- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

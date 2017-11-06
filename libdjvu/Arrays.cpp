@@ -61,9 +61,7 @@
 #include "GException.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 ArrayRep::ArrayRep(int xelsize,
 		   void (* xdestroy)(void *, int, int),
@@ -242,10 +240,7 @@ ArrayRep::ins(int n, const void * what, unsigned int howmany)
 }
 
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 
 
 // ---------------------------------------
@@ -257,9 +252,7 @@ ArrayRep::ins(int n, const void * what, unsigned int howmany)
 #ifndef DO_NOT_MOVE_GET_DATA_TO_ARRAYS_CPP
 #include "ByteStream.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 TArray<char>
 ByteStream::get_data(void)
 {
@@ -276,9 +269,7 @@ ByteStream::get_data(void)
    }
 }
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 
 // ---------------------------------------

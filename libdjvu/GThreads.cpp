@@ -94,11 +94,7 @@
 # include <process.h>
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // ----------------------------------------
 // WIN32 IMPLEMENTATION
@@ -677,8 +673,4 @@ GSafeFlags::wait_and_modify(long set_mask, long clr_mask,
    leave();
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

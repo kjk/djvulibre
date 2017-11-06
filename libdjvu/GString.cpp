@@ -93,11 +93,7 @@
 # define DO_CHANGELOCALE 0
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 GBaseString::~GBaseString() {}
 GNativeString::~GNativeString() {}
@@ -2710,7 +2706,4 @@ GNativeString::setat(const int n, const char ch)
 
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

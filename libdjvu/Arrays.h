@@ -63,9 +63,7 @@
 #include "GSmartPointer.h"
 #include <string.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 
 
@@ -967,8 +965,6 @@ DPArray<TYPE>::operator= (const DPArray &ga)
 //@}
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 

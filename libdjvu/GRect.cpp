@@ -65,9 +65,7 @@
 #include "GException.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 // -- Local utilities
 
@@ -442,7 +440,4 @@ GRectMapper::get_output()
     return rectTo;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

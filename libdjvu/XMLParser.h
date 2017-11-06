@@ -65,9 +65,7 @@
 #include "GContainer.h"
 #include "GURL.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 class lt_XMLTags;
@@ -104,10 +102,5 @@ public:
     void * const arg,mapOCRcallback * const );
 };
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif /* _LT_XMLPARSER__ */
-
-

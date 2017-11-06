@@ -66,10 +66,7 @@
 #include <string.h>
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 DjVuErrorList::DjVuErrorList() {}
 
@@ -158,7 +155,4 @@ DjVuErrorList::request_data(const DjVuPort * source, const GURL & url)
    return retval;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

@@ -62,11 +62,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // ----------------------------------------
 // PRINTING MMX REGISTERS (Debug)
@@ -212,8 +208,4 @@ MMXControl::enable_mmx()
   return mmxflag;
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

@@ -64,10 +64,7 @@
 #include "GSmartPointer.h"
 #include <string.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // Supports old iterators (first/last/next/prev) on lists and maps?
 #ifndef GCONTAINER_OLD_ITERATORS
@@ -1341,9 +1338,7 @@ public:
 // ------------ THE END
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 
 

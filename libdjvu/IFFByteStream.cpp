@@ -67,11 +67,7 @@
 #include <assert.h>
 #include "IFFByteStream.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // Constructor
 IFFByteStream::IFFByteStream(const GP<ByteStream> &xbs,const int xpos)
@@ -554,7 +550,4 @@ IFFByteStream::compare(IFFByteStream &iff)
   return retval;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

@@ -62,9 +62,7 @@
 
 #include "GSmartPointer.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 class JB2Image;
@@ -214,13 +212,5 @@ private:
   friend class VLTable;
 };
 
-
-//@}
-
-
-// -----------
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

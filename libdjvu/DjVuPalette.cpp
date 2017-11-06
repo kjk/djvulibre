@@ -68,10 +68,7 @@
 #include <math.h>
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 #define CUBEBITS  4
 #define CUBESIDE  (1<<CUBEBITS)
@@ -590,10 +587,4 @@ DjVuPalette::decode(GP<ByteStream> gbs)
     }
 }
 
-
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

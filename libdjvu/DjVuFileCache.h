@@ -71,12 +71,9 @@
 # include <time.h>
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
-/** @name DjVuFileCache.h
+      /** @name DjVuFileCache.h
     Files #"DjVuFileCache.h"# and #"DjVuFileCache.cpp"# implement a simple
     caching mechanism for keeping a given number of \Ref{DjVuFile} instances
     alive. The cache estimates the size of its elements and gets rid of
@@ -271,7 +268,5 @@ DjVuFileCache::create(const int max_size)
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

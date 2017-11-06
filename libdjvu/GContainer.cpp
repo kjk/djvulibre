@@ -59,11 +59,7 @@
 
 #include "GContainer.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // ------------------------------------------------------------
 // DYNAMIC ARRAYS
@@ -798,7 +794,5 @@ GSetBase::empty()
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 

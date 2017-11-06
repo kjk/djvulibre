@@ -65,10 +65,7 @@
 #include "GException.h"
 #endif
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 class GRect;
 class GMonitor;
@@ -657,7 +654,5 @@ GBitmap::borrow_data(unsigned char &data,int w,int h)
 
 // ---------------- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

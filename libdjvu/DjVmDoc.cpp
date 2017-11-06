@@ -66,9 +66,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 static const char octets[4]={0x41,0x54,0x26,0x54};
 
@@ -649,6 +647,4 @@ DjVmDoc::expand(const GURL &codebase, const GUTF8String &idx_name)
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif

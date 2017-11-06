@@ -68,9 +68,7 @@
 # include <sys/types.h>
 #endif
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 const char * DataPool::Stop = ERR_MSG("STOP");
 
@@ -1801,6 +1799,4 @@ DataPool::Counter::dec(void)
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif

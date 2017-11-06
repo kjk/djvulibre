@@ -79,11 +79,7 @@
 #include <assert.h>
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
-
 
 //////////////////////////////////////////////////
 // ------- predefined colors
@@ -1745,9 +1741,4 @@ GP<GPixmap> GPixmap::rotate(int count)
   return newpixmap;
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

@@ -31,7 +31,7 @@ AC_DEFUN([AC_CHECK_CXX_OPT],[
  echo 'void f(){}' > conftest.cc
  if test -z "`${CXX} ${CXXFLAGS} $opt -c conftest.cc 2>&1`"; then
     AC_MSG_RESULT(yes)
-    rm conftest.* 
+    rm conftest.*
     ifelse($2,,[CXXFLAGS="$CXXFLAGS $opt"],$2)
  else
     AC_MSG_RESULT(no)
@@ -52,7 +52,7 @@ AC_DEFUN([AC_CHECK_CC_OPT],[
  echo 'void f(){}' > conftest.c
  if test -z "`${CC} ${CFLAGS} $opt -c conftest.c 2>&1`"; then
     AC_MSG_RESULT(yes)
-    rm conftest.* 
+    rm conftest.*
     ifelse($2,,[CFLAGS="$CFLAGS $opt"],$2)
  else
     AC_MSG_RESULT(no)
@@ -68,7 +68,7 @@ AC_DEFUN([AC_REMOVE_OPTIONS],[
    saved_var=${$1}
    $1=
    for opt in ${saved_var} ; do
-     case "$opt" in 
+     case "$opt" in
       $2) ;;
       *) $1="${$1} $opt" ;;
      esac
@@ -122,7 +122,7 @@ AC_DEFUN([AC_OPTIMIZE],[
 changequote(<<, >>)dnl
      x[0-9]) defines="-DDEBUGLVL=$ac_debug" ;;
      xr*)    defines="-DRUNTIME_DEBUG_ONLY" ;;
-changequote([, ])dnl 
+changequote([, ])dnl
    esac
    CFLAGS="$CFLAGS $defines"
    CXXFLAGS="$CXXFLAGS $defines"
@@ -162,7 +162,7 @@ fi
 
 dnl -------------------------------------------------------
 dnl @synopsis AC_CXX_MEMBER_TEMPLATES
-dnl If the compiler supports member templates, 
+dnl If the compiler supports member templates,
 dnl define HAVE_MEMBER_TEMPLATES.
 dnl -------------------------------------------------------
 AC_DEFUN([AC_CXX_MEMBER_TEMPLATES],
@@ -194,10 +194,6 @@ fi
 
 
 dnl -------------------------------------------------------
-dnl @synopsis AC_CXX_NAMESPACES
-dnl Define HAVE_NAMESPACES if the compiler supports
-dnl namespaces.
-dnl -------------------------------------------------------
 AC_DEFUN([AC_CXX_NAMESPACES],
 [AC_CACHE_CHECK(whether the compiler implements namespaces,
 ac_cv_cxx_namespaces,
@@ -215,17 +211,13 @@ return i;
   [ac_cv_cxx_namespaces=no])
   AC_LANG_POP([C++])
 ])
-if test "$ac_cv_cxx_namespaces" = yes && test "$ac_debug" = no; then
-  AC_DEFINE(HAVE_NAMESPACES,1,
-             [define if the compiler implements namespaces])
-fi
 ])
 
 
 
 dnl -------------------------------------------------------
 dnl @synopsis AC_CXX_TYPENAME
-dnl Define HAVE_TYPENAME if the compiler recognizes 
+dnl Define HAVE_TYPENAME if the compiler recognizes
 dnl keyword typename.
 dnl -------------------------------------------------------
 AC_DEFUN([AC_CXX_TYPENAME],
@@ -284,7 +276,7 @@ dnl -------------------------------------------------------
 dnl @synopsis AC_CXX_BOOL
 dnl If the compiler recognizes bool as a separate built-in type,
 dnl define HAVE_BOOL. Note that a typedef is not a separate
-dnl type since you cannot overload a function such that it 
+dnl type since you cannot overload a function such that it
 dnl accepts either the basic type or the typedef.
 dnl -------------------------------------------------------
 AC_DEFUN([AC_CXX_BOOL],
@@ -339,7 +331,7 @@ fi
 
 dnl -------------------------------------------------------
 dnl @synopsis AC_CXX_GCCTLS
-dnl Define HAVE_GCCTLS if the compiler recognizes 
+dnl Define HAVE_GCCTLS if the compiler recognizes
 dnl keyword __thread for TLS variables.
 dnl -------------------------------------------------------
 AC_DEFUN([AC_CXX_GCCTLS],
@@ -371,7 +363,7 @@ dnl threads.  It sets the PTHREAD_LIBS output variable to the threads
 dnl library and linker flags, and the PTHREAD_CFLAGS output variable
 dnl to any special C compiler flags that are needed.  (The user can also
 dnl force certain compiler flags/libs to be tested by setting these
-dnl environment variables.).  
+dnl environment variables.).
 dnl ------------------------------------------------------------------
 AC_DEFUN([AC_PATH_PTHREAD], [
 AC_REQUIRE([AC_CANONICAL_HOST])
@@ -407,12 +399,12 @@ fi
 # Create a list of thread flags to try.  Items starting with a "-" are
 # C compiler flags, and other items are library names, except for "none"
 # which indicates that we try without any flags at all. Also, combinations
-# of items (for instance, both a compiler flag and a library name) can be 
+# of items (for instance, both a compiler flag and a library name) can be
 # specified using a colon separator.
-acx_pthread_flags="pthreads none -Kthread -kthread lthread 
+acx_pthread_flags="pthreads none -Kthread -kthread lthread
                    -pthread -pthreads -mt -mthreads pthread
                    --thread-safe"
-# The ordering *is* (sometimes) important.  
+# The ordering *is* (sometimes) important.
 # Some notes on the individual items follow:
 # pthreads: AIX (must check this before -lpthread)
 # none: in case threads are in libc; should be tried before -Kthread and
@@ -694,7 +686,7 @@ dnl Sets output variables PKG_CONFIG
 dnl ------------------------------------------------------------------
 
 
-AC_DEFUN([AC_PROG_PKG_CONFIG], 
+AC_DEFUN([AC_PROG_PKG_CONFIG],
 [
   AC_ARG_VAR(PKG_CONFIG,[Location of the pkg-config program.])
   AC_ARG_VAR(PKG_CONFIG_PATH, [Path for pkg-config descriptors.])

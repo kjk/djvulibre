@@ -67,10 +67,7 @@
 #include "GBitmap.h"
 #include <string.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 ////////////////////////////////////////
 //// CLASS JB2Codec::Decode:  DECLARATION
@@ -1436,7 +1433,4 @@ JB2Dict::create(void)
   return new JB2Dict();
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

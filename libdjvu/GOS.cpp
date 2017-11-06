@@ -123,10 +123,7 @@
 # endif
 #endif
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 #if defined(AUTOCONF) && !defined(HAVE_STRERROR)
 # define NEED_STRERROR
@@ -348,9 +345,4 @@ GOS::getenv(const GUTF8String &name)
   return retval;
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

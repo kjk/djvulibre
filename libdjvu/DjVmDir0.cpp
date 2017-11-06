@@ -62,9 +62,7 @@
 #include "debug.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 int
 DjVmDir0::get_size(void) const
@@ -153,7 +151,4 @@ DjVmDir0::add_file(
    num2file[num2file.size()-1]=file;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

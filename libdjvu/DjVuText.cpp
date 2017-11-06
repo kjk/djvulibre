@@ -65,17 +65,7 @@
 
 using namespace DJVU;
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
-
-#ifdef min
-#undef min
-#endif
-template<class TYPE>
-static inline TYPE min(TYPE a,TYPE b) { return (a<b)?a:b; }
 
 //***************************************************************************
 //******************************** DjVuTXT **********************************
@@ -954,8 +944,4 @@ DjVuText::get_xmlText(const int height) const
   return retval;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

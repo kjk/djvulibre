@@ -63,11 +63,9 @@
 #include "DjVuPalette.h"
 #include "DjVuPort.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
-class DjVuTXT;
+  class DjVuTXT;
 class ByteStream;
 class DataPool;
 class JB2Image;
@@ -822,8 +820,5 @@ DjVuFile::set_recover_errors
 
 //@}
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

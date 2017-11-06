@@ -62,11 +62,7 @@
 #include "ByteStream.h"
 #include "GBitmap.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // ----------------------------------------
 // MMR CODEBOOKS
@@ -944,8 +940,4 @@ MMRDecoder::decode(GP<ByteStream> gbs)
   return jimg;
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

@@ -161,10 +161,7 @@
 #include "GSmartPointer.h"
 #include "ZPCodec.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class GRect;
 class IFFByteStream;
@@ -739,11 +736,5 @@ IW44Image::Block::set(int n, int val, IW44Image::Map *map)
 
 #endif /* IW44IMAGE_IMPLIMENTATION */
 
-//@}
-
-
-#ifdef HAVE_NAMESPACES
 }
 #endif
-#endif
-

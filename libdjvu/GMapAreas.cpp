@@ -64,11 +64,7 @@
 #include <math.h>
 #include <stdio.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /****************************************************************************
 ***************************** GMapArea definition ***************************
@@ -1061,8 +1057,4 @@ GMapPoly::get_xmltag(const int height) const
   return retval;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
-

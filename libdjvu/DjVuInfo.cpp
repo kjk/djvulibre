@@ -63,9 +63,7 @@
 #include "GString.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 // ----------------------------------------
 // CLASS DJVUINFO
@@ -184,7 +182,4 @@ DjVuInfo::writeParam(ByteStream &str_out) const
   str_out.writestring(get_paramtags());
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

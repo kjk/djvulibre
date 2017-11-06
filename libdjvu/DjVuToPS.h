@@ -75,9 +75,7 @@
 #include "DjVuDocument.h"
 #include "DjVuText.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** DjVuImage to PostScript converter.
     Use this class to print \Ref{DjVuImage}s and \Ref{DjVuDocument}s.
@@ -407,7 +405,5 @@ public:
 //@}
 // ------------
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

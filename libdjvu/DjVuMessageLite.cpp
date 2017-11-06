@@ -86,10 +86,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 const DjVuMessageLite& (*DjVuMessageLite::create)(void) =
   DjVuMessageLite::create_lite;
@@ -433,11 +430,7 @@ DjVuMessageLite::AddByteStream(const GP<ByteStream> &bs)
   }
 }
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 
 void
 DjVuWriteError( const char *message )

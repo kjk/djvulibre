@@ -64,10 +64,7 @@
 #include "Arrays.h"
 #include "GThreads.h"
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** @name GURL.h
     Files #"GURL.h"# and #"GURL.cpp"# contain the implementation of the
@@ -424,12 +421,5 @@ GURL::is_valid(void) const
   return validurl;
 }
 
-
-
-//@}
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

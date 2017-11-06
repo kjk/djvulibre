@@ -156,13 +156,9 @@
 #include <unistd.h>
 #endif
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
-
-static const char djvuopts[]="DJVUOPTS";
+  static const char djvuopts[]="DJVUOPTS";
 static const char localhost[]="file://localhost/";
 static const char colon=':';
 static const char dot='.';
@@ -1873,7 +1869,4 @@ hash(const GURL & gurl)
   return retval;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

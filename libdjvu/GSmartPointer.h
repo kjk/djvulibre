@@ -97,9 +97,7 @@
 #include <atomic>
 #include <stddef.h>
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** Base class for reference counted objects.
     This is the base class for all reference counted objects.
@@ -508,9 +506,5 @@ public:
   inline operator int(void) const {return GPBufferBase::operator int();}
 };
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

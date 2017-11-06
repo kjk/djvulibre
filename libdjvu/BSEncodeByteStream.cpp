@@ -73,11 +73,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 // ========================================
 // --- Assertion
@@ -997,7 +993,4 @@ BSByteStream::Encode::write(const void *buffer, size_t sz)
   return copied;
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

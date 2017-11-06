@@ -62,9 +62,7 @@
 
 #include "GString.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 
@@ -201,7 +199,5 @@ DjVmDir0::DjVmDir0(const DjVmDir0 & d) :
 //@}
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

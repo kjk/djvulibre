@@ -63,9 +63,7 @@
 #include "DjVuDocument.h"
 #include "DjVmDoc.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** @name DjVuDocEditor.h
     Files #"DjVuDocEditor.h"# and #"DjVuDocEditor.cpp"# contain extension
@@ -441,8 +439,6 @@ private:
 //@}
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 

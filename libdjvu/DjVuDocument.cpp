@@ -74,10 +74,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 static const char octets[4]={0x41,0x54,0x26,0x54};
 const float	DjVuDocument::thumb_gamma=(float)2.20;
@@ -1859,7 +1856,5 @@ DjVuDocument::writeDjVuXML(const GP<ByteStream> &gstr_out,
   str_out.writestring(GUTF8String(end_xml));
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
+

@@ -86,9 +86,7 @@
 
 #include "GString.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class GMapArea;
 class ByteStream;
@@ -277,7 +275,5 @@ DjVuAnno::get_memory_usage() const
 
 // ----- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

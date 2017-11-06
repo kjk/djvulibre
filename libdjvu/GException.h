@@ -115,9 +115,7 @@
 # endif
 #endif
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 /** Exception class.
     The library always uses macros #G_TRY#, #G_THROW#, #G_CATCH# and #G_ENDCATCH# for
@@ -233,7 +231,5 @@ private:
 
 // -------------- THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

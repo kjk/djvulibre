@@ -62,9 +62,7 @@
 
 #include "DjVmDir.h"
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 class ByteStream;
 class DataPool;
@@ -255,9 +253,5 @@ DjVmDoc::get_djvm_dir(void)
 
 //@}
 
-
-
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif

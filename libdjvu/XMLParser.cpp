@@ -77,9 +77,7 @@
 
 using namespace DJVU;
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
 
 static const char mimetype[]="image/x.djvu";
 static const char bodytag[]="BODY";
@@ -1117,7 +1115,4 @@ lt_XMLParser::setOCRcallback(
   ::OCRcallback(arg,callback);
 }
 
-
-#ifdef HAVE_NAMESPACES
 }
-#endif

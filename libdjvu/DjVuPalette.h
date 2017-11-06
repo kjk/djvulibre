@@ -64,11 +64,7 @@
 #include "GPixmap.h"
 #include <string.h>
 
-
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 /** @name DjVuPalette.h
     Files #"DjVuPalette.h"# and #"DjVuPalette.cpp"# implement a single class
@@ -316,9 +312,7 @@ DjVuPalette::get_color(int nth, GPixel &p) const
 
 // ------------ THE END
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
 #endif
 
 

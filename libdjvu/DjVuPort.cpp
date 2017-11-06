@@ -66,10 +66,7 @@
 #include "DataPool.h"
 
 
-#ifdef HAVE_NAMESPACES
 namespace DJVU {
-#endif
-
 
 //****************************************************************************
 //******************************* Globals ************************************
@@ -696,7 +693,4 @@ DjVuMemoryPort::add_data(const GURL & url, const GP<DataPool> & pool)
 }
 
 
-#ifdef HAVE_NAMESPACES
 }
-#endif
-
