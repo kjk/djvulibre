@@ -42,8 +42,8 @@
 # if defined(_WIN32) || defined(_WIN64)
 
 namespace {
-  struct CS { 
-    CRITICAL_SECTION cs; 
+  struct CS {
+    CRITICAL_SECTION cs;
     CS() { InitializeCriticalSection(&cs); }
     ~CS() { DeleteCriticalSecton(&cs); } }; }
 static CS globalCS;
@@ -74,38 +74,6 @@ static QMutex qtm;
 /* atomic primitive emulation */
 
 int
-atomicIncrement(int volatile *var)
-{
-  int res;
-  MUTEX_ENTER;
-  res = ++(*var);
-  MUTEX_LEAVE;
-  return res;
-}
-
-int 
-atomicDecrement(int volatile *var)
-{
-  int res;
-  MUTEX_ENTER;
-  res = --(*var);
-  MUTEX_LEAVE;
-  return res;
-}
-
-int 
-atomicCompareAndSwap(int volatile *var, int oldval, int newval)
-{
-  int ret;
-  MUTEX_ENTER;
-  ret = *var;
-  if (ret == oldval)
-    *var = newval;
-  MUTEX_LEAVE;
-  return ret;
-}
-
-int 
 atomicExchange(int volatile *var, int newval)
 {
   int ret;
@@ -116,7 +84,7 @@ atomicExchange(int volatile *var, int newval)
   return ret;
 }
 
-void* 
+void*
 atomicExchangePointer(void* volatile *var, void* newval)
 {
   void *ret;
@@ -127,6 +95,6 @@ atomicExchangePointer(void* volatile *var, void* newval)
   return ret;
 }
 
-#endif 
+#endif
 
 

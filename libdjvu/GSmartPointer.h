@@ -94,6 +94,7 @@
 #include "DjVuGlobal.h"
 #include "atomic.h"
 
+#include <atomic>
 #include <stddef.h>
 
 #ifdef HAVE_NAMESPACES
@@ -130,7 +131,7 @@ public:
   int get_count(void) const;
 protected:
   /// The reference counter
-  volatile int count;
+  std::atomic<int> count;
 };
 
 
@@ -334,7 +335,7 @@ GPEnabled::ref()
 #if PARANOID_DEBUG
   assert (count >= 0);
 #endif
-  atomicIncrement(&count);
+  count++;
 }
 
 inline void
@@ -343,7 +344,7 @@ GPEnabled::unref()
 #if PARANOID_DEBUG
   assert (count > 0);
 #endif
-  if (! atomicDecrement(&count))
+  if (! count-- )
     destroy();
 }
 

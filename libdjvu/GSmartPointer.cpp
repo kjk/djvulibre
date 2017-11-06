@@ -98,7 +98,9 @@ GPEnabled::destroy()
   // If yes, set the counter to -0x7fff to mark
   // the object as doomed and make sure things
   // will work if the destructor uses a GP...
-  if (! atomicCompareAndSwap(&count, 0, -0x7fff))
+  int tst_val = 0;
+  int new_val = -99;
+  if (! count.compare_exchange_strong(tst_val, new_val))
     delete this;
 }
 
@@ -110,7 +112,7 @@ GPBase&
 GPBase::assign (const GPBase &sptr)
 {
   GPEnabled *nptr = sptr.ptr;
-  if (nptr && atomicIncrement(&nptr->count) <= 0)
+  if (nptr && nptr->count++ <= 0)
     nptr = 0;
   GPEnabled *optr = (GPEnabled*)atomicExchangePointer((void**)&ptr, (void*)nptr);
   if (optr)
@@ -121,7 +123,7 @@ GPBase::assign (const GPBase &sptr)
 GPBase&
 GPBase::assign (GPEnabled *nptr)
 {
-  if (nptr && atomicIncrement(&nptr->count) <= 0)
+  if (nptr && nptr->count++ <= 0)
     nptr = 0;
   GPEnabled *optr = (GPEnabled*)atomicExchangePointer((void**)&ptr, (void*)nptr);
   if (optr)
